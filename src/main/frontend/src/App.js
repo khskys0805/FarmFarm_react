@@ -1,22 +1,41 @@
-import {useEffect, useState} from "react";
-import axios from "axios";
+import {BrowserRouter, Routes, Route, Navigate} from "react-router-dom";
+import Login from "./pages/Login/Login";
+import CreateNickname from "./pages/Login/CreateNickname";
+import Token from "./pages/join/Token";
 
 function App() {
-  const [hello, setHello] = useState('');
-
-  useEffect(() => {
-    axios.get("/api/test")
-        .then((res) => {
-          setHello(res.data);
-          console.log("dd : " + res.data);
-        })
-  }, []);
   return (
-      <div className="App">
-        백엔드 데이터 : {hello}
-        백엔드 데이터 : {hello}
-      </div>
-  );
+      <BrowserRouter>
+        <div className="App">
+          <Routes>
+            <Route
+                path="/"
+                element={
+                    localStorage.getItem("jwt") ? (
+                        <Navigate replace to="/" />
+                    ) : (
+                        <Login />
+                    )
+                }
+            />
+              <Route
+                  path="/user/login/oauth_kakao"
+                  element={
+                      localStorage.getItem("jwt") ? (
+                          <Navigate replace to="/" />
+                      ) : (
+                          <Token />
+                      )
+                  }
+              />
+              <Route
+                  path="/user/nickname/create"
+                  element={<CreateNickname />}
+              />
+          </Routes>
+        </div>
+      </BrowserRouter>
+  )
 }
 
 export default App;

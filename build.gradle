@@ -1,6 +1,6 @@
 plugins {
     id 'java'
-    id 'org.springframework.boot' version '3.2.2'
+    id 'org.springframework.boot' version '2.7.6'
     id 'io.spring.dependency-management' version '1.1.4'
 }
 
@@ -8,7 +8,7 @@ group = 'com.example'
 version = '0.0.1-SNAPSHOT'
 
 java {
-    sourceCompatibility = '17'
+    sourceCompatibility = '11'
 }
 
 configurations {
@@ -29,6 +29,15 @@ dependencies {
     runtimeOnly 'com.mysql:mysql-connector-j'
     annotationProcessor 'org.projectlombok:lombok'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    implementation 'org.springframework.security:spring-security-core:5.5.0'
+    implementation 'org.springframework.boot:spring-boot-starter-security'
+    implementation 'javax.servlet:javax.servlet-api:4.0.1'
+    implementation 'org.hibernate:hibernate-core:5.6.3.Final' // Hibernate JPA 추가
+    implementation 'com.auth0:java-jwt:3.18.1' // Auth0 JWT 라이브러리 추가
+    implementation 'com.h2database:h2:1.4.200' // H2 데이터베이스 의존성 추가
+    implementation 'com.amazonaws:aws-java-sdk-s3:1.12.200' // AWS SDK for Java의 S3 모듈 추가
+    implementation 'org.springframework.boot:spring-boot-starter-tomcat'
+    implementation 'com.google.code.gson:gson:2.8.8' // Gson 라이브러리 추가
 }
 
 tasks.named('test') {
