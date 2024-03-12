@@ -59,17 +59,43 @@ public class UserController {
 
     // 프론트에서 인가코드 받아오는 url
     @GetMapping("/login/oauth_kakao")
-    ResponseEntity getLogin(@RequestParam("code") String code) {
+    public String getLogin(RedirectAttributes attr, @RequestParam("code") String code, Model model, HttpSession session) {
+        System.out.println("code : " + code);
         // 넘어온 인가 코드를 통해 access_token 발급
         OauthToken oauthToken= userService.getAccessToken(code);
+        System.out.println("oauthToken : " + oauthToken);
         // 발급 받은 accessToken 으로 카카오 회원 정보 DB 저장 후 JWT 를 생성
         //UserService 의 기존 SaveUser 메소드를 수정한다
         String jwtToken = userService.saveUserAndGetToken(oauthToken.getAccess_token());
         //응답 헤더의 Authorization 이라는 항목에 JWT 를 넣어준다.
         HttpHeaders headers = new HttpHeaders();
         headers.add(JwtProperties.HEADER_STRING, JwtProperties.TOKEN_PREFIX + jwtToken);
+        String Auth = JwtProperties.TOKEN_PREFIX + jwtToken;
+        System.out.println("our Token : " + jwtToken);
         //JWT 가 담긴 헤더와 200 ok 스테이터스 값, "success" 라는 바디값을 ResponseEntity 에 담아 프론트 측에 전달한다.
-        return ResponseEntity.ok().headers(headers).body(null);
+        //System.out.println(ResponseEntity.ok().headers(headers).body(null));
+        RestTemplate restTemplate = new RestTemplate();
+        HttpEntity req = new HttpEntity(headers);
+        ResponseEntity<UserEntity> response = restTemplate.exchange(
+                serverUrl + "/user/me",
+                HttpMethod.GET,
+                req,
+                UserEntity.class
+        );
+        //request.setAttribute("Authorization", headers.get("Authorization"));
+        attr.addFlashAttribute("Authorization", headers.get("Authorization"));
+
+        System.out.println("kakaoLoginNickname1 : " + response.getBody().toString());
+        System.out.println("kakaoLoginNickname2 : " + response.getBody().getNickname());
+        model.addAttribute("Authorization", Auth);
+        model.addAttribute("user", response.getBody());
+        model.addAttribute("myFarm", farmService.getMyFarm(response.getBody()));
+        session.setAttribute("uid", response.getBody().getUId());
+        if (response.getBody().getNickname() == null) {
+            return "redirect:/user/nickname";
+        } else {
+            return "redirect:http://localhost:3000/home";
+        }
     }
 
     @GetMapping("/me")

@@ -24,5 +24,9 @@
     font-size: 13px;
 }
 .button{
+    all:unset;
+    cursor: pointer;
+}
+.img{
     width:300px;
 }

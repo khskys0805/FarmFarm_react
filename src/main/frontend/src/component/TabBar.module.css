@@ -1,0 +1,16 @@
+.tab{
+    width:500px;
+    position: fixed;
+    bottom: 0;
+    background: #fff;
+    padding:10px 0;
+}
+.bar{
+    width:100%;
+    display: flex;
+    justify-content: space-between;
+}
+button{
+    all:unset;
+    cursor: pointer;
+}

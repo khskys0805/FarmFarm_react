@@ -1,4 +1,8 @@
 const API = {
+    PRODUCT(ID){
+        return `/product/${ID}`
+    },
+    ALLPRODUCT: "/product/list",
     // MYPAGE: "/letterbox/my",
     // CREATEBOX: "/letterbox",
     // LETTERBOX: "/letterbox",

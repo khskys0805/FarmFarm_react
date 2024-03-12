@@ -11,6 +11,8 @@ import com.example.farmfarm_react.Service.UserService;
 import org.h2.engine.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -96,23 +98,36 @@ public class HomeController {
 
 
     @GetMapping("/")
-    public String home(HttpServletRequest request, Model model, HttpSession session) {
+    public ResponseEntity<Object> home(HttpServletRequest request, HttpSession session) {
+        // 데이터를 담을 객체 생성
+        Object responseData;
+
         if (session.getAttribute("user") != null) {
-            UserEntity user = (UserEntity)session.getAttribute("user");
+            UserEntity user = (UserEntity) session.getAttribute("user");
             session.setAttribute("uid", user.getUId());
+
+            // 세션에 유저 정보가 있는 경우, 유저 정보를 응답 데이터로 설정
+            responseData = user;
+        } else {
+            // 로그인되지 않은 경우, 클라이언트에게 로그인 페이지로 redirect할 것을 응답합니다.
+            responseData = "Unauthorized"; // 예시로 문자열을 응답 데이터로 설정
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(responseData);
         }
-        else if (session.getAttribute("user") == null){
-            System.out.println("/kakao로 redirect!!!");
-            return "redirect:/kakao";
-        }
+
+        // 응답할 데이터 설정
         List<ProductEntity> products = productService.getAllProduct();
-        model.addAttribute("products", products);
         List<ProductEntity> auctions = productService.getAllAuctionProduct();
-        model.addAttribute("auctions", auctions);
         List<FarmEntity> farms = farmService.getFarmsOrderBy("new");
-        model.addAttribute("farms", farms);
-        return "home/home";
+
+        Map<String, Object> response = new HashMap<>();
+        response.put("products", products);
+        response.put("auctions", auctions);
+        response.put("farms", farms);
+
+        // 응답
+        return ResponseEntity.ok().body(response);
     }
+
     @GetMapping("/kakao")
     public String login(HttpServletRequest request) {
         return "common/index";

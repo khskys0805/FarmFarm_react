@@ -13,11 +13,11 @@ export default function Token() {
             .get(API.LOGINTOKEN(serchParams.get("code")))
             .then((res) => {
                 localStorage.setItem("jwt", res.headers.authorization);
-                navigate("/user/nickname/create");
+                navigate("/home");
             })
             .catch((err) => {
                 console.log("로그인을 다시 시도해주세요");
                 navigate("/");
             });
-    });
+    }, []);
 }
