@@ -18,3 +18,15 @@
 .box .swiper-container .swiper-wrapper .swiper-slide img {
     width: 100%;
 }
+
+.content{
+    margin-top:50px;
+    padding-bottom: 70px;
+}
+.content h2{
+    margin-bottom: 20px;
+}
+
+.content .group{
+    margin-bottom: 50px;
+}

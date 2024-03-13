@@ -4,6 +4,7 @@
     bottom: 0;
     background: #fff;
     padding:10px 0;
+    z-index: 999;
 }
 .bar{
     width:100%;

@@ -3,6 +3,7 @@ const API = {
         return `/product/${ID}`
     },
     ALLPRODUCT: "/product/list",
+    ALLFARM: "/farm/list",
     // MYPAGE: "/letterbox/my",
     // CREATEBOX: "/letterbox",
     // LETTERBOX: "/letterbox",

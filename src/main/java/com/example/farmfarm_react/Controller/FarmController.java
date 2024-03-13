@@ -54,33 +54,26 @@ public class FarmController {
 
     //농장 전체 조회, 농장 정렬
     @GetMapping("/list")
-    public ModelAndView getSortedFarm(@RequestParam(required = false, defaultValue = "rating", value = "sort") String criteria,
-                                      @RequestParam(required = false, defaultValue = "", value = "keyword") String keyword,
-                                      @RequestParam(required = false, defaultValue = "", value = "si") String si,
-                                      @RequestParam(required = false, defaultValue = "", value = "gugun") String gugun) {
+    public ResponseEntity<Object> getSortedFarm(@RequestParam(required = false, defaultValue = "rating", value = "sort") String criteria,
+                                                @RequestParam(required = false, defaultValue = "", value = "keyword") String keyword,
+                                                @RequestParam(required = false, defaultValue = "", value = "si") String si,
+                                                @RequestParam(required = false, defaultValue = "", value = "gugun") String gugun) {
         List allFarm = new ArrayList<>();
 
         if (!si.equals("") && !gugun.equals("")) {
-            ModelAndView mav = new ModelAndView("home/farm/farmList");
             allFarm = farmService.searchByLocation(si, gugun);
-            mav.addObject("farmList", allFarm);
-            Gson gson = new Gson();
-            String jsonFarmList = gson.toJson(allFarm);
-            mav.addObject("jsonFarmList", jsonFarmList);
-            return mav;
+            return ResponseEntity.ok().body(allFarm);
         }
-        ModelAndView mav = new ModelAndView("home/farm/allFarm");
+
         if (keyword.equals("")) {
             allFarm = farmService.getFarmsOrderBy(criteria);
         } else {
             allFarm = farmService.searchSortFarms(keyword, criteria);
         }
-        mav.addObject("farmList", allFarm);
-        Gson gson = new Gson();
-        String jsonFarmList = gson.toJson(allFarm);
-        mav.addObject("jsonFarmList", jsonFarmList);
-        return mav;
+
+        return ResponseEntity.ok().body(allFarm);
     }
+
 
     // 농장 조회 ( 전체 농장 리스트에서 클릭 시 해당 농장 페이지로 이동)
     @GetMapping("/{f_id}")

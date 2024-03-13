@@ -1,0 +1,16 @@
+.table {
+    border-collapse: collapse;
+    font-size: 18px;
+    width: 100%;
+}
+
+.table td, .table th {
+    height: 40px;
+    border-bottom: 1px solid #F3F3F3;
+    padding: 15px 0;
+}
+
+th[scope="row"] {
+    width: 7%;
+    color: #94C015;
+}
