@@ -1,4 +1,5 @@
 import styles from './Home.module.css';
+import { IoIosArrowDroprightCircle } from "react-icons/io";
 import TabBar from "../../component/TabBar";
 import SwiperComponent from "../../component/SwiperComponent";
 import banner1 from "../../images/banner/banner1.png";
@@ -25,15 +26,24 @@ const Home = () => {
             <SwiperComponent slides={slides}/>
             <div className={styles.content}>
                 <div className={styles.group}>
-                    <h2>이 상품 어때요?</h2>
+                    <div className={styles.link}>
+                        <h2>이 상품 어때요?</h2>
+                        <IoIosArrowDroprightCircle size="30" color="#94C015FF" style={{cursor:"pointer"}}/>
+                    </div>
                     <AllProduct numToShow={numProductsToShow}/>
                 </div>
                 <div className={styles.group}>
-                    <h2>이 농장 어때요?</h2>
+                    <div className={styles.link}>
+                        <h2>이 농장 어때요?</h2>
+                        <IoIosArrowDroprightCircle size="30" color="#94C015FF" style={{cursor:"pointer"}}/>
+                    </div>
                     <AllFarm numToShow={numFarmsToShow}/>
                 </div>
-                <div className={styles.auction}>
-                    <h2>진행 중인 경매</h2>
+                <div className={styles.group}>
+                    <div className={styles.link}>
+                        <h2>진행 중인 경매</h2>
+                        <IoIosArrowDroprightCircle size="30" color="#94C015FF" style={{cursor:"pointer"}}/>
+                    </div>
                     <AllAuction/>
                 </div>
             </div>
