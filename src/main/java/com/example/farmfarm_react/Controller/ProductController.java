@@ -187,28 +187,28 @@ public class ProductController {
 
     // 경매 상품 리스트 조회
     @GetMapping("/auction/list")
-    public ModelAndView getAllAuctionProduct(@RequestParam(value="keyword", required=false) String keyword, @RequestParam(value="sort", required=false) String sort){
+    public ResponseEntity<Object> getAllAuctionProduct(@RequestParam(value="keyword", required=false) String keyword,
+                                                       @RequestParam(value="sort", required=false) String sort) {
         List<ProductEntity> productList;
         List<ProductEntity> resultList = new ArrayList<>();
-        ModelAndView mav = new ModelAndView("home/auction/auctionList");
 
         if (!StringUtils.isEmpty(keyword)) { // 키워드 검색
             productList = productService.getSearchProduct(keyword);
-        }
-        else if (!StringUtils.isEmpty(sort)) { // 정렬
+        } else if (!StringUtils.isEmpty(sort)) { // 정렬
             productList = productService.getSortedProduct(sort);
-        }
-        else {
+        } else {
             productList = productService.getAllAuctionProduct();
         }
+
         for (ProductEntity val : productList) {
             if (val.isAuction() && val.getOpen_status() != 2) {
                 resultList.add(val);
             }
         }
-        mav.addObject("productList", resultList);
-        return mav;
+
+        return ResponseEntity.ok().body(resultList);
     }
+
     @GetMapping("/{p_id}/group")
     public void getGroupList(HttpSession session, @PathVariable("p_id") long pId, Model model) {
         ProductEntity product = productService.getProduct(pId);

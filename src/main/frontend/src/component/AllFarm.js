@@ -3,7 +3,7 @@ import axios from "axios";
 import API from "../config";
 import styles from "./AllFarm.module.css";
 
-const AllFarm = () => {
+const AllFarm = ({ numToShow }) => {
     const [farms, setFarms] = useState([]);
 
     useEffect(() => {
@@ -23,14 +23,14 @@ const AllFarm = () => {
     }, []);
     return (
         <div>
-            {farms.length === 0 && <p>농장이 없습니다.</p>}
+            {farms.length === 0 && <p>개설된 농장이 없어요.</p>}
             {farms.length > 0 && (
                 <table className={styles.table}>
                     <tbody>
-                    {farms.map((item, index) => (
-                        <tr>
+                    {farms.slice(0, numToShow).map((item, index) => (
+                        <tr key={index}>
                             <th scope="row">{index}</th>
-                            <td><a href="/farm/${farm.FId}">{item.name}</a></td>
+                            <td><a href={`/farm/${item.FId}`}>{item.name}</a></td>
                         </tr>
                     ))}
                     </tbody>

@@ -3,7 +3,7 @@ import axios from "axios";
 import API from "../config";
 import styles from "./AllProduct.module.css";
 
-const AllProduct = () => {
+const AllProduct = ({ numToShow }) => {
     const [products, setProducts] = useState([]);
 
     useEffect(() => {
@@ -24,9 +24,9 @@ const AllProduct = () => {
 
     return (
         <div className={styles.item_container}>
-            {products.length === 0 && <p>상품이 없습니다.</p>}
+            {products.length === 0 && <p>등록된 상품이 없어요.</p>}
             {products.length > 0 && (
-                products.map((item, index) => (
+                products.slice(0, numToShow).map((item, index) => (
                     <div className={styles.item_box} key={index}>
                         <div className={styles.item_media}>
                             <img src={item.image1} alt=""/>

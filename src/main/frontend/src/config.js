@@ -4,6 +4,7 @@ const API = {
     },
     ALLPRODUCT: "/product/list",
     ALLFARM: "/farm/list",
+    ALLAUCTION: "/product/auction/list",
     // MYPAGE: "/letterbox/my",
     // CREATEBOX: "/letterbox",
     // LETTERBOX: "/letterbox",
