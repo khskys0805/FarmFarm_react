@@ -1,9 +1,9 @@
 import {useEffect, useState} from "react";
 import axios from "axios";
 import API from "../config";
-import styles from "./AllFarm.module.css";
+import styles from "./FarmList.module.css";
 
-const AllFarm = ({ numToShow }) => {
+const FarmList = ({ numToShow }) => {
     const [farms, setFarms] = useState([]);
 
     useEffect(() => {
@@ -27,7 +27,7 @@ const AllFarm = ({ numToShow }) => {
             {farms.length > 0 && (
                 <table className={styles.table}>
                     <tbody>
-                    {farms.slice(0, numToShow).map((item, index) => (
+                    {farms.slice(0, numToShow || farms.length).map((item, index) => (
                         <tr key={index}>
                             <th scope="row">{index}</th>
                             <td><a href={`/farm/${item.FId}`}>{item.name}</a></td>
@@ -39,4 +39,4 @@ const AllFarm = ({ numToShow }) => {
         </div>
     )
 }
-export default AllFarm;
+export default FarmList;

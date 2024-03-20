@@ -1,0 +1,12 @@
+.box{
+    display: flex;
+    align-items: center;
+    margin: 20px 0;
+    position: relative;
+}
+.title{
+    font-size:20px;
+    font-weight: bold;
+    text-align: center;
+    flex-grow: 1;
+}

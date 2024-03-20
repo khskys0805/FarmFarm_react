@@ -6,9 +6,10 @@ import banner1 from "../../images/banner/banner1.png";
 import banner2 from "../../images/banner/banner2.png";
 import banner3 from "../../images/banner/banner3.png";
 import logo from "../../images/logo/farmfarm_logo2.png";
-import AllProduct from "../../component/AllProduct";
-import AllFarm from "../../component/AllFarm";
-import AllAuction from "../../component/AllAuction";
+import ProductList from "../../component/ProductList";
+import FarmList from "../../component/FarmList";
+import AuctionList from "../../component/AuctionList";
+import {Link} from "react-router-dom";
 
 const Home = () => {
     const slides = [
@@ -28,23 +29,29 @@ const Home = () => {
                 <div className={styles.group}>
                     <div className={styles.link}>
                         <h2>이 상품 어때요?</h2>
-                        <IoIosArrowDroprightCircle size="30" color="#94C015FF" style={{cursor:"pointer"}}/>
+                        <Link to="/product/list">
+                            <IoIosArrowDroprightCircle size="30" color="#94C015FF" style={{cursor:"pointer"}}/>
+                        </Link>
                     </div>
-                    <AllProduct numToShow={numProductsToShow}/>
+                    <ProductList numToShow={numProductsToShow}/>
                 </div>
                 <div className={styles.group}>
                     <div className={styles.link}>
                         <h2>이 농장 어때요?</h2>
-                        <IoIosArrowDroprightCircle size="30" color="#94C015FF" style={{cursor:"pointer"}}/>
+                        <Link to="/farm/list">
+                            <IoIosArrowDroprightCircle size="30" color="#94C015FF" style={{cursor:"pointer"}}/>
+                        </Link>
                     </div>
-                    <AllFarm numToShow={numFarmsToShow}/>
+                    <FarmList numToShow={numFarmsToShow}/>
                 </div>
                 <div className={styles.group}>
                     <div className={styles.link}>
                         <h2>진행 중인 경매</h2>
-                        <IoIosArrowDroprightCircle size="30" color="#94C015FF" style={{cursor:"pointer"}}/>
+                        <Link to="/auction/list">
+                            <IoIosArrowDroprightCircle size="30" color="#94C015FF" style={{cursor:"pointer"}}/>
+                        </Link>
                     </div>
-                    <AllAuction/>
+                    <AuctionList/>
                 </div>
             </div>
             <TabBar />

@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import API from "../config";
-import styles from "./AllProduct.module.css";
+import styles from "./ProductList.module.css";
 
-const AllProduct = ({ numToShow }) => {
+const ProductList = ({ numToShow }) => {
     const [products, setProducts] = useState([]);
 
     useEffect(() => {
@@ -26,7 +26,7 @@ const AllProduct = ({ numToShow }) => {
         <div className={styles.item_container}>
             {products.length === 0 && <p>등록된 상품이 없어요.</p>}
             {products.length > 0 && (
-                products.slice(0, numToShow).map((item, index) => (
+                products.slice(0, numToShow || products.length).map((item, index) => (
                     <div className={styles.item_box} key={index}>
                         <div className={styles.item_media}>
                             <img src={item.image1} alt=""/>
@@ -48,4 +48,4 @@ const AllProduct = ({ numToShow }) => {
     );
 }
 
-export default AllProduct;
+export default ProductList;

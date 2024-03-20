@@ -1,9 +1,9 @@
 import {useEffect, useState} from "react";
 import axios from "axios";
 import API from "../config";
-import styles from "./AllAuction.module.css";
+import styles from "./AuctionList.module.css";
 
-const AllAuction = ({ numToShow }) => {
+const AuctionList = ({ numToShow }) => {
     const [auctions, setAuctions] = useState([]);
 
     useEffect(() => {
@@ -26,7 +26,7 @@ const AllAuction = ({ numToShow }) => {
         <div>
             {auctions.length === 0 && <p className={styles.no_auction}>진행 중인 경매 상품이 없어요.</p>}
             {auctions.length > 0 && (
-                auctions.slice(0, numToShow).map((item, index) => (
+                auctions.slice(0, numToShow || auctions.length).map((item, index) => (
                     item.open_status !== 2 && (
                         <div className={styles.item_box} key={index} onClick={() => { window.location.href=`/product/${item.product.PId}` }}>
                             <div className={styles.item_media}>
@@ -47,4 +47,4 @@ const AllAuction = ({ numToShow }) => {
         </div>
     );
 }
-export default AllAuction;
+export default AuctionList;
