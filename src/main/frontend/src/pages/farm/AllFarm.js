@@ -2,9 +2,6 @@ import styles from "./AllFarm.module.css";
 import FarmList from "../../component/FarmList";
 import Header from "../../component/Header";
 import SearchBar from "../../component/SearchBar";
-import { useEffect, useState } from "react";
-import axios from "axios";
-import API from "../../config";
 import Sort from "../../component/Sort";
 import { useLocation } from "react-router-dom";
 

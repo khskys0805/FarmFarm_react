@@ -1,27 +1,6 @@
-import { useEffect, useState } from "react";
-import axios from "axios";
-import API from "../config";
 import styles from "./ProductList.module.css";
 
-const ProductList = ({ numToShow }) => {
-    const [products, setProducts] = useState([]);
-
-    useEffect(() => {
-        axios.get(API.ALLPRODUCT, {
-            headers: { authorization: localStorage.getItem("jwt") },
-        })
-            .then((res) => {
-                console.log("전송 성공");
-                console.log(res.data);
-
-                setProducts(res.data);
-                console.log("product:" + res.data);
-            })
-            .catch((error) => {
-                console.error('작성한 게시물을 가져오는 중 오류 발생: ', error);
-            });
-    }, []);
-
+const ProductList = ({ numToShow, products }) => {
     return (
         <div className={styles.item_container}>
             {products.length === 0 && <p>등록된 상품이 없어요.</p>}

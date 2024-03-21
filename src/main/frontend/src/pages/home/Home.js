@@ -25,6 +25,8 @@ const Home = () => {
     const numFarmsToShow = 5; // 보여줄 농장 개수를 지정
 
     const [farms, setFarms] = useState([]);
+    const [products, setProducts] = useState([]);
+
     useEffect(() => {
         axios.get(API.ALLFARM, {
             headers: { authorization: localStorage.getItem("jwt") },
@@ -41,6 +43,23 @@ const Home = () => {
             });
     }, []);
 
+    useEffect(() => {
+        axios.get(API.ALLPRODUCT, {
+            headers: { authorization: localStorage.getItem("jwt") },
+        })
+            .then((res) => {
+                console.log("전송 성공");
+                console.log(res.data);
+
+                setProducts(res.data);
+                console.log("product:" + res.data);
+            })
+            .catch((error) => {
+                console.error('작성한 게시물을 가져오는 중 오류 발생: ', error);
+            });
+    }, []);
+
+
     return (
         <div className={styles.box}>
             <img className={styles.logo} src={logo} alt="logo"/>
@@ -49,11 +68,11 @@ const Home = () => {
                 <div className={styles.group}>
                     <div className={styles.link}>
                         <h2>이 상품 어때요?</h2>
-                        <Link to="/product/list">
+                        <Link to="/product/list" state={{ products: products }}>
                             <IoIosArrowDroprightCircle size="30" color="#94C015FF" style={{cursor:"pointer"}}/>
                         </Link>
                     </div>
-                    <ProductList numToShow={numProductsToShow}/>
+                    <ProductList numToShow={numProductsToShow} products={products}/>
                 </div>
                 <div className={styles.group}>
                     <div className={styles.link}>

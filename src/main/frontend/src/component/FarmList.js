@@ -1,6 +1,3 @@
-import {useEffect, useState} from "react";
-import axios from "axios";
-import API from "../config";
 import styles from "./FarmList.module.css";
 
 const FarmList = ({ numToShow, farms }) => {
