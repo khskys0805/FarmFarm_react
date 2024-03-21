@@ -1,0 +1,7 @@
+.sort{
+    margin-bottom: 20px;
+}
+.sort .sortSelect{
+    border: none;
+    outline:none;
+}

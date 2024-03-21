@@ -8,6 +8,7 @@ import ProductList from "./component/ProductList";
 import FarmList from "./component/FarmList";
 import AuctionList from "./component/AuctionList";
 import AllProduct from "./pages/product/AllProduct";
+import AllFarm from "./pages/farm/AllFarm";
 
 function App() {
   return (
@@ -54,7 +55,7 @@ function App() {
               />
               <Route
                   path="/farm/list"
-                  element={<FarmList />}
+                  element={<AllFarm />}
               />
               <Route
                   path="/auction/list"

@@ -1,0 +1,13 @@
+.input_wrap{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.input_wrap input{
+    order: 1;
+    width: 400px;
+    padding:10px;
+    border: none;
+    outline: none;
+    font-size: 18px;
+}

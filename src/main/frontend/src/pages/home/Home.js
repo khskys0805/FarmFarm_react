@@ -10,6 +10,9 @@ import ProductList from "../../component/ProductList";
 import FarmList from "../../component/FarmList";
 import AuctionList from "../../component/AuctionList";
 import {Link} from "react-router-dom";
+import {useEffect, useState} from "react";
+import axios from "axios";
+import API from "../../config";
 
 const Home = () => {
     const slides = [
@@ -20,6 +23,23 @@ const Home = () => {
 
     const numProductsToShow = 4; // 보여줄 상품 개수를 지정
     const numFarmsToShow = 5; // 보여줄 농장 개수를 지정
+
+    const [farms, setFarms] = useState([]);
+    useEffect(() => {
+        axios.get(API.ALLFARM, {
+            headers: { authorization: localStorage.getItem("jwt") },
+        })
+            .then((res) => {
+                console.log("전송 성공");
+                console.log(res.data);
+
+                setFarms(res.data);
+                console.log("farm:" + res.data);
+            })
+            .catch((error) => {
+                console.error('작성한 게시물을 가져오는 중 오류 발생: ', error);
+            });
+    }, []);
 
     return (
         <div className={styles.box}>
@@ -38,11 +58,11 @@ const Home = () => {
                 <div className={styles.group}>
                     <div className={styles.link}>
                         <h2>이 농장 어때요?</h2>
-                        <Link to="/farm/list">
+                        <Link to="/farm/list" state={{ farms: farms }}>
                             <IoIosArrowDroprightCircle size="30" color="#94C015FF" style={{cursor:"pointer"}}/>
                         </Link>
                     </div>
-                    <FarmList numToShow={numFarmsToShow}/>
+                    <FarmList numToShow={numFarmsToShow} farms={farms}/>
                 </div>
                 <div className={styles.group}>
                     <div className={styles.link}>
