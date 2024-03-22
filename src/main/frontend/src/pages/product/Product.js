@@ -3,16 +3,18 @@ import SwiperComponent from "../../component/SwiperComponent";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import API from "../../config";
-import { useParams } from "react-router-dom";
+import {useNavigate, useParams} from "react-router-dom";
 import { FiShare2 } from "react-icons/fi";
-import { FaStar } from "react-icons/fa";
-
+import { FaStar, FaTrashAlt } from "react-icons/fa";
+import { IoIosArrowDropleftCircle } from "react-icons/io";
+import { FaPen } from "react-icons/fa6";
 const Product = () => {
     const { id } = useParams();
     const [product, setProduct] = useState([]);
     const [reviews, setReviews] = useState([]);
     const [images, setImages] = useState([]);
     const [quantity, setQuantity] = useState(1);
+    const navigate = useNavigate();
 
     useEffect(() => {
         axios.get(API.PRODUCT(id), {
@@ -52,7 +54,10 @@ const Product = () => {
 
     return (
         <div className={styles.box}>
-            <SwiperComponent slides={images} />
+            <SwiperComponent slides={images}/>
+            <IoIosArrowDropleftCircle className={styles.arrowLeft} size="30" color="#fff" onClick={() => navigate(-1)}/>
+            <FaPen className={styles.correct} size="25" color="#fff"/>
+            <FaTrashAlt className={styles.delete} size="25" color="#fff"/>
             {product && (
                 <div className={styles.content}>
                     <div className={styles.top}>

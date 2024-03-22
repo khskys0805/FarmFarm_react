@@ -21,6 +21,23 @@
     height: auto;
     object-fit: cover;
 }
+.arrowLeft, .correct, .delete{
+    position: absolute;
+    z-index: 2;
+    top:20px;
+    cursor: pointer;
+    text-shadow: 0 0 5px #4b4b4b;
+}
+.arrowLeft{
+    left:20px;
+}
+.correct{
+    right:60px;
+}
+.delete{
+    right: 20px;
+}
+
 
 .box .content {
     position: absolute; /* 절대적으로 위치 지정 */
