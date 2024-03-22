@@ -5,15 +5,9 @@ const API = {
     ALLPRODUCT: "/product/list",
     ALLFARM: "/farm/list",
     ALLAUCTION: "/product/auction/list",
-    // MYPAGE: "/letterbox/my",
-    // CREATEBOX: "/letterbox",
-    // LETTERBOX: "/letterbox",
     LOGIN: "/user/login/getKakaoAuthUrl",
     LOGINTOKEN(CODE) {
         return `/user/login/oauth_kakao?code=${CODE}`;
-    },
-    LETTER(ID) {
-        return `/letterbox/${ID}/letter`;
     },
 };
 

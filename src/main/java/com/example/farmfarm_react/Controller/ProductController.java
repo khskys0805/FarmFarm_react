@@ -74,28 +74,26 @@ public class ProductController {
     }
 
     // 상품 조회 (일반 상품일 경우 detail 페이지로, 경매 상품일 경우 경매 참여 form으로
-    @GetMapping("/{p_id}")
-    public ModelAndView getProduct(@PathVariable("p_id") long p_id, HttpSession session) {
+    @GetMapping(value = "/{p_id}")
+    public ResponseEntity<Object> getProduct(@PathVariable("p_id") long p_id, HttpSession session) {
         ProductEntity product = productService.getProduct(p_id);
-        List<ReviewEntity> reviewList = new ArrayList<>();
-        reviewList =  reviewService.getProductReview(p_id);
-        System.out.println(reviewList);
-        List<EnquiryEntity> enquiryList = new ArrayList<>();
-        enquiryList = enquiryService.getProductEnquiry(p_id);
-        ModelAndView mav_general = new ModelAndView("home/product/productDetails");
-        ModelAndView mav_auction = new ModelAndView("home/auction/auctionDetail");
-        mav_general.addObject("product", product);
-        mav_general.addObject("reviews", reviewList);
-        mav_general.addObject("enquiries", enquiryList);
+        List<ReviewEntity> reviewList = reviewService.getProductReview(p_id);
+        List<EnquiryEntity> enquiryList = enquiryService.getProductEnquiry(p_id);
         List<GroupEntity> groups = groupService.findByProduct(product);
-        mav_general.addObject("groups", groups);
-        mav_auction.addObject("product", product);
-        mav_auction.addObject("reviews", reviewList);
-        if (product.isAuction()) { // 경매일 경우
-            return mav_auction;
-        }
-        else { // 일반일 경우
-            return mav_general;
+
+        // 사용자가 경매인 경우와 그렇지 않은 경우를 나누어 처리
+        if (product.isAuction()) {
+            ModelAndView mav_auction = new ModelAndView("home/auction/auctionDetail");
+            mav_auction.addObject("product", product);
+            mav_auction.addObject("reviews", reviewList);
+            return ResponseEntity.ok().body(mav_auction.getModelMap());
+        } else {
+            ModelAndView mav_general = new ModelAndView("home/product/productDetails");
+            mav_general.addObject("product", product);
+            mav_general.addObject("reviews", reviewList);
+            mav_general.addObject("enquiries", enquiryList);
+            mav_general.addObject("groups", groups);
+            return ResponseEntity.ok().body(mav_general.getModelMap());
         }
     }
 

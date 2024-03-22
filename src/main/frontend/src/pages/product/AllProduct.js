@@ -1,7 +1,6 @@
 import Header from "../../component/Header";
 import styles from "./AllProduct.module.css";
 import ProductList from "../../component/ProductList";
-import SearchBar from "../../component/SearchBar";
 import Sort from "../../component/Sort";
 import {useLocation} from "react-router-dom";
 const AllProduct = () => {
