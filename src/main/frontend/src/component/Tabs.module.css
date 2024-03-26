@@ -1,0 +1,17 @@
+.tab_title ul{
+    display: flex;
+    padding-bottom: 20px;
+    border-bottom: 1px solid #d5d5d5;
+    margin-bottom: 20px;
+}
+.tab_title li{
+    margin-right: 20px;
+    cursor: pointer;
+}
+.tab_title .submenu_focused{
+    font-weight: bold;
+    color:#0A3C48;
+}
+.tab_title .submenu{
+    color: #B1B1B1;
+}
