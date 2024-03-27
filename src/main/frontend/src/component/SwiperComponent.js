@@ -1,7 +1,7 @@
 import { Swiper, SwiperSlide } from 'swiper/react';
 import SwiperCore, { Navigation, Pagination, Autoplay } from "swiper";	// 추가
 import 'swiper/swiper-bundle.min.css';
-import styles from "../pages/product/Product.module.css";
+import styles from "../pages/product/ProductDetails.module.css";
 
 SwiperCore.use([Navigation, Pagination, Autoplay])
 const SwiperComponent = ({slides}) => {

@@ -1,4 +1,5 @@
 import styles from "./FarmList.module.css";
+import {Link} from "react-router-dom";
 
 const FarmList = ({ numToShow, farms }) => {
     return (
@@ -10,7 +11,9 @@ const FarmList = ({ numToShow, farms }) => {
                     {farms.slice(0, numToShow || farms.length).map((item, index) => (
                         <tr key={index}>
                             <th scope="row">{index + 1}</th>
-                            <td><a href={`/farm/${item.FId}`}>{item.name}</a></td>
+                            <Link to={`/farm/${item.fid}`}>
+                                <td>{item.name}</td>
+                            </Link>
                         </tr>
                     ))}
                     </tbody>

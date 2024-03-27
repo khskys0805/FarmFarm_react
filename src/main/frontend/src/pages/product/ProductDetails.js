@@ -1,4 +1,4 @@
-import styles from "./Product.module.css";
+import styles from "./ProductDetails.module.css";
 import SwiperComponent from "../../component/SwiperComponent";
 import { useEffect, useState } from "react";
 import axios from "axios";
@@ -10,7 +10,7 @@ import { IoIosArrowDropleftCircle } from "react-icons/io";
 import { FaPen } from "react-icons/fa6";
 import Tabs from "../../component/Tabs";
 import Button from "../../component/Button";
-const Product = () => {
+const ProductDetails = () => {
     const { id } = useParams();
     const [product, setProduct] = useState([]);
     const [reviews, setReviews] = useState([]);
@@ -114,4 +114,4 @@ const Product = () => {
     )
 }
 
-export default Product;
+export default ProductDetails;

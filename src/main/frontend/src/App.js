@@ -9,8 +9,9 @@ import FarmList from "./component/FarmList";
 import AuctionList from "./component/AuctionList";
 import AllProduct from "./pages/product/AllProduct";
 import AllFarm from "./pages/farm/AllFarm";
-import Product from "./pages/product/Product";
+import ProductDetails from "./pages/product/ProductDetails";
 import MyPage from "./pages/myPage/MyPage";
+import FarmDetails from "./pages/farm/FarmDetails";
 
 function App() {
   return (
@@ -65,7 +66,11 @@ function App() {
               />
               <Route
                   path="/product/:id"
-                  element={<Product />}
+                  element={<ProductDetails />}
+              />
+              <Route
+                  path="/farm/:id"
+                  element={<FarmDetails />}
               />
               <Route
                   path="/myPage"

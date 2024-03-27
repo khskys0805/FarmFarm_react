@@ -77,7 +77,7 @@ public class FarmController {
 
     // 농장 조회 ( 전체 농장 리스트에서 클릭 시 해당 농장 페이지로 이동)
     @GetMapping("/{f_id}")
-    public ModelAndView getFarm(@PathVariable("f_id") long fId) {
+    public ResponseEntity<Object> getFarm(@PathVariable("f_id") long fId) {
         ModelAndView mav = new ModelAndView("home/farm/farmDetails");
         FarmEntity farm = farmService.getFarm(fId);
         List<ProductEntity> productList = productService.getFarmProduct(farm);
@@ -88,8 +88,10 @@ public class FarmController {
         mav.addObject("farm", farm);
         mav.addObject("productList", productList);
         mav.addObject("myFarmOrderList", allOrderDetailList);
-        return mav;
+
+        return ResponseEntity.ok().body(mav.getModelMap());
     }
+
 
     // 나의 농장 조회
     @GetMapping("/my")
