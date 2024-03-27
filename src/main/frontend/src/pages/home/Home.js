@@ -63,7 +63,7 @@ const Home = () => {
     return (
         <div className={styles.box}>
             <img className={styles.logo} src={logo} alt="logo"/>
-            <SwiperComponent slides={slides}/>
+            <SwiperComponent slides={slides} useContainerStyle={false}/>
             <div className={styles.content}>
                 <div className={styles.group}>
                     <div className={styles.link}>

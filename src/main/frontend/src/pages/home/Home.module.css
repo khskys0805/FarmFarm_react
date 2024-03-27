@@ -12,10 +12,10 @@
     margin-bottom: 20px;
 }
 
-.box .swiper-container {
+.swiper-container {
     width: 400px;
 }
-.box .swiper-container .swiper-wrapper .swiper-slide img {
+.swiper-container .swiper-wrapper .swiper-slide img {
     width: 100%;
 }
 

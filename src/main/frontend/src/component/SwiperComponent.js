@@ -4,9 +4,9 @@ import 'swiper/swiper-bundle.min.css';
 import styles from "../pages/product/ProductDetails.module.css";
 
 SwiperCore.use([Navigation, Pagination, Autoplay])
-const SwiperComponent = ({slides}) => {
+const SwiperComponent = ({ slides, useContainerStyle = true }) => {
     return(
-        <div>
+        <div className={useContainerStyle ? styles.swiperContainer : ''}>
             <Swiper
                 className={styles.imageWrapper}
                 spaceBetween={0}

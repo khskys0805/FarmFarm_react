@@ -5,12 +5,22 @@ import Review from "./Review";
 import Button from "./Button";
 import EnquiryForm from "./EnquiryForm"; // Review 컴포넌트 import
 
-
-const Tabs = ({ type, productAllInfo }) => {
+const Tabs = ({ type, productAllInfo, farmAllInfo }) => {
     const [tab, setTab] = useState(0);
     const [showEnquiryForm, setShowEnquiryForm] = useState(false);
-    const product = productAllInfo.product;
-    const reviews = productAllInfo.reviews;
+    let product = null;
+    let reviews = null;
+    let farm = null;
+    let productList = null;
+
+    if (productAllInfo) {
+        product = productAllInfo.product;
+        reviews = productAllInfo.reviews;
+    }
+    if (farmAllInfo) {
+        farm = farmAllInfo.farm;
+        productList = farmAllInfo.productList;
+    }
     const productTab = [
         { name: '상품 설명' },
         { name: '후기' }, // 리뷰 컴포넌트로 대체
@@ -50,19 +60,28 @@ const Tabs = ({ type, productAllInfo }) => {
                 ))}
             </ul>
             <div className={styles.tab_content}>
-                {tab === 0 && product && <p>{product.detail}</p>}
-                {tab === 1 && type === 'product' && reviews && (
-                    <div>
-                        {reviews.map((review, index) => (
-                            <Review key={index} review={review} />
-                        ))}
-                    </div>
+                {type === 'product' && (
+                    <>
+                        {tab === 0 && product && <p>{product.detail}</p>}
+                        {tab === 1 && reviews && (
+                            <div>
+                                {reviews.map((review, index) => (
+                                    <Review key={index} review={review} />
+                                ))}
+                            </div>
+                        )}
+                        {tab === 2 && (
+                            <div>
+                                <Button content={"문의 작성하기"} onClick={showForm} />
+                                {showEnquiryForm && <EnquiryForm />}
+                            </div>
+                        )}
+                    </>
                 )}
-                {tab === 2 && (
-                    <div>
-                        <Button content={"문의 작성하기"} onClick={showForm} />
-                        {showEnquiryForm && <EnquiryForm />}
-                    </div>
+                {type === 'farm' && (
+                    <>
+                        {tab === 0 && farm && <p>{farm.detail}</p>}
+                    </>
                 )}
             </div>
         </div>

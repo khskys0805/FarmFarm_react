@@ -3,10 +3,17 @@ import {useNavigate, useParams} from "react-router-dom";
 import {useEffect, useState} from "react";
 import axios from "axios";
 import API from "../../config";
+import SwiperComponent from "../../component/SwiperComponent";
+import {IoIosArrowDropleftCircle} from "react-icons/io";
+import {FaPen} from "react-icons/fa6";
+import {FaTrashAlt} from "react-icons/fa";
+import {FiShare2} from "react-icons/fi";
+import Tabs from "../../component/Tabs";
 const FarmDetails = () => {
     const { id } = useParams();
     const [farm, setFarm] = useState([]);
     const [images, setImages] = useState([]);
+    const [farmAllInfo, setFarmAllInfo] = useState([]);
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -19,6 +26,7 @@ const FarmDetails = () => {
                 console.log(res.data.farm);
 
                 setFarm(res.data.farm);
+                setFarmAllInfo(res.data);
                 const imageArray = [];
                 imageArray.push(<img key="image" src={res.data.farm.image} alt="Slide 1" style={{ objectFit:"cover", height:"100%" }} />);
                 setImages(imageArray);
@@ -29,7 +37,24 @@ const FarmDetails = () => {
     }, []);
 
     return (
-        <></>
+        <div className={styles.box}>
+            <SwiperComponent slides={images}/>
+            <IoIosArrowDropleftCircle className={styles.arrowLeft} size="30" color="#fff" onClick={() => navigate(-1)}/>
+            <FaPen className={styles.correct} size="25" color="#fff"/>
+            <FaTrashAlt className={styles.delete} size="25" color="#fff"/>
+            {farm && (
+                <div className={styles.content}>
+                    <div className={styles.top}>
+                        <div>
+                            <h3 className={styles.address}>{farm.locationCity} {farm.locationGu}</h3>
+                            <h2 className={styles.productName}>{farm.name}</h2>
+                        </div>
+                        <FiShare2 size="30"/>
+                    </div>
+                    <Tabs type="farm" farmAllInfo={farmAllInfo}/>
+                </div>
+            )}
+        </div>
     )
 }
 export default FarmDetails;
