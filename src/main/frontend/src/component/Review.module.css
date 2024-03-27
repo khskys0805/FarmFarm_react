@@ -12,6 +12,9 @@
     object-fit: cover;
     border-radius: 50%;
 }
+.review_box .review_content{
+    width:290px;
+}
 .review_box .review_content p{
     font-size: 14px;
     margin-top: 3px;

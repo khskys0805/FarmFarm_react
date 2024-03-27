@@ -2,11 +2,13 @@
 import styles from "./Tabs.module.css";
 import { useEffect, useState } from "react";
 import Review from "./Review";
-import Button from "./Button"; // Review 컴포넌트 import
+import Button from "./Button";
+import EnquiryForm from "./EnquiryForm"; // Review 컴포넌트 import
 
 
 const Tabs = ({ type, productAllInfo }) => {
     const [tab, setTab] = useState(0);
+    const [showEnquiryForm, setShowEnquiryForm] = useState(false);
     const product = productAllInfo.product;
     const reviews = productAllInfo.reviews;
     const productTab = [
@@ -30,6 +32,10 @@ const Tabs = ({ type, productAllInfo }) => {
         setTab(index);
     };
 
+    const showForm = () => {
+        setShowEnquiryForm(!showEnquiryForm);
+    }
+
     return (
         <div className={styles.tab_title}>
             <ul>
@@ -52,8 +58,12 @@ const Tabs = ({ type, productAllInfo }) => {
                         ))}
                     </div>
                 )}
-                {tab === 2 && <Button content={"문의 작성하기"} color={"#94C015"}/>}
-
+                {tab === 2 && (
+                    <div>
+                        <Button content={"문의 작성하기"} onClick={showForm} />
+                        {showEnquiryForm && <EnquiryForm />}
+                    </div>
+                )}
             </div>
         </div>
     );

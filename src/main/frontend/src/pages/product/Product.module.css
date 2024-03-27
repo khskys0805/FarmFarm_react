@@ -5,8 +5,12 @@
     display: flex;
     flex-direction: column;
     box-sizing: border-box;
-    overflow: hidden; /* 이미지의 높이가 부모 요소를 넘어가지 않도록 함 */
+    overflow-x: hidden; /* 가로 스크롤은 숨김 */
+    overflow-y: auto; /* 세로 스크롤이 가능하도록 설정 */
     position: relative;
+}
+.box::-webkit-scrollbar{
+    display: none;    /* 스크롤바를 숨김 */
 }
 
 .box .imageWrapper {
@@ -125,11 +129,16 @@ input::-webkit-inner-spin-button {
 }
 
 .under_bar{
-    position: absolute;
-    bottom: 10px;
-    left:0;
+    position: fixed;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
     z-index: 5;
-    width:100%;
+    width: 500px;
+    height: 80px;
+    background: #fff;
+    display: flex;
+    align-items: center;
 }
 .under_bar .group{
     display: flex;

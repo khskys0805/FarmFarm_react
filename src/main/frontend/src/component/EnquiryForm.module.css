@@ -1,0 +1,17 @@
+.form_container{
+    margin-top: 20px;
+    padding-bottom: 200px;
+
+}
+.form_container h5{
+    margin-bottom: 10px;
+}
+.form_container .form{
+    width: 100%;
+    height: 150px;
+    border-radius: 16px;
+    padding:15px;
+    margin-bottom: 10px;
+    outline: none;
+    border:1px solid #B1B1B1;
+}

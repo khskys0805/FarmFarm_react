@@ -102,11 +102,11 @@ const Product = () => {
             <div className={styles.under_bar}>
                 {product.group ? (
                     <div className={styles.group}>
-                        <Button content={["같이 주문", `${formatNumber(groupPrice(product.price))}`]} width={"30%"} color={"#FFC42B"} />
-                        <Button content={["혼자 주문", `${formatNumber(product.price)}`]} color={"#94C015"} width={"70%"}/>
+                        <Button content={["같이 주문", `${formatNumber(groupPrice(product.price))}원`]} width={"30%"} color={"#FFC42B"} />
+                        <Button content={["혼자 주문", `${formatNumber(product.price)}원`]} width={"70%"}/>
                     </div>
                 ) : (
-                    <Button content={["혼자 주문", `${formatNumber(product.price)}`]} color={"#94C015"}/>
+                    <Button content={["혼자 주문", `${formatNumber(product.price)}원`]}/>
                 )}
             </div>
 
