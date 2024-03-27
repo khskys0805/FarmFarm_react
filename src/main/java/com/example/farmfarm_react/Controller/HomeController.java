@@ -138,12 +138,6 @@ public class HomeController {
         return "home/home";
     }
 
-//    @GetMapping("/category")
-//    public String category() {
-//        return "category/categories";
-//    }
-
-
     @GetMapping("/category")
     public String category(Model model) {
         List<String> sidoList = categoryService.getDistinctSidoValues();
@@ -159,7 +153,6 @@ public class HomeController {
         return gugunList;
     }
 
-
     @GetMapping("/search")
     public String search() {
         return "search/search";
@@ -172,52 +165,44 @@ public class HomeController {
 
     @PostMapping("/myPage")
     @ResponseBody
-    public Map<String, Object> myPage(HttpServletRequest request, Model model, HttpSession session) {
+    public ResponseEntity<Map<String, Object>> myPage(HttpServletRequest request, HttpSession session) {
         System.out.println(request.getHeaderNames());
-        Map<String, Object> mv = new HashMap<>();
+        Map<String, Object> response = new HashMap<>();
         UserEntity user = (UserEntity)session.getAttribute("user");
         FarmEntity myFarm = farmService.getMyFarm(user);
-//        if (!myFarm.getStatus().equals("yes")) {
-//            myFarm = null;
-//            System.out.println("여기 안찍히냐?");
-//        }
-//        System.out.println("111111111" + myFarm.getStatus());
-        mv.put("user", user);
-        model.addAttribute("user", user);
+        response.put("user", user);
         session.setAttribute("uid", user.getUId());
         if (myFarm == null) {
             System.out.println("bbbbnull!!!!!!!!!");
-            model.addAttribute("myFarm", null);
-            mv.put("myFarm", null);
+            response.put("myFarm", null);
+        } else {
+            response.put("myFarm", myFarm);
         }
-        else {
-            model.addAttribute("myFarm", myFarm);
-            mv.put("myFarm", myFarm);
-        }
-        return mv;
+        return ResponseEntity.ok().body(response);
     }
 
     @GetMapping("/myPage")
-    public ModelAndView myPage(HttpSession session, Model model) {
-        if (session.getAttribute("user") == null){
+    public ResponseEntity<Object> myPage(HttpSession session) {
+        if (session.getAttribute("user") == null) {
             System.out.println("/kakao로 redirect!!!");
-            ModelAndView mav = new ModelAndView("common/index");
-            return mav;
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Redirect to /kakao");
         }
-        ModelAndView mav = new ModelAndView("myPage/myPage");
-        UserEntity user = (UserEntity)session.getAttribute("user");
+
+        UserEntity user = (UserEntity) session.getAttribute("user");
         FarmEntity myFarm = farmService.getMyFarm(user);
         System.out.println("myFarm : " + myFarm);
-        mav.addObject("user", user);
+
+        Map<String, Object> response = new HashMap<>();
+        response.put("user", user);
         session.setAttribute("uid", user.getUId());
+
         if (myFarm == null) {
             session.removeAttribute("myFarm");
-            mav.addObject("myFarm", null);
-            model.addAttribute("myFarm", null);
+            response.put("myFarm", null);
+        } else {
+            response.put("myFarm", myFarm);
         }
-        else {
-            mav.addObject("myFarm", myFarm);
-        }
-        return mav;
+
+        return ResponseEntity.ok().body(response);
     }
 }

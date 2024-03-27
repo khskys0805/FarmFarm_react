@@ -17,19 +17,8 @@ const TabBar = ({ Authorization }) => {
     };
 
     const handleMyPageClick = () => {
-        axios.post('/myPage', {}, {
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': Authorization
-            }
-        })
-            .then(response => {
-                console.log(response.data);
-                navigate(`/maPage`);
-            })
-            .catch(error => {
-                console.error(error);
-            });
+        navigate(`/myPage`);
+
     };
 
     return (

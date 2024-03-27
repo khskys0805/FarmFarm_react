@@ -10,6 +10,7 @@ import AuctionList from "./component/AuctionList";
 import AllProduct from "./pages/product/AllProduct";
 import AllFarm from "./pages/farm/AllFarm";
 import Product from "./pages/product/Product";
+import MyPage from "./pages/myPage/MyPage";
 
 function App() {
   return (
@@ -65,6 +66,10 @@ function App() {
               <Route
                   path="/product/:id"
                   element={<Product />}
+              />
+              <Route
+                  path="/myPage"
+                  element={<MyPage />}
               />
           </Routes>
         </div>
