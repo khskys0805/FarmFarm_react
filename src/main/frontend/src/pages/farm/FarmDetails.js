@@ -49,7 +49,7 @@ const FarmDetails = () => {
                             <h3 className={styles.address}>{farm.locationCity} {farm.locationGu}</h3>
                             <h2 className={styles.productName}>{farm.name}</h2>
                         </div>
-                        <FiShare2 size="30"/>
+                        <FiShare2 size="30" style={{cursor:"pointer"}}/>
                     </div>
                     <Tabs type="farm" farmAllInfo={farmAllInfo}/>
                 </div>

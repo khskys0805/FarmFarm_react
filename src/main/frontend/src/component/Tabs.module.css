@@ -15,3 +15,14 @@
 .tab_title .submenu{
     color: #B1B1B1;
 }
+
+.btn_wrapper{
+    text-align: right;
+    margin-bottom: 20px;
+}
+.btn_wrapper .product_add_button{
+    display: block;
+    text-align: right;
+    font-weight: bold;
+    color:#94C015;
+}

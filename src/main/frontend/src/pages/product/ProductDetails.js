@@ -78,7 +78,7 @@ const ProductDetails = () => {
                             <h3 className={styles.farmName}>{product.farm && product.farm.name}</h3>
                             <h2 className={styles.productName}>{product.name}</h2>
                         </div>
-                        <FiShare2 size="30"/>
+                        <FiShare2 size="30" style={{cursor:"pointer"}}/>
                     </div>
                     <div className={styles.middle}>
                         <h2>{formatNumber(product.price)}원</h2>
