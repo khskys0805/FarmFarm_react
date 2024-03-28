@@ -3,7 +3,6 @@
     flex-wrap: wrap;
     justify-content: space-between; /* 가로 여백 조절을 위해 추가 */
 }
-
 .item_box{
     position: relative;
     height: 200px;

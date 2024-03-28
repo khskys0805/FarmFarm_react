@@ -14,6 +14,7 @@ const FarmDetails = () => {
     const [farm, setFarm] = useState([]);
     const [images, setImages] = useState([]);
     const [farmAllInfo, setFarmAllInfo] = useState([]);
+    const [user, setUser] = useState(null); // 사용자 정보 상태
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -34,6 +35,16 @@ const FarmDetails = () => {
             .catch((error) => {
                 console.error('작성한 게시물을 가져오는 중 오류 발생: ', error);
             });
+    }, []);
+
+    useEffect(() => {
+        // 세션 스토리지에서 사용자 정보 가져오기
+        const storedUser = sessionStorage.getItem("user");
+        console.log("user: " + storedUser);
+        if (storedUser) {
+            setUser(JSON.parse(storedUser)); // JSON 문자열을 파싱하여 객체로 변환
+        }
+        console.log("DDDDDDD:" + user);
     }, []);
 
     return (

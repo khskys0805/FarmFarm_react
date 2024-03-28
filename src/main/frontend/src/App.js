@@ -12,6 +12,7 @@ import AllFarm from "./pages/farm/AllFarm";
 import ProductDetails from "./pages/product/ProductDetails";
 import MyPage from "./pages/myPage/MyPage";
 import FarmDetails from "./pages/farm/FarmDetails";
+import RegisterProduct from "./pages/product/RegisterProduct";
 
 function App() {
   return (
@@ -75,6 +76,10 @@ function App() {
               <Route
                   path="/myPage"
                   element={<MyPage />}
+              />
+              <Route
+                  path="/product"
+                  element={<RegisterProduct />}
               />
           </Routes>
         </div>
