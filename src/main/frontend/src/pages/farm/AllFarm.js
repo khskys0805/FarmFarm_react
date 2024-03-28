@@ -12,7 +12,7 @@ const AllFarm = () => {
 
     return (
         <div className={styles.container}>
-            <Header title="농장 전체 보기"/>
+            <Header title="농장 전체 보기" go={`/home`}/>
             <SearchBar/>
             <div className={styles.text_box}>
                 <div>

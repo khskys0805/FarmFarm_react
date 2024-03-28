@@ -7,7 +7,7 @@ import TabBar from "../../component/TabBar";
 const RegisterProduct = () => {
     return (
         <div className={styles.box}>
-            <Header title={"상품 등록"}/>
+            <Header title={"상품 등록"} go={-1}/>
             <form className={styles.form}>
                 <div className={styles.content_wrapper}>
                     <h3>상품 유형</h3>

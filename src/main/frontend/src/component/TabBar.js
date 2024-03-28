@@ -16,15 +16,10 @@ const TabBar = ({ Authorization }) => {
         setActiveTab(index);
     };
 
-    const handleMyPageClick = () => {
-        navigate(`/myPage`);
-
-    };
-
     return (
         <div className={styles.tab}>
             <div className={styles.bar}>
-                <button ref={(el) => tabLinksRef.current[0] = el} className={`tab-link ${activeTab === 0 && 'active'}`} onClick={() => handleTabClick(0)}>
+                <button ref={(el) => tabLinksRef.current[0] = el} className={`tab-link ${activeTab === 0 && 'active'}`} onClick={() => navigate(`/home`)}>
                     <TiHome style={{ fontSize: '20px' }}/>
                 </button>
                 <button ref={(el) => tabLinksRef.current[1] = el} className={`tab-link ${activeTab === 1 && 'active'}`} onClick={() => handleTabClick(1)}>
@@ -36,7 +31,7 @@ const TabBar = ({ Authorization }) => {
                 <button ref={(el) => tabLinksRef.current[3] = el} className={`tab-link ${activeTab === 3 && 'active'}`} onClick={() => handleTabClick(3)}>
                     <FaShoppingCart style={{ fontSize: '20px' }}/>
                 </button>
-                <button ref={(el) => tabLinksRef.current[4] = el} className={`tab-link ${activeTab === 4 && 'active'}`} onClick={handleMyPageClick}>
+                <button ref={(el) => tabLinksRef.current[4] = el} className={`tab-link ${activeTab === 4 && 'active'}`} onClick={() => navigate(`/myPage`)}>
                     <img src="https://farmfarm-bucket.s3.ap-northeast-2.amazonaws.com/7cc20134-7565-44e3-ba1d-ae6edbc213e5.png" className="user-media" alt="" style={{ borderRadius: '50%', width: '25px', height: '25px' }} />
                 </button>
             </div>

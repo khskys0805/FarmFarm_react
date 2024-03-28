@@ -1,10 +1,10 @@
 import { IoIosArrowDropleftCircle } from "react-icons/io";
 import styles from "./Header.module.css"
 import {useNavigate} from "react-router-dom";
-const Header = ({title}) => {
+const Header = ({title, go}) => {
     const navigate = useNavigate();
     const onClickArrow = () => {
-        navigate(-1);
+        navigate(go);
     }
     return (
         <div className={styles.box}>

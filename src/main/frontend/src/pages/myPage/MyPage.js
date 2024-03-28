@@ -3,6 +3,7 @@ import axios from "axios";
 import API from "../../config";
 import styles from "./MyPage.module.css";
 import Header from "../../component/Header";
+import TabBar from "../../component/TabBar";
 
 const MyPage = () => {
     const [user, setUser] = useState([]);
@@ -28,7 +29,7 @@ const MyPage = () => {
 
     return (
         <div className={styles.box}>
-            <Header title={"마이페이지"}/>
+            <Header title={"마이페이지"} go={`/home`}/>
             <table>
                 <tbody>
                     <tr>
@@ -94,6 +95,7 @@ const MyPage = () => {
                     </tr>
                 </tbody>
             </table>
+            <TabBar/>
         </div>
     )
 }
