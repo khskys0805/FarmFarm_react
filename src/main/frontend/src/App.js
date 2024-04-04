@@ -4,8 +4,6 @@ import CreateNickname from "./pages/login/CreateNickname";
 import Token from "./pages/join/Token";
 import TabBar from "./component/TabBar";
 import Home from "./pages/home/Home";
-import ProductList from "./component/ProductList";
-import FarmList from "./component/FarmList";
 import AuctionList from "./component/AuctionList";
 import AllProduct from "./pages/product/AllProduct";
 import AllFarm from "./pages/farm/AllFarm";
@@ -13,6 +11,7 @@ import ProductDetails from "./pages/product/ProductDetails";
 import MyPage from "./pages/myPage/MyPage";
 import FarmDetails from "./pages/farm/FarmDetails";
 import RegisterProduct from "./pages/product/RegisterProduct";
+import SearchProduct from "./pages/search/SearchProduct";
 
 function App() {
   return (
@@ -80,6 +79,10 @@ function App() {
               <Route
                   path="/product"
                   element={<RegisterProduct />}
+              />
+              <Route
+                  path="/search"
+                  element={<SearchProduct />}
               />
           </Routes>
         </div>

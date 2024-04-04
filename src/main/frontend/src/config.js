@@ -2,6 +2,7 @@ const API = {
     PRODUCT(ID){
         return `/product/${ID}`
     },
+    REGISTERPRODUCT: "/product",
     FARM(ID){
         return `/farm/${ID}`
     },

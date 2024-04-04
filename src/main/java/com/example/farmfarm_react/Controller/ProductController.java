@@ -53,6 +53,7 @@ public class ProductController {
     @ResponseBody
     @PostMapping("")
     public ResponseEntity<Object> registerProduct(@RequestHeader("uid") String headerUId, HttpServletRequest request, @RequestBody ProductEntity product, HttpSession session) throws ParseException {
+        System.out.println("어디까지오니1");
         UserEntity user = (UserEntity)session.getAttribute("user");
         if (user == null) {
             long huid = Long.parseLong(headerUId);
@@ -61,11 +62,14 @@ public class ProductController {
             System.out.println(user);
             session.setAttribute("user", user);
         }
+        System.out.println("어디까지오니2");
         FarmEntity myFarm = farmService.getMyFarm(user);
         FarmEntity farm = (FarmEntity)session.getAttribute("myFarm");
         if (farm.getFId() == myFarm.getFId()) {
             ProductEntity newProduct = productService.saveProduct(product, myFarm);
+            System.out.println("어디까지오니3");
             if (newProduct == null) { // 나중에 적절하게 수정
+                System.out.println("null임ㅁㅁㅁㅁㅁ");
                 return null;
             }
             return ResponseEntity.ok().body(newProduct);

@@ -1,6 +1,5 @@
 import React, { useState, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
 import { TiHome } from "react-icons/ti";
 import { SlMenu } from "react-icons/sl";
 import { HiMiniMagnifyingGlass } from "react-icons/hi2";
@@ -25,7 +24,7 @@ const TabBar = ({ Authorization }) => {
                 <button ref={(el) => tabLinksRef.current[1] = el} className={`tab-link ${activeTab === 1 && 'active'}`} onClick={() => handleTabClick(1)}>
                     <SlMenu style={{ fontSize: '20px' }}/>
                 </button>
-                <button ref={(el) => tabLinksRef.current[2] = el} className={`tab-link ${activeTab === 2 && 'active'}`} onClick={() => handleTabClick(2)}>
+                <button ref={(el) => tabLinksRef.current[2] = el} className={`tab-link ${activeTab === 2 && 'active'}`} onClick={() => navigate(`/search`)}>
                     <HiMiniMagnifyingGlass style={{ fontSize: '20px' }}/>
                 </button>
                 <button ref={(el) => tabLinksRef.current[3] = el} className={`tab-link ${activeTab === 3 && 'active'}`} onClick={() => handleTabClick(3)}>

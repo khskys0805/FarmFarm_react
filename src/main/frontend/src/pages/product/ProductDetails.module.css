@@ -141,7 +141,8 @@ input::-webkit-inner-spin-button {
 }
 .under_bar .group{
     display: flex;
+    width:100%;
 }
-.under_bar .group > div:nth-of-type(1){
+.under_bar .group > button:nth-of-type(1){
     margin-right: 10px;
 }
