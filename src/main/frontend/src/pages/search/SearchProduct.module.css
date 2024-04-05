@@ -18,3 +18,11 @@
     height:18px;
     cursor: pointer;
 }
+.box .search_result{
+    text-align: center;
+    margin-top: 20px;
+    padding-bottom: 100px;
+}
+.box .search_result .count{
+    margin-bottom: 100px;
+}
