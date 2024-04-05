@@ -4,7 +4,6 @@ import InputBox from "../../component/InputBox";
 import React, {useEffect, useState} from "react";
 import {HiMiniMagnifyingGlass} from "react-icons/hi2";
 import TabBar from "../../component/TabBar";
-import {useNavigate} from "react-router-dom";
 import axios from "axios";
 import API from "../../config";
 import ProductList from "../../component/ProductList";
@@ -12,8 +11,6 @@ import ProductList from "../../component/ProductList";
 const SearchProduct = () => {
     const [searchText, setSearchText] = useState("");
     const [productList, setProductList] = useState([]);
-    const navigate = useNavigate();
-
     const handleInputChange = (e) => {
         setSearchText(e.target.value);
     }
@@ -36,29 +33,26 @@ const SearchProduct = () => {
                 console.error('작성한 게시물을 가져오는 중 오류 발생: ', error);
             });
     }, [])
-    const performSearch = () => {
-        if (searchText === "") {
-            alert('검색어를 입력해주세요.');
-        } else {
-            const url = '/product/list?keyword=' + encodeURIComponent(searchText);
-            navigate(url);
-            console.log("검색어: " + searchText);
-        }
-    };
 
     return (
         <div className={styles.box}>
             <Header title={"상품 검색"} go={`/home`}/>
             <div className={styles.input_wrap}>
                 <InputBox type={"search"} value={searchText} placeholder={"검색어를 입력해주세요."} onChange={handleInputChange}/>
-                <span onClick={performSearch}><HiMiniMagnifyingGlass style={{ fontSize: '18px' }}/></span>
+                <span><HiMiniMagnifyingGlass style={{ fontSize: '18px' }}/></span>
             </div>
-            {filterMonster && (
-                <div className={styles.search_result}>
-                    <p className={styles.count}>총 <span>{filterMonster.length}</span>개의 상품이 있습니다.</p>
-                    <ProductList products={filterMonster}/>
-                </div>
-            )}
+            <div className={styles.search_result}>
+                {filterMonster.length > 0 ? (
+                    <>
+                        <p className={styles.count}>총 <span>{filterMonster.length}</span>개의 상품이 있습니다.</p>
+                        <ProductList products={filterMonster} />
+                    </>
+                ) : (
+                    <p className={styles.count}>검색된 결과가 없습니다.</p>
+                )}
+            </div>
+
+
             <TabBar/>
         </div>
     )
