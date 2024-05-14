@@ -19,10 +19,10 @@
     cursor: pointer;
 }
 .box .search_result{
-    text-align: center;
     margin-top: 30px;
     padding-bottom: 100px;
 }
 .box .search_result .count{
     margin-bottom: 30px;
+    text-align: center;
 }

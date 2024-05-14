@@ -84,7 +84,7 @@ const Tabs = ({ type, productAllInfo, farmAllInfo }) => {
                         {tab === 0 && farm && <p>{farm.detail}</p>}
                         {tab === 1 && productList && (
                             <>
-                                <div className={styles.btn_wrapper}><a href="/product" className={styles.product_add_button}>판매 상품 등록</a></div>
+                                <div className={styles.btn_wrapper}><a href="/registerProduct" className={styles.product_add_button}>판매 상품 등록</a></div>
                                 <ProductList products={productList}/>
                             </>
                         )}

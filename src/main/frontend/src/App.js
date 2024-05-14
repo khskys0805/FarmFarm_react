@@ -12,6 +12,7 @@ import MyPage from "./pages/myPage/MyPage";
 import FarmDetails from "./pages/farm/FarmDetails";
 import RegisterProduct from "./pages/product/RegisterProduct";
 import SearchProduct from "./pages/search/SearchProduct";
+import RegisterFarm from "./pages/farm/RegisterFarm";
 
 function App() {
   return (
@@ -53,6 +54,10 @@ function App() {
                   element={<Home />}
               />
               <Route
+                  path="/registerProduct"
+                  element={<RegisterProduct />}
+              />
+              <Route
                   path="/product/list"
                   element={<AllProduct />}
               />
@@ -77,12 +82,12 @@ function App() {
                   element={<MyPage />}
               />
               <Route
-                  path="/product"
-                  element={<RegisterProduct />}
-              />
-              <Route
                   path="/search"
                   element={<SearchProduct />}
+              />
+              <Route
+                  path="/farm"
+                  element={<RegisterFarm />}
               />
           </Routes>
         </div>

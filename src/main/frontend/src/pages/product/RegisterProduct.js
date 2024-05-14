@@ -6,8 +6,10 @@ import TabBar from "../../component/TabBar";
 import {useCallback, useState} from "react";
 import axios from "axios";
 import API from "../../config";
+import {useNavigate} from "react-router-dom";
 
 const RegisterProduct = () => {
+    const navigate = useNavigate();
     const [imageSrcs, setImageSrcs] = useState([]);
     const [productData, setProductData] = useState({
         auction:false,
@@ -70,18 +72,18 @@ const RegisterProduct = () => {
 
     const handleFormSubmit = (event) => {
         event.preventDefault();
-        axios.post(API.REGISTERPRODUCT, {
-                productData
-            },
-            {
-                withCredentials: true,
-                headers: {
-                    authorization: localStorage.getItem("jwt")
-                }
-            })
+        axios.post(API.REGISTERPRODUCT, productData, {
+            withCredentials: true,
+            headers: {
+                authorization: localStorage.getItem("jwt"),
+                uid: sessionStorage.getItem("uid"), // uid를 헤더에 추가
+                "Content-Type": "application/json" // 요청의 컨텐츠 타입 설정
+            }
+        })
             .then((res) => {
                 console.log("전송 성공");
                 console.log(res.data);
+                navigate(`/product/${res.data.id}`);
             })
             .catch((error) => {
                 console.error('상품 등록 중 오류 발생: ', error);
@@ -159,7 +161,7 @@ const RegisterProduct = () => {
                     <p style={{marginTop:"20px"}}>상품과 무관한 사진을 첨부하면 노출 제한 처리될 수 있습니다.<br/>
                         사진 첨부 시 개인정보가 노출되지 않도록 유의해주세요.</p>
                 </div>
-                <Button content={"상품 등록"} />
+                <Button content={"상품 등록"} onClick={handleFormSubmit}/>
             </form>
             <TabBar/>
         </div>
