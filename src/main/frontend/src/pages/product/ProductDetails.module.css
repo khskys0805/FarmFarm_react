@@ -146,3 +146,61 @@ input::-webkit-inner-spin-button {
 .under_bar .group > button:nth-of-type(1){
     margin-right: 10px;
 }
+
+.mask{
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    background: rgba(0, 0, 0, 0.7) repeat;
+    top: 0;
+    left: 0;
+    z-index: 999;
+    display: none;
+}
+.layer{
+    display: none;
+    box-sizing: border-box;
+    position: fixed;
+    left: 50%;
+    bottom: 0;
+    transform: translateX(-50%);
+    width: 500px;
+    background-color: #fff;
+    z-index: 9999;
+    border-radius: 20px 20px 0 0;
+}
+.layer .title{
+    display: flex;
+    justify-content: space-between;
+    margin: 20px;
+}
+
+.group_open_btn{
+    text-align: right;
+    margin:0 30px 10px 0;
+}
+.group_user{
+    margin:0 30px 15px 30px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.group_user .group_left{
+    display: flex;
+    align-items: center;
+}
+.group_user .group_left .user{
+    width: 35px;
+    height: 35px;
+}
+.group_user .group_left .user img{
+    width:100%;
+}
+.group_user .group_left .user_nickname{
+    margin-left: 10px;
+}
+
+.no_groups{
+    text-align: center;
+    margin-bottom: 20px;
+}

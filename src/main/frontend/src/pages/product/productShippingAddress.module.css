@@ -1,0 +1,9 @@
+.box{
+    max-width: 500px;
+    margin:0 auto;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+    position: relative;
+}
