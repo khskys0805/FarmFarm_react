@@ -98,9 +98,9 @@ const RegisterProduct = () => {
                     <h3>상품 유형</h3>
                     <p>상품 유형을 선택해주세요.</p>
                     <div>
-                        <InputBox type={"radio"} name={"type"} value={1} onChange={(e) => handleRadioChange(e, "type")}/><span>일반 상품</span>
-                        <InputBox type={"radio"} name={"type"} value={2} onChange={(e) => handleRadioChange(e, "type")}/><span>공동 구매</span>
-                        <InputBox type={"radio"} name={"type"} value={3} onChange={(e) => handleRadioChange(e, "type")}/><span>경매 상품</span>
+                        <InputBox type={"radio"} name={"type"} value={1} onChange={(e) => handleRadioChange(e, "type")} checked={productData.type === 1}/><span>일반 상품</span>
+                        <InputBox type={"radio"} name={"type"} value={2} onChange={(e) => handleRadioChange(e, "type")} checked={productData.type === 2}/><span>공동 구매</span>
+                        <InputBox type={"radio"} name={"type"} value={3} onChange={(e) => handleRadioChange(e, "type")} checked={productData.type === 3}/><span>경매 상품</span>
                     </div>
                 </div>
                 {showAuctionFields && (
@@ -141,7 +141,7 @@ const RegisterProduct = () => {
                     <h3>거래 방법</h3>
                     <p>상품을 거래할 방법을 선택해주세요.</p>
                     <div>
-                        <InputBox type={"radio"} name={"direct"} value={true} onChange={(e) => handleRadioChange(e, "direct")}/><span>직거래</span>
+                        <InputBox type={"radio"} name={"direct"} value={true} onChange={(e) => handleRadioChange(e, "direct")} checked/><span>직거래</span>
                         <InputBox type={"radio"} name={"direct"} value={false} onChange={(e) => handleRadioChange(e, "direct")}/><span>배송</span>
                     </div>
                 </div>

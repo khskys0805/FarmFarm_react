@@ -5,6 +5,7 @@ import com.example.farmfarm_react.Service.EnquiryService;
 import com.example.farmfarm_react.Service.ProductService;
 import com.example.farmfarm_react.Service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -84,13 +85,15 @@ public class EnquiryController {
 
     //내가 쓴 문의사항 보기 - 리스트일듯
     @GetMapping("/my")
-    public ModelAndView getMyReview(HttpSession session) {
-        UserEntity user = (UserEntity)session.getAttribute("user");
-        List<EnquiryEntity> myEnquiry = new ArrayList<>();
-        ModelAndView mav = new ModelAndView("myPage/myEnquiryList");
-        myEnquiry = enquiryService.getMyEnquiry(session);
+    public ResponseEntity<Object> getMyEnquiry(HttpSession session) {
+        UserEntity user = (UserEntity) session.getAttribute("user");
+        if (user == null) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Unauthorized access");
+        }
+
+        List<EnquiryEntity> myEnquiry = enquiryService.getMyEnquiry(session);
         System.out.println("내가 쓴 문의사항 조회");
-        mav.addObject("enquiries", myEnquiry);
-        return mav;
+        return ResponseEntity.ok().body(myEnquiry);
     }
+
 }

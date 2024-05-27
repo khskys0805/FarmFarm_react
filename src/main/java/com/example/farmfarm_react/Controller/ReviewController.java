@@ -3,6 +3,7 @@ package com.example.farmfarm_react.Controller;
 import com.example.farmfarm_react.Entity.*;
 import com.example.farmfarm_react.Service.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -82,14 +83,17 @@ public class ReviewController {
 
     //내가 쓴 리뷰 보기
     @GetMapping("/my")
-    public ModelAndView getMyReview(HttpSession session) {
-        UserEntity user = (UserEntity)session.getAttribute("user");
-        List<ReviewEntity> myReview = new ArrayList<>();
-        ModelAndView mav = new ModelAndView("myPage/myReviewList");
-        myReview = reviewService.getMyEnquiry(session);
+    public ResponseEntity<Object> getMyReview(HttpSession session) {
+        UserEntity user = (UserEntity) session.getAttribute("user");
+//        if (user == null) {
+//            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Unauthorized access");
+//        }
+
+        List<ReviewEntity> myReview = reviewService.getMyEnquiry(session);
         System.out.println("내가 쓴 리뷰 조회");
         System.out.println(myReview);
-        mav.addObject("reviews", myReview);
-        return mav;
+
+        return ResponseEntity.ok().body(myReview);
     }
+
 }

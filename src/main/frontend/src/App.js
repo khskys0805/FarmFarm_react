@@ -13,6 +13,11 @@ import FarmDetails from "./pages/farm/FarmDetails";
 import RegisterProduct from "./pages/product/RegisterProduct";
 import SearchProduct from "./pages/search/SearchProduct";
 import RegisterFarm from "./pages/farm/RegisterFarm";
+import ProductShippingAddress from "./pages/product/ProductShippingAddress";
+import MyOrderList from "./pages/myPage/MyOrderList";
+import MyReviewList from "./pages/myPage/MyReviewList";
+import MyEnquiryList from "./pages/myPage/MyEnquiryList";
+import MyParticipateAuction from "./pages/myPage/MyParticipateAuction";
 
 function App() {
   return (
@@ -88,6 +93,26 @@ function App() {
               <Route
                   path="/farm"
                   element={<RegisterFarm />}
+              />
+              <Route
+                  path="/cart"
+                  element={<ProductShippingAddress />}
+              />
+              <Route
+                  path="/myOrder"
+                  element={<MyOrderList />}
+              />
+              <Route
+                  path="/myReview"
+                  element={<MyReviewList />}
+              />
+              <Route
+                  path="/myEnquiry"
+                  element={<MyEnquiryList />}
+              />
+              <Route
+                  path="/myParticipateAuction"
+                  element={<MyParticipateAuction />}
               />
           </Routes>
         </div>

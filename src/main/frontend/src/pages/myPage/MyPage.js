@@ -79,16 +79,16 @@ const MyPage = () => {
                         </td>
                     </tr>
                     <tr>
-                        <td className={styles.row}><a href="/order">주문 내역</a></td>
+                        <td className={styles.row}><a href="/myOrder">주문 내역</a></td>
                     </tr>
                     <tr>
-                        <td className={styles.row}><a href="/order/auction">경매 참가 내역</a></td>
+                        <td className={styles.row}><a href="/myParticipateAuction">경매 참가 내역</a></td>
                     </tr>
                     <tr>
-                        <td className={styles.row}><a href="/review/my">상품 후기 내역</a></td>
+                        <td className={styles.row}><a href="/myReview">상품 후기 내역</a></td>
                     </tr>
                     <tr>
-                        <td className={styles.row}><a href="/enquiry/my">문의 내역</a></td>
+                        <td className={styles.row}><a href="/myEnquiry">문의 내역</a></td>
                     </tr>
                     <tr>
                         <td className={styles.row}><a href="/user/logout">로그아웃</a></td>

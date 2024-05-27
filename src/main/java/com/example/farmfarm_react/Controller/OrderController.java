@@ -200,22 +200,28 @@ public class OrderController {
     }
 
     @GetMapping("")
-    public ModelAndView myOrderList(HttpSession session) {
-        ModelAndView mav = new ModelAndView("myPage/myOrderList");
-        UserEntity user = (UserEntity)session.getAttribute("user");
+    public ResponseEntity<Object> myOrderList(HttpSession session) {
+        UserEntity user = (UserEntity) session.getAttribute("user");
+//        if (user == null) {
+//            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Unauthorized access");
+//        }
+
         List<OrderEntity> orderList = orderService.getMyOrderList(user);
-        mav.addObject("orderList", orderList);
-        return mav;
+        return ResponseEntity.ok().body(orderList);
     }
 
+
     @GetMapping("/auction")
-    public ModelAndView myAuctionList(HttpSession session) {
-        ModelAndView mav = new ModelAndView("myPage/myAuctionList");
+    public ResponseEntity<Object> myAuctionList(HttpSession session) {
         UserEntity user = (UserEntity) session.getAttribute("user");
+        if (user == null) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Unauthorized access");
+        }
+
         List<OrderEntity> auctionList = orderService.getMyAuctionList(user);
-        mav.addObject("auctionList", auctionList);
-        return mav;
+        return ResponseEntity.ok().body(auctionList);
     }
+
 
     //24시간 후 닫히는 메소드
     @ResponseBody

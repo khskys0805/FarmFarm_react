@@ -135,7 +135,7 @@ const ProductDetails = () => {
                         </div>
                         <div>
                             <div className={styles.group_open_btn}>
-                                <Button content={"공구 개설"} width={"70px"} className="open" padding={"10px"}/>
+                                <Button content={"공구 개설"} width={"70px"} className="open" padding={"10px"} onClick={() => navigate(`/cart`)}/>
                             </div>
                         </div>
                         {groups.length > 0 ? (
