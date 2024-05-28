@@ -4,9 +4,12 @@ import {useEffect, useState} from "react";
 import axios from "axios";
 import API from "../../config";
 import img from "../../images/logo/farmfarm_logo.png";
+import {useNavigate} from "react-router-dom";
 
 const MyOrderList = () => {
     const [orderList, setOrderList] = useState([]);
+    const navigate = useNavigate();
+
     useEffect(() => {
         axios.get(API.MYORDER, {
             headers: { authorization: localStorage.getItem("jwt") },
@@ -56,7 +59,7 @@ const MyOrderList = () => {
                                     </div>
                                 </div>
                                 <div>
-                                    <h4 className={styles.review}>리뷰 작성</h4>
+                                    <h4 className={styles.review} onClick={() => navigate(`/review/write`)}>리뷰 작성</h4>
                                     <h4 className={styles.quantity}>X {order.total_quantity}</h4>
                                 </div>
                             </li>

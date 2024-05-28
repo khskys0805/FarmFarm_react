@@ -18,6 +18,7 @@ import MyOrderList from "./pages/myPage/MyOrderList";
 import MyReviewList from "./pages/myPage/MyReviewList";
 import MyEnquiryList from "./pages/myPage/MyEnquiryList";
 import MyParticipateAuction from "./pages/myPage/MyParticipateAuction";
+import WriteReview from "./pages/review/WriteReview";
 
 function App() {
   return (
@@ -113,6 +114,10 @@ function App() {
               <Route
                   path="/myParticipateAuction"
                   element={<MyParticipateAuction />}
+              />
+              <Route
+                  path="/review/write"
+                  element={<WriteReview />}
               />
           </Routes>
         </div>
