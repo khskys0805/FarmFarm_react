@@ -32,6 +32,7 @@
     margin-right: 10px;
     font-size: 30px;
     color:#FFC42B;
+    cursor: pointer;
 }
 .review .input_wrap{
     width: 100%;
