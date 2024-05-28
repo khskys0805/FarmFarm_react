@@ -5,7 +5,7 @@ import axios from "axios";
 import API from "../../config";
 
 const MyEnquiryList = () => {
-    const [orderList, setOrderList] = useState([]);
+    const [enquiryList, setEnquiryList] = useState([]);
     useEffect(() => {
         axios.get(API.MYORDER, {
             headers: { authorization: localStorage.getItem("jwt") },
@@ -14,7 +14,7 @@ const MyEnquiryList = () => {
                 console.log("전송 성공");
                 console.log(res.data);
 
-                setOrderList(res.data)
+                setEnquiryList(res.data)
             })
             .catch((error) => {
                 console.error('작성한 게시물을 가져오는 중 오류 발생: ', error);

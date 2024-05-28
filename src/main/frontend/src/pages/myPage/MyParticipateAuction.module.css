@@ -7,3 +7,64 @@
     box-sizing: border-box;
     position: relative;
 }
+.no_list{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+.auction_list{
+    display: flex;
+    justify-content: space-between;
+    margin: 10px;
+    border-bottom: 1px solid #eaeaea;
+    padding-bottom: 10px;
+}
+.auction_list .left{
+    display: flex;
+    align-items: center;
+}
+.auction_list .img{
+    width:100px;
+    margin-right: 20px;
+}
+.auction_list .img img{
+    width:100%;
+}
+.auction_list p{
+    font-size: 14px;
+}
+.auction_list .farm_name{
+    color:#7c7c7c;
+    margin-bottom: 10px;
+}
+.auction_list .product_name{
+    margin-bottom: 20px;
+}
+.auction_list .price{
+    margin-bottom: 30px;
+}
+.auction_list .total_price{
+    color:rgb(148, 192, 21);
+}
+
+.auction_list .date{
+    margin-bottom: 45px;
+    color:#7c7c7c;
+}
+.auction_list .quantity{
+    margin-bottom: 35px;
+    text-align: right;
+}
+.auction_list .status{
+    text-align: right;
+}
+.status_success {
+    color:#4D9EE9;
+}
+.status_failure {
+    color: tomato;
+}
+.status_progress {
+    color: green;
+}
