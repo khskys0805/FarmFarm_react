@@ -1,0 +1,51 @@
+.box{
+    max-width: 500px;
+    margin:0 auto;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+    position: relative;
+}
+.no_list{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+.enquiry_list{
+    display: flex;
+    justify-content: space-between;
+    margin: 10px;
+    border-bottom: 1px solid #eaeaea;
+    padding-bottom: 10px;
+}
+.enquiry_list .left{
+    display: flex;
+    align-items: center;
+}
+.enquiry_list .left .img{
+    width:35px;
+    height:35px;
+    margin-right: 10px;
+}
+.enquiry_list .left .img img{
+    width:100%;
+    height: 100%;
+    border-radius: 50%;
+}
+.enquiry_list .left .content{
+    font-size: 12px;
+    color:#7c7c7c;
+    margin-top: 5px;
+}
+
+.enquiry_list .right .button{
+    display: flex;
+}
+.enquiry_list .right .button div{
+    cursor: pointer;
+}
+.enquiry_list .right .button div:nth-of-type(1){
+    margin-right: 15px;
+}
