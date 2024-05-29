@@ -1,5 +1,12 @@
 .review_box{
     display: flex;
+    justify-content: space-between;
+    margin:10px 0;
+    align-items: center;
+}
+.type2{
+    border-bottom: 1px solid #eaeaea;
+    padding-bottom: 10px;
 }
 .review_box .user_img{
     width:40px;
@@ -12,8 +19,15 @@
     object-fit: cover;
     border-radius: 50%;
 }
+.type2 .user_img img{
+    margin-left:15px;
+}
 .review_box .review_content{
     width:290px;
+}
+.type2 .review_content{
+    width:300px;
+    margin-left: -10px;
 }
 .review_box .review_content p{
     font-size: 14px;
@@ -23,4 +37,16 @@
 .review_box .star{
     text-align: right;
     flex-grow: 1;
+    margin-bottom: 5px;
+}
+
+.review_box .right .button{
+    display: flex;
+    float: right;
+}
+.review_box .right .button div{
+    cursor: pointer;
+}
+.review_box .right .button div:nth-of-type(1){
+    margin-right: 15px;
 }

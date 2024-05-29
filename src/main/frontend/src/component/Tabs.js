@@ -67,7 +67,7 @@ const Tabs = ({ type, productAllInfo, farmAllInfo }) => {
                         {tab === 1 && reviews && (
                             <div>
                                 {reviews.map((review, index) => (
-                                    <Review key={index} review={review} />
+                                    <Review key={index} review={review} type={1}/>
                                 ))}
                             </div>
                         )}

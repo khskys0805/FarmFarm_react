@@ -36,7 +36,7 @@ const WriteReview = () => {
                             <li><FaStar key={i} onClick={() => setProductScore(i + 1)} /></li>
                         ))}
                         {[...Array(5 - productScore)].map((a, i) => (
-                            <li><FaRegStar key={i} onClick={() => setProductScore(productScore + i + 1)} /></li>
+                            <li><FaStar key={i} onClick={() => setProductScore(productScore + i + 1)} color="#B1B1B1"/></li>
                         ))}
                     </ul>
                 </div>

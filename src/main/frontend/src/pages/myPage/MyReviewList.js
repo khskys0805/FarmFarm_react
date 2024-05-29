@@ -3,10 +3,7 @@ import Header from "../../component/Header";
 import {useEffect, useState} from "react";
 import axios from "axios";
 import API from "../../config";
-import img from "../../images/logo/farmfarm_logo.png";
-import { FaTrashAlt } from "react-icons/fa";
-import { FaPen } from "react-icons/fa6";
-import { FaRegStar, FaStar } from "react-icons/fa";
+import Review from "../../component/Review";
 
 const MyReviewList = () => {
     const [reviewList, setReviewList] = useState([]);
@@ -34,31 +31,7 @@ const MyReviewList = () => {
                     </div>
                 ) : (
                     reviewList.map((review, index) => (
-                        <li key={index} className={styles.review_list}>
-                            <div className={styles.left}>
-                                <div className={styles.img}>
-                                    <img src={img} alt="경매 이미지" />
-                                </div>
-                                <div>
-                                    <h4 className={styles.product_name}>{review.orderDetail.product.name}</h4>
-                                    <p className={styles.comment}>{review.comment}</p>
-                                </div>
-                            </div>
-                            <div className={styles.right}>
-                                <div className={styles.stars}>
-                                    {[...Array(review.farmStar)].map((a, i) => (
-                                        <FaStar key={i} />
-                                    ))}
-                                    {[...Array(5 - review.farmStar)].map((a, i) => (
-                                        <FaRegStar key={i} />
-                                    ))}
-                                </div>
-                                <div className={styles.button}>
-                                    <div><FaPen /></div>
-                                    <div><FaTrashAlt /></div>
-                                </div>
-                            </div>
-                        </li>
+                        <Review key={index} review={review} type={2} />
                     ))
                 )}
             </ul>

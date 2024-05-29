@@ -42,7 +42,7 @@ const MyPage = () => {
                                 님
                             </div>
                             <div>
-                                <a href="/user/profile" className={styles.profile_edit_btn}>
+                                <a href="/editProfile" className={styles.profile_edit_btn}>
                                     프로필 관리
                                 </a>
                             </div>

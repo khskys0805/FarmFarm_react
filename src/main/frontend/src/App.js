@@ -19,6 +19,7 @@ import MyReviewList from "./pages/myPage/MyReviewList";
 import MyEnquiryList from "./pages/myPage/MyEnquiryList";
 import MyParticipateAuction from "./pages/myPage/MyParticipateAuction";
 import WriteReview from "./pages/review/WriteReview";
+import EditMyProfile from "./pages/myPage/EditMyProfile";
 
 function App() {
   return (
@@ -118,6 +119,10 @@ function App() {
               <Route
                   path="/review/write"
                   element={<WriteReview />}
+              />
+              <Route
+                  path="/editProfile"
+                  element={<EditMyProfile />}
               />
           </Routes>
         </div>

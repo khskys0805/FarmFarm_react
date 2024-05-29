@@ -5,7 +5,7 @@ const Button = ({ content, color = '#94C015', width, onClick, padding }) => {
     const isArrayContent = Array.isArray(content);
 
     // padding 값을 전달받지 않으면 기본값을 설정
-    const paddingValue = padding || (isArrayContent ? '10px 30px' : '20px 30px');
+    const paddingValue = padding || (isArrayContent ? '10px 0' : '20px 0');
 
     return (
         <button className={styles.button} onClick={onClick} style={{ background: color, width: width || '100%', padding: paddingValue }}>
@@ -16,7 +16,7 @@ const Button = ({ content, color = '#94C015', width, onClick, padding }) => {
                 ))
             ) : (
                 /* content가 배열이 아니면 단일 값으로 출력 */
-                <div>{content}</div>
+                <>{content}</>
             )}
         </button>
     );
