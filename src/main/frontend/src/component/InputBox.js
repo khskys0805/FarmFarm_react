@@ -1,6 +1,6 @@
 import styles from "./InputBox.module.css";
 
-const InputBox = ({ type = "text", name, value, placeholder, onChange, checked }) => {
+const InputBox = ({ type = "text", name, value, placeholder, onChange }) => {
     return (
         <input
             className={styles.input}
@@ -9,7 +9,6 @@ const InputBox = ({ type = "text", name, value, placeholder, onChange, checked }
             value={value || ""}
             placeholder={placeholder}
             onChange={onChange}
-            checked={checked} // 수정된 부분: 불리언 값으로 설정
         />
     );
 };
