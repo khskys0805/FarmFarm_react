@@ -16,6 +16,10 @@
     color: #B1B1B1;
 }
 
+.tab_content .detail{
+    margin-top:10px;
+}
+
 .btn_wrapper{
     text-align: right;
     margin-bottom: 20px;

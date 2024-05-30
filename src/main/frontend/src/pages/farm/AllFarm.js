@@ -24,7 +24,7 @@ const AllFarm = () => {
     return (
         <div className={styles.box}>
             <Header title="농장 전체 보기" go={`/home`}/>
-            <Location farms={farms} />
+            <Location farms={farms} type={1}/>
             <SearchBar searchText={searchText} onChange={handleInputChange}/>
             <div className={styles.text_box}>
                 {filterMonster.length > 0 && (
@@ -36,7 +36,7 @@ const AllFarm = () => {
             </div>
             <div className={styles.search_result}>
                 {filterMonster.length > 0 ? (
-                    <FarmList farms={filterMonster} />
+                    <FarmList farms={filterMonster}/>
                 ) : (
                     <p className={styles.count}>검색된 결과가 없습니다.</p>
                 )}

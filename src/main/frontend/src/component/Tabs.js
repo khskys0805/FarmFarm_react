@@ -4,7 +4,8 @@ import { useEffect, useState } from "react";
 import Review from "./Review";
 import Button from "./Button";
 import EnquiryForm from "./EnquiryForm";
-import ProductList from "./ProductList"; // Review 컴포넌트 import
+import ProductList from "./ProductList";
+import Location from "./Location"; // Review 컴포넌트 import
 
 const Tabs = ({ type, productAllInfo, farmAllInfo }) => {
     const [tab, setTab] = useState(0);
@@ -81,7 +82,12 @@ const Tabs = ({ type, productAllInfo, farmAllInfo }) => {
                 )}
                 {type === 'farm' && (
                     <>
-                        {tab === 0 && farm && <p>{farm.detail}</p>}
+                        {tab === 0 && farm && (
+                            <>
+                                <Location farms={farm} type={2}/>
+                                <p className={styles.detail}>{farm.detail}</p>
+                            </>
+                        )}
                         {tab === 1 && productList && (
                             <>
                                 <div className={styles.btn_wrapper}><a href="/registerProduct" className={styles.product_add_button}>판매 상품 등록</a></div>

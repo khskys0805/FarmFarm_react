@@ -9,6 +9,7 @@ import {FaPen} from "react-icons/fa6";
 import {FaTrashAlt} from "react-icons/fa";
 import {FiShare2} from "react-icons/fi";
 import Tabs from "../../component/Tabs";
+import Location from "../../component/Location";
 const FarmDetails = () => {
     const { id } = useParams();
     const [farm, setFarm] = useState([]);
