@@ -3,7 +3,7 @@ import Header from "../../component/Header";
 import {useEffect, useState} from "react";
 import axios from "axios";
 import API from "../../config";
-import img from "../../images/logo/farmfarm_logo.png";
+import img from "../../images/icon.png";
 import {FaRegStar, FaStar, FaTrashAlt} from "react-icons/fa";
 import {FaPen} from "react-icons/fa6";
 

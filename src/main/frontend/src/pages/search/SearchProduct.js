@@ -7,6 +7,7 @@ import TabBar from "../../component/TabBar";
 import axios from "axios";
 import API from "../../config";
 import ProductList from "../../component/ProductList";
+import SearchBar from "../../component/SearchBar";
 
 const SearchProduct = () => {
     const [searchText, setSearchText] = useState("");
@@ -37,10 +38,7 @@ const SearchProduct = () => {
     return (
         <div className={styles.box}>
             <Header title={"상품 검색"} go={`/home`}/>
-            <div className={styles.input_wrap}>
-                <InputBox type={"search"} value={searchText} placeholder={"검색어를 입력해주세요."} onChange={handleInputChange}/>
-                <span><HiMiniMagnifyingGlass style={{ fontSize: '18px' }}/></span>
-            </div>
+            <SearchBar searchText={searchText} onChange={handleInputChange}/>
             <div className={styles.search_result}>
                 {filterMonster.length > 0 ? (
                     <>

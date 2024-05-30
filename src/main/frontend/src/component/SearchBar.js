@@ -1,15 +1,12 @@
 import styles from "./SearchBar.module.css";
-import {useState} from "react";
-import { IoSearch } from "react-icons/io5";
-const SearchBar = () => {
-    const [search, setSearch] = useState("");
-    const onChange = (e) => {
-        setSearch(e.target.value);
-    }
+import React, {useState} from "react";
+import InputBox from "./InputBox";
+import {HiMiniMagnifyingGlass} from "react-icons/hi2";
+const SearchBar = ({searchText, onChange}) => {
     return (
         <div className={styles.input_wrap}>
-            <input type="search" placeholder="검색어를 입력해주세요." value={search} onChange={onChange}/>
-            <IoSearch fontSize="20" style={{order:"2"}}/>
+            <InputBox type={"search"} value={searchText} placeholder={"검색어를 입력해주세요."} onChange={(e) => onChange(e)}/>
+            <span><HiMiniMagnifyingGlass style={{ fontSize: '18px' }}/></span>
         </div>
     )
 }
