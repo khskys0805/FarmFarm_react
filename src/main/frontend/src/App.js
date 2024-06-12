@@ -28,25 +28,13 @@ function App() {
           <Routes>
               <Route
                   path="/"
-                  element={
-                      localStorage.getItem("jwt") ? (
-                          <Navigate replace to="/home" />
-                      ) : (
-                          <Navigate replace to="/auth" />
-                      )
-                  }
+                  element={<Login />}
               />
-              <Route path="auth" element={<Login />} />
-              <Route path="home" element={<Home />} />
+              <Route path="/auth" element={<Login />} />
+              <Route path="/home" element={<Home />} />
               <Route
                   path="/user/login/oauth_kakao"
-                  element={
-                      localStorage.getItem("jwt") ? (
-                          <Navigate replace to="/home" />
-                      ) : (
-                          <Token />
-                      )
-                  }
+                  element={<Token />}
               />
               <Route
                   path="/user/nickname/create"
