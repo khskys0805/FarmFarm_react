@@ -11,7 +11,7 @@ const MyPage = () => {
 
     useEffect(() => {
         axios.get(API.MYPAGE, {
-            headers: { Authorization: `Bearer ${localStorage.getItem('token')}` },
+            headers: { Authorization: `Bearer ${localStorage.getItem('jwt')}` },
         })
             .then((res) => {
                 console.log("전송 성공");

@@ -1,0 +1,35 @@
+.box{
+    max-width: 500px;
+    margin:0 auto;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+    position: relative;
+    align-items: center;
+}
+.box .logo{
+    width:150px;
+    position: absolute;
+    left:50%;
+    top:10%;
+    transform: translateX(-50%);
+}
+.box .container{
+    position: absolute;
+    bottom: 12%;
+    left:50%;
+    transform: translateX(-50%);
+    width: 100%;
+}
+.box .container h2{
+    margin-bottom: 50px;
+    text-align: center;
+}
+.box .container .input_box{
+    width:100%;
+    margin-bottom: 30px;
+}
+.box .container .input_box input{
+
+}

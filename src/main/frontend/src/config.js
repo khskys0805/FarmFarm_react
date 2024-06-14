@@ -14,6 +14,7 @@ const API = {
     MYREVIEW: "/review/my",
     MYENQUIRY: "/enquiry/my",
     MYAUCTION: "/order/auction",
+    ISNICKNAME: "/user/me",
     LOGIN: "/user/login/getKakaoAuthUrl",
     LOGINTOKEN(CODE) {
         return `/user/login/oauth_kakao?code=${CODE}`;

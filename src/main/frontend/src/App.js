@@ -30,7 +30,7 @@ function App() {
                     <Route path="/auth" element={<Login />} />
                     <Route path="/home" element={<Home />} />
                     <Route path="/login/oauth_kakao" element={<Token />} />
-                    <Route path="/user/nickname/create" element={<CreateNickname />} />
+                    <Route path="/nickname" element={<CreateNickname />} />
                     <Route path="/tabbar" element={<TabBar />} />
                     <Route path="/registerProduct" element={<RegisterProduct />} />
                     <Route path="/product/list" element={<AllProduct />} />
