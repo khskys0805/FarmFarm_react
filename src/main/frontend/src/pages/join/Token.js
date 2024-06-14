@@ -1,35 +1,35 @@
 import React, { useEffect } from 'react';
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import API from '../../config';
 
 const Token = () => {
     const navigate = useNavigate();
-    const location = useLocation();
+    const code = new URL(window.location.href).searchParams.get('code');
 
     useEffect(() => {
-        const searchParams = new URLSearchParams(location.search);
-        const code = searchParams.get('code');
-        console.log('Code:', code); // 디버깅용 콘솔 로그
-
+        console.log('Token component mounted');
         if (code) {
-            getToken(code);
-        }
-    }, [location.search]);
+            console.log('Code received:', code); // 디버깅용 콘솔 로그
+            axios.get(`http://localhost:9000/user/login/oauth_kakao?code=${code}`)
+                .then((response) => {
+                    console.log(response.data);
 
-    const getToken = async (code) => {
-        try {
-            const response = await axios.get(API.LOGINTOKEN(code));
-            console.log('Response:', response.data); // 디버깅용 콘솔 로그
-            localStorage.setItem('accessToken', response.data.data.accessToken);
-            localStorage.setItem('refreshToken', response.data.data.refreshToken);
-            navigate('/home');
-        } catch (error) {
-            console.error('Error getting token:', error);
-        }
-    };
+                    // 토큰을 받아서 localStorage 같은 곳에 저장하는 코드를 여기에 쓴다.
+                    localStorage.setItem('name', response.data.user_name); // 일단 이름만 저장했다.
 
-    return null; // 이 페이지는 리디렉션을 위해서만 존재
+                    navigate('/home');
+                })
+                .catch((error) => {
+                    console.error('There was an error!', error);
+                });
+        }
+    }, [code, navigate]);
+
+    return (
+        <div>
+            Redirecting...
+        </div>
+    );
 };
 
 export default Token;

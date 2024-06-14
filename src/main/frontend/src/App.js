@@ -1,4 +1,4 @@
-import {BrowserRouter, Routes, Route, Navigate} from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import Login from "./pages/login/Login";
 import CreateNickname from "./pages/login/CreateNickname";
 import Token from "./pages/join/Token";
@@ -22,100 +22,36 @@ import WriteReview from "./pages/review/WriteReview";
 import EditMyProfile from "./pages/myPage/EditMyProfile";
 
 function App() {
-  return (
-      <BrowserRouter>
-        <div className="App">
-          <Routes>
-              <Route
-                  path="/"
-                  element={<Login />}
-              />
-              <Route path="/auth" element={<Login />} />
-              <Route path="/home" element={<Home />} />
-              <Route
-                  path="/user/login/oauth_kakao"
-                  element={<Token />}
-              />
-              <Route
-                  path="/user/nickname/create"
-                  element={<CreateNickname />}
-              />
-              <Route
-                  path="/tabbar"
-                  element={<TabBar />}
-              />
-              <Route
-                  path="/home"
-                  element={<Home />}
-              />
-              <Route
-                  path="/registerProduct"
-                  element={<RegisterProduct />}
-              />
-              <Route
-                  path="/product/list"
-                  element={<AllProduct />}
-              />
-              <Route
-                  path="/farm/list"
-                  element={<AllFarm />}
-              />
-              <Route
-                  path="/auction/list"
-                  element={<AuctionList />}
-              />
-              <Route
-                  path="/product/:id"
-                  element={<ProductDetails />}
-              />
-              <Route
-                  path="/farm/:id"
-                  element={<FarmDetails />}
-              />
-              <Route
-                  path="/myPage"
-                  element={<MyPage />}
-              />
-              <Route
-                  path="/search"
-                  element={<SearchProduct />}
-              />
-              <Route
-                  path="/farm"
-                  element={<RegisterFarm />}
-              />
-              <Route
-                  path="/cart"
-                  element={<ProductShippingAddress />}
-              />
-              <Route
-                  path="/myOrder"
-                  element={<MyOrderList />}
-              />
-              <Route
-                  path="/myReview"
-                  element={<MyReviewList />}
-              />
-              <Route
-                  path="/myEnquiry"
-                  element={<MyEnquiryList />}
-              />
-              <Route
-                  path="/myParticipateAuction"
-                  element={<MyParticipateAuction />}
-              />
-              <Route
-                  path="/review/write"
-                  element={<WriteReview />}
-              />
-              <Route
-                  path="/editProfile"
-                  element={<EditMyProfile />}
-              />
-          </Routes>
-        </div>
-      </BrowserRouter>
-  )
+    return (
+        <BrowserRouter>
+            <div className="App">
+                <Routes>
+                    <Route path="/" element={<Login />} />
+                    <Route path="/auth" element={<Login />} />
+                    <Route path="/home" element={<Home />} />
+                    <Route path="/login/oauth_kakao" element={<Token />} />
+                    <Route path="/user/nickname/create" element={<CreateNickname />} />
+                    <Route path="/tabbar" element={<TabBar />} />
+                    <Route path="/registerProduct" element={<RegisterProduct />} />
+                    <Route path="/product/list" element={<AllProduct />} />
+                    <Route path="/farm/list" element={<AllFarm />} />
+                    <Route path="/auction/list" element={<AuctionList />} />
+                    <Route path="/product/:id" element={<ProductDetails />} />
+                    <Route path="/farm/:id" element={<FarmDetails />} />
+                    <Route path="/myPage" element={<MyPage />} />
+                    <Route path="/search" element={<SearchProduct />} />
+                    <Route path="/farm" element={<RegisterFarm />} />
+                    <Route path="/cart" element={<ProductShippingAddress />} />
+                    <Route path="/myOrder" element={<MyOrderList />} />
+                    <Route path="/myReview" element={<MyReviewList />} />
+                    <Route path="/myEnquiry" element={<MyEnquiryList />} />
+                    <Route path="/myParticipateAuction" element={<MyParticipateAuction />} />
+                    <Route path="/review/write" element={<WriteReview />} />
+                    <Route path="/editProfile" element={<EditMyProfile />} />
+                </Routes>
+            </div>
+        </BrowserRouter>
+    );
 }
 
 export default App;
