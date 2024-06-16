@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import API from "../../config";
+import {BeatLoader} from "react-spinners";
 
 const Token = () => {
     const navigate = useNavigate();
@@ -43,8 +44,8 @@ const Token = () => {
     }, [code, navigate]);
 
     return (
-        <div>
-            Redirecting...
+        <div style={{display:"flex", justifyContent:"center", alignItems:"center"}}>
+            <BeatLoader color="#36d7b7" />
         </div>
     );
 };

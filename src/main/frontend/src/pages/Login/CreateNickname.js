@@ -13,9 +13,9 @@ const CreateNickname = () => {
         setNickname(e.target.value);
     }
     const handleSubmitNickname = () => {
-        axios.post(API.MYPAGE, {
+        axios.post(API.CREATENICKNAME,
+            { nickname: nickname },{
             headers: { Authorization: `Bearer ${localStorage.getItem('jwt')}` },
-            nickname: nickname
         })
             .then((res) => {
                 console.log(res);
