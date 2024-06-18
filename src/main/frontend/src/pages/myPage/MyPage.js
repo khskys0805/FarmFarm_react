@@ -71,7 +71,7 @@ const MyPage = () => {
                                         농장 관리
                                     </a>
                                 ) : (
-                                    <a href="/farm" className={styles.profile_edit_btn}>
+                                    <a href="/registerFarm" className={styles.profile_edit_btn}>
                                         농장 개설
                                     </a>
                                 )}

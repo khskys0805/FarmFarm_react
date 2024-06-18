@@ -40,7 +40,7 @@ function App() {
                     <Route path="/farm/:id" element={<FarmDetails />} />
                     <Route path="/myPage" element={<MyPage />} />
                     <Route path="/search" element={<SearchProduct />} />
-                    <Route path="/farm" element={<RegisterFarm />} />
+                    <Route path="/registerFarm" element={<RegisterFarm />} />
                     <Route path="/cart" element={<ProductShippingAddress />} />
                     <Route path="/myOrder" element={<MyOrderList />} />
                     <Route path="/myReview" element={<MyReviewList />} />

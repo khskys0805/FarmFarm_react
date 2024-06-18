@@ -4,7 +4,7 @@ import {Link} from "react-router-dom";
 const ProductList = ({ numToShow, products }) => {
     return (
         <div className={products.length === 0 ? '' : styles.item_container}>
-            {products.length === 0 && <p style={{textAlign:"center"}}>등록된 상품이 없어요.</p>}
+            {products.length === 0 && <p style={{textAlign:"center", margin:"30px 0"}}>등록된 상품이 없어요.</p>}
             {products.length > 0 && (
                 products.slice(0, numToShow || products.length).map((item, index) => (
                     <div className={styles.item_box} key={index}>

@@ -23,6 +23,26 @@
     color:#999999;
     margin: -10px 0 10px;
 }
+.content_wrapper .location_title,
+.content_wrapper .location{
+    display: flex;
+    align-items: center;
+}
+/*.content_wrapper .location_title{*/
+/*    margin-bottom: 15px;*/
+/*}*/
+.content_wrapper .location_title .file_label{
+    width:inherit;
+    margin:0 0 15px 10px;
+    padding: 6px 20px;
+}
+.content_wrapper .location input:nth-of-type(1){
+    margin-right: 10px;
+}
+.content_wrapper .location,
+.content_wrapper input[name = "locationFull"]{
+    margin-bottom: 10px;
+}
 .content_wrapper div span{
     vertical-align: middle;
     font-size:17px;

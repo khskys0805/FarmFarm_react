@@ -1,17 +1,29 @@
 import {useCallback, useState} from "react";
+import DaumPostcode from 'react-daum-postcode';
 import styles from "../product/RegisterProduct.module.css";
 import Header from "../../component/Header";
 import InputBox from "../../component/InputBox";
 import Button from "../../component/Button";
 import TabBar from "../../component/TabBar";
 import {useNavigate} from "react-router-dom";
+import axios from "axios";
+import API from "../../config";
+import PopupPostCode from "../../component/PopupPostCode";
 
 const RegisterFarm = () => {
     const navigate = useNavigate();
     const [imageSrc, setImageSrc] = useState("");
     const [farmData, setFarmData] = useState({
-
+        name:"",
+        locationCity:"",
+        locationGu:"",
+        locationFull:"",
+        locationDetail:"",
+        detail:"",
+        auction:true,
+        image:"",
     })
+    const [popup, setPopup] = useState(false);
 
     const handleInputChange = useCallback((e) => {
         const {name, value} = e.target;
@@ -31,6 +43,24 @@ const RegisterFarm = () => {
         }));
     };
 
+    const handleComplete = (data) => {
+        setPopup(!popup);
+    }
+
+    const handleSubmitForm = useCallback(e => {
+        axios.post(API.REGISTERFARM,
+            {  },{
+                headers: { Authorization: `Bearer ${localStorage.getItem('jwt')}` },
+            })
+            .then((res) => {
+                console.log(res);
+                navigate(`/home`);
+            })
+            .catch((error) => {
+                alert("농장 개설에 실패했습니다.");
+                console.error(error);
+            });
+    }, [farmData, navigate])
     return (
         <div className={styles.box}>
             <Header title={"농장 개설"} go={-1}/>
@@ -38,6 +68,19 @@ const RegisterFarm = () => {
                 <div className={styles.content_wrapper}>
                     <h3>농장 이름</h3>
                     <InputBox type={"text"} name={"name"} value={farmData.name} placeholder={"농장 이름을 입력해주세요."} onChange={handleInputChange}/>
+                </div>
+                <div className={styles.content_wrapper}>
+                    <div className={styles.location_title}>
+                        <h3>농장 위치</h3>
+                        <label className={styles.file_label} onClick={handleComplete}>주소 찾기</label>
+                        {popup && <PopupPostCode farm={farmData} setFarm={setFarmData}></PopupPostCode>}
+                    </div>
+                    <div className={styles.location}>
+                        <InputBox type={"text"} name={"locationCity"} value={farmData.locationCity} placeholder={"OO시/도"} readOnly={true}/>
+                        <InputBox type={"text"} name={"locationGu"} value={farmData.locationGu} placeholder={"OO시/군/구"} readOnly={true}/>
+                    </div>
+                    <InputBox type={"text"} name={"locationFull"} value={farmData.locationFull} placeholder={"전체 주소"} readOnly={true}/>
+                    <InputBox type={"text"} name={"locationDetail"} value={farmData.locationDetail} placeholder={"상세 주소"} onChange={handleInputChange}/>
                 </div>
                 <div className={styles.content_wrapper}>
                     <h3>농장 설명</h3>
