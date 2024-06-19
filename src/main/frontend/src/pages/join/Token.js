@@ -21,14 +21,15 @@ const Token = () => {
 
                     // 토큰을 받아서 localStorage 같은 곳에 저장
                     localStorage.setItem('jwt', tokenResponse.data.result.accessToken);
+                    localStorage.setItem('refreshToken', tokenResponse.data.result.refreshToken);
 
-                    // 두 번째 요청: 닉네임 확인
-                    const nicknameResponse = await axios.get(API.ISNICKNAME, {
-                        headers: { Authorization: `Bearer ${tokenResponse.data.result.accessToken}` },
-                    });
-                    console.log(nicknameResponse.data);
+                    // // 두 번째 요청: 닉네임 확인
+                    // const nicknameResponse = await axios.get(API.ISNICKNAME, {
+                    //     headers: { Authorization: `Bearer ${tokenResponse.data.result.accessToken}` },
+                    // });
+                    // console.log(nicknameResponse.data);
 
-                    const nickname = nicknameResponse.data.result.nickname;
+                    const nickname = tokenResponse.data.result.nickname;
                     if (nickname) {
                         console.log(nickname);
                         navigate("/home");

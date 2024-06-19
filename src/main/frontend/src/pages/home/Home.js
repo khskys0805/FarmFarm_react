@@ -29,7 +29,7 @@ const Home = () => {
 
     useEffect(() => {
         axios.get(API.ALLFARM, {
-            headers: { authorization: localStorage.getItem("jwt") },
+            headers: { Authorization: `Bearer ${localStorage.getItem('jwt')}` },
         })
             .then((res) => {
                 console.log("전송 성공");
@@ -45,7 +45,7 @@ const Home = () => {
 
     useEffect(() => {
         axios.get(API.ALLPRODUCT, {
-            headers: { authorization: localStorage.getItem("jwt") },
+            headers: { Authorization: `Bearer ${localStorage.getItem('jwt')}` },
         })
             .then((res) => {
                 console.log("전송 성공");

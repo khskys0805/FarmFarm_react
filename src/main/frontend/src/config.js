@@ -3,10 +3,10 @@ const API = {
         return `/product/${ID}`
     },
     REGISTERPRODUCT: "/product",
+    ALLPRODUCT: "/product/list",
     FARM(ID){
         return `/farm/${ID}`
     },
-    ALLPRODUCT: "/product/list",
     REGISTERFARM: "/farm",
     ALLFARM: "/farm/list",
     ALLAUCTION: "/product/auction/list",
