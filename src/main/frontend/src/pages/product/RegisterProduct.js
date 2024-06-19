@@ -14,6 +14,7 @@ const RegisterProduct = () => {
     const [productData, setProductData] = useState({
         auction:false,
         auction_quantity:"",
+        category:"",
         closeCalendar:"",
         date:"",
         detail:"",
@@ -35,6 +36,11 @@ const RegisterProduct = () => {
         type:0
     });
     const [showAuctionFields, setShowAuctionFields] = useState(false);
+    const selectList = [
+        { value: 1, name: "과일" },
+        { value: 2, name: "채소" },
+        { value: 3, name: "기타" },
+    ];
 
     const handleFileChange = (event) => {
         const files = Array.from(event.target.files);
@@ -122,6 +128,16 @@ const RegisterProduct = () => {
                 <div className={styles.content_wrapper}>
                     <h3>상품 이름</h3>
                     <InputBox type={"text"} name={"name"} value={productData.name} placeholder={"상품 이름을 입력해주세요."} onChange={handleInputChange}/>
+                </div>
+                <div className={styles.content_wrapper}>
+                    <h3>상품 카테고리</h3>
+                    <select name={"category"} onChange={handleInputChange} value={productData.category}>
+                        {selectList.map((item) => (
+                            <option value={item.value} key={item.value}>
+                                {item.name}
+                            </option>
+                        ))}
+                    </select>
                 </div>
                 <div className={styles.content_wrapper}>
                     <h3>상품 수량</h3>
