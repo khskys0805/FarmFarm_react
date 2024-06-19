@@ -77,11 +77,15 @@ const Home = () => {
                 <div className={styles.group}>
                     <div className={styles.link}>
                         <h2>이 농장 어때요?</h2>
-                        <Link to="/farm/list" state={{ farms: farms }}>
+                        <Link to="/allFarm" state={{ farms: farms }}>
                             <IoIosArrowDroprightCircle size="30" color="#94C015FF" style={{cursor:"pointer"}}/>
                         </Link>
                     </div>
-                    <FarmList numToShow={numFarmsToShow} farms={farms}/>
+                    {farms.length > 0 ? (
+                        <FarmList numToShow={numFarmsToShow} farms={farms} />
+                    ) : (
+                        <p  style={{textAlign:"center", margin:"30px 0"}}>개설된 농장이 없어요.</p>
+                    )}
                 </div>
                 <div className={styles.group}>
                     <div className={styles.link}>
