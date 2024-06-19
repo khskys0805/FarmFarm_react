@@ -1,5 +1,4 @@
 import {useCallback, useState} from "react";
-import DaumPostcode from 'react-daum-postcode';
 import styles from "../product/RegisterProduct.module.css";
 import Header from "../../component/Header";
 import InputBox from "../../component/InputBox";
@@ -14,16 +13,15 @@ const RegisterFarm = () => {
     const navigate = useNavigate();
     const [imageSrc, setImageSrc] = useState("");
     const [farmData, setFarmData] = useState({
-        name:"",
-        locationCity:"",
-        locationGu:"",
-        locationFull:"",
-        locationDetail:"",
-        detail:"",
-        auction:true,
-        image:"",
-    })
-    const [popup, setPopup] = useState(false);
+        name: "",
+        locationCity: "",
+        locationGu: "",
+        locationFull: "",
+        locationDetail: "",
+        detail: "",
+        auction: true,
+        image: "",
+    });
 
     const handleInputChange = useCallback((e) => {
         const {name, value} = e.target;
@@ -34,24 +32,30 @@ const RegisterFarm = () => {
     }, [farmData]);
 
     const handleFileChange = (event) => {
-        const file = event.target.files[0]; // 하나의 파일만 선택하도록 수정
-        const imageUrl = file ? URL.createObjectURL(file) : ""; // 파일이 있으면 URL 생성, 없으면 빈 문자열
-        setImageSrc(imageUrl); // 이미지 URL 상태 업데이트
+        const file = event.target.files[0];
+        const imageUrl = file ? URL.createObjectURL(file) : "";
+        setImageSrc(imageUrl);
         setFarmData(prevFarmData => ({
             ...prevFarmData,
-            image: imageUrl, // 단일 이미지만 사용하므로 image로 설정
+            image: imageUrl,
         }));
     };
 
     const handleComplete = (data) => {
-        setPopup(!popup);
+        setFarmData({
+            ...farmData,
+            locationCity: data.locationCity,
+            locationGu: data.locationGu,
+            locationFull: data.locationFull,
+            locationDetail: data.locationDetail,
+        });
     }
 
     const handleSubmitForm = useCallback(e => {
-        axios.post(API.REGISTERFARM,
-            {  },{
-                headers: { Authorization: `Bearer ${localStorage.getItem('jwt')}` },
-            })
+        e.preventDefault();
+        axios.post(API.REGISTERFARM, farmData, {
+            headers: { Authorization: `Bearer ${localStorage.getItem('jwt')}` },
+        })
             .then((res) => {
                 console.log(res);
                 navigate(`/home`);
@@ -60,11 +64,12 @@ const RegisterFarm = () => {
                 alert("농장 개설에 실패했습니다.");
                 console.error(error);
             });
-    }, [farmData, navigate])
+    }, [farmData, navigate]);
+
     return (
         <div className={styles.box}>
             <Header title={"농장 개설"} go={-1}/>
-            <form className={styles.form}>
+            <form className={styles.form} onSubmit={handleSubmitForm}>
                 <div className={styles.content_wrapper}>
                     <h3>농장 이름</h3>
                     <InputBox type={"text"} name={"name"} value={farmData.name} placeholder={"농장 이름을 입력해주세요."} onChange={handleInputChange}/>
@@ -72,8 +77,7 @@ const RegisterFarm = () => {
                 <div className={styles.content_wrapper}>
                     <div className={styles.location_title}>
                         <h3>농장 위치</h3>
-                        <label className={styles.file_label} onClick={handleComplete}>주소 찾기</label>
-                        {popup && <PopupPostCode farm={farmData} setFarm={setFarmData}></PopupPostCode>}
+                        <PopupPostCode onComplete={handleComplete} />
                     </div>
                     <div className={styles.location}>
                         <InputBox type={"text"} name={"locationCity"} value={farmData.locationCity} placeholder={"OO시/도"} readOnly={true}/>
@@ -103,7 +107,7 @@ const RegisterFarm = () => {
                         <label className={styles.file_label} htmlFor="chooseFile">파일 선택</label>
                         <input className={styles.file} id="chooseFile" type="file" onChange={handleFileChange}/>
                         <div className={styles.image_container}>
-                            {imageSrc && ( // imageSrc가 존재하고 비어있지 않은 경우에만 아래 내용을 렌더링
+                            {imageSrc && (
                                 <div className={styles.my_image}>
                                     <img src={imageSrc} alt={imageSrc}/>
                                 </div>

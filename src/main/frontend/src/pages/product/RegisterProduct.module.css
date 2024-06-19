@@ -28,13 +28,10 @@
     display: flex;
     align-items: center;
 }
-/*.content_wrapper .location_title{*/
-/*    margin-bottom: 15px;*/
-/*}*/
 .content_wrapper .location_title .file_label{
     width:inherit;
     margin:0 0 15px 10px;
-    padding: 6px 20px;
+    padding: 6px 10px;
 }
 .content_wrapper .location input:nth-of-type(1){
     margin-right: 10px;
