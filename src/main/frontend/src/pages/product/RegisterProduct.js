@@ -14,11 +14,11 @@ const RegisterProduct = () => {
     const [productData, setProductData] = useState({
         auction:false,
         auction_quantity:"",
-        category:"",
+        category:"1",
         closeCalendar:"",
         date:"",
         detail:"",
-        direct:false,
+        direct:"",
         direct_location:"",
         group:false,
         image1:"",
@@ -65,26 +65,30 @@ const RegisterProduct = () => {
 
     const handleRadioChange = (e, fieldName) => {
         const value = e.target.value;
-        setProductData(prevProductData => ({
-            ...prevProductData,
-            [fieldName]: value
-        }));
-        if (fieldName === "type" && value === "3") {
-            setShowAuctionFields(true);
-        } else {
-            setShowAuctionFields(false);
-        }
+
+        setProductData(prevProductData => {
+            const newProductData = {
+                ...prevProductData,
+                [fieldName]: value
+            };
+
+            if (fieldName === "type") {
+                const isAuction = value === "3";
+                setShowAuctionFields(isAuction);
+                newProductData.auction = isAuction;
+            }
+
+            return newProductData;
+        });
     };
+
+
 
     const handleFormSubmit = (event) => {
         event.preventDefault();
+        console.log(productData);
         axios.post(API.REGISTERPRODUCT, productData, {
-            withCredentials: true,
-            headers: {
-                authorization: localStorage.getItem("jwt"),
-                uid: sessionStorage.getItem("uid"), // uid를 헤더에 추가
-                "Content-Type": "application/json" // 요청의 컨텐츠 타입 설정
-            }
+            headers: { Authorization: `Bearer ${localStorage.getItem('jwt')}` },
         })
             .then((res) => {
                 console.log("전송 성공");
@@ -157,8 +161,8 @@ const RegisterProduct = () => {
                     <h3>거래 방법</h3>
                     <p>상품을 거래할 방법을 선택해주세요.</p>
                     <div>
-                        <InputBox type={"radio"} name={"direct"} value={true} onChange={(e) => handleRadioChange(e, "direct")} checked/><span>직거래</span>
-                        <InputBox type={"radio"} name={"direct"} value={false} onChange={(e) => handleRadioChange(e, "direct")}/><span>배송</span>
+                        <InputBox type={"radio"} name={"direct"} value={1} onChange={(e) => handleRadioChange(e, "direct")} checked/><span>직거래</span>
+                        <InputBox type={"radio"} name={"direct"} value={2} onChange={(e) => handleRadioChange(e, "direct")}/><span>배송</span>
                     </div>
                 </div>
                 <div className={styles.content_wrapper}>

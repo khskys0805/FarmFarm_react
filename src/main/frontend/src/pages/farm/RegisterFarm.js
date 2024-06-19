@@ -25,9 +25,10 @@ const RegisterFarm = () => {
 
     const handleInputChange = useCallback((e) => {
         const {name, value} = e.target;
+        const newValue = value === "true";
         setFarmData({
             ...farmData,
-            [name]: value,
+            [name]: newValue,
         });
     }, [farmData]);
 
@@ -53,6 +54,7 @@ const RegisterFarm = () => {
 
     const handleSubmitForm = useCallback(e => {
         e.preventDefault();
+        console.log(farmData);
         axios.post(API.REGISTERFARM, farmData, {
             headers: { Authorization: `Bearer ${localStorage.getItem('jwt')}` },
         })
@@ -97,8 +99,8 @@ const RegisterFarm = () => {
                         가격이 높은 경매건이 낙찰됩니다.
                     </p>
                     <div>
-                        <InputBox type={"radio"} name={"auction"} value={true} onChange={handleInputChange}/><span>네</span>
-                        <InputBox type={"radio"} name={"auction"} value={false} onChange={handleInputChange}/><span>아니오</span>
+                        <InputBox type={"radio"} name={"auction"} value={"true"} onChange={handleInputChange}/><span>네</span>
+                        <InputBox type={"radio"} name={"auction"} value={"false"} onChange={handleInputChange}/><span>아니오</span>
                     </div>
                 </div>
                 <div className={styles.content_wrapper}>
