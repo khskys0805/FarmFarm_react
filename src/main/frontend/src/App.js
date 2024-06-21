@@ -26,16 +26,17 @@ function App() {
         <BrowserRouter>
             <div className="App">
                 <Routes>
-                    <Route
-                        path="/"
-                        element={
-                            localStorage.getItem("jwt") ? (
-                                <Navigate replace to="/home" />
-                            ) : (
-                                <Login />
-                            )
-                        }
-                    />
+                    {/*<Route*/}
+                    {/*    path="/"*/}
+                    {/*    element={*/}
+                    {/*        localStorage.getItem("jwt") ? (*/}
+                    {/*            <Navigate replace to="/home" />*/}
+                    {/*        ) : (*/}
+                    {/*            <Login />*/}
+                    {/*        )*/}
+                    {/*    }*/}
+                    {/*/>*/}
+                    <Route path="/" element={<Login />} />
                     <Route path="/auth" element={<Login />} />
                     <Route path="/home" element={<Home />} />
                     <Route path="/login/oauth_kakao" element={<Token />} />

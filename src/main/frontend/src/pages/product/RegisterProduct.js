@@ -11,6 +11,7 @@ import {useNavigate} from "react-router-dom";
 const RegisterProduct = () => {
     const navigate = useNavigate();
     const [imageSrcs, setImageSrcs] = useState([]);
+    const [fileIds, setFileIds] = useState([]);
     const [productData, setProductData] = useState({
         auction:false,
         auction_quantity:"",
@@ -21,9 +22,8 @@ const RegisterProduct = () => {
         direct:"",
         direct_location:"",
         group:false,
-        image1:"",
-        image2:"",
-        image3:"",
+        hour:"",
+        images:[],
         low_price:"",
         minute:"",
         name:"",
@@ -42,17 +42,48 @@ const RegisterProduct = () => {
         { value: 3, name: "기타" },
     ];
 
-    const handleFileChange = (event) => {
+    const uploadFile = async (file) => {
+        const formData = new FormData();
+        formData.append("multipartFile", file);
+
+        try {
+            const response = await axios.post("/s3/file", formData, {
+                headers: {
+                    "Content-Type": "multipart/form-data",
+                },
+            });
+            return response.data.fileId;
+        } catch (error) {
+            console.error("File upload error: ", error);
+            return null;
+        }
+    }
+
+    const handleFileChange = async (event) => {
         const files = Array.from(event.target.files);
-        const newImageUrls = files.map(file => URL.createObjectURL(file));
-        const totalImageUrls = [...imageSrcs, ...newImageUrls].slice(0, 3);
-        setImageSrcs(totalImageUrls);
-        setProductData(prevProductData => ({
-            ...prevProductData,
-            image1: totalImageUrls[0] || "",
-            image2: totalImageUrls[1] || "",
-            image3: totalImageUrls[2] || ""
-        }));
+
+        if (files.length + imageSrcs.length > 10) {
+            alert("사진은 최대 10개까지 선택할 수 있습니다.");
+            return;
+        }
+
+        const uploadedFiles = await Promise.all(files.map(file => uploadFile(file)));
+        const validFiles = uploadedFiles.filter(file => file !== null);
+
+        if (validFiles.length > 0) {
+            const newImageUrls = validFiles.map(file => file.url);
+            const totalImageUrls = [...imageSrcs, ...newImageUrls].slice(0, 10);
+            const newFileIds = validFiles.map(file => file.id);
+            const totalFileIds = [...fileIds, ...newFileIds].slice(0, 10);
+
+            setImageSrcs(totalImageUrls);
+            setFileIds(totalFileIds);
+
+            setProductData(prevProductData => ({
+                ...prevProductData,
+                images: totalFileIds
+            }));
+        }
     };
 
     const handleInputChange = useCallback((e) => {
@@ -166,10 +197,10 @@ const RegisterProduct = () => {
                     </div>
                 </div>
                 <div className={styles.content_wrapper}>
-                    <h3>사진을 올려주세요 <span>(선택)</span></h3>
-                    <div>
+                    <h3>사진을 올려주세요 <span>(선택) (최대 10장)</span></h3>
+                    <div className={styles.image_wrapper}>
                         <label className={styles.file_label} htmlFor="chooseFile">파일 선택</label>
-                        <input className={styles.file} id="chooseFile" type="file" onChange={handleFileChange}/>
+                        <input className={styles.file} id="chooseFile" type="file" onChange={handleFileChange} multiple/>
                         <div className={styles.image_container}>
                             {imageSrcs.map((src, index) =>(
                                 <div key={index} className={styles.my_image}>
