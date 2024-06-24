@@ -33,7 +33,7 @@ const RegisterProduct = () => {
         quantity:"",
         rating:"",
         sales:"",
-        type:0
+        type:""
     });
     const [showAuctionFields, setShowAuctionFields] = useState(false);
     const selectList = [
@@ -116,10 +116,32 @@ const RegisterProduct = () => {
         });
     };
 
+    const fieldNames = {
+        type: "상품 유형",
+        name: "상품 이름",
+        category: "상품 카테고리",
+        quantity: "상품 수량",
+        detail: "상품 설명",
+        price: "상품 가격",
+        direct: "거래 방법"
+    };
 
+    const validateForm = () => {
+        const requiredFields = ['type', 'name', 'category', 'quantity', 'detail', 'price', 'direct'];
+        for (const field of requiredFields) {
+            if (!productData[field]) {
+                alert(`${fieldNames[field]}을(를) 입력해주세요.`);
+                return false;
+            }
+        }
+        return true;
+    };
 
     const handleFormSubmit = (event) => {
         event.preventDefault();
+        if (!validateForm()) {
+            return;
+        }
         console.log(productData);
         axios.post(API.REGISTERPRODUCT, productData, {
             headers: { Authorization: `Bearer ${localStorage.getItem('jwt')}` },
