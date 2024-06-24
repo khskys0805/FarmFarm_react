@@ -44,15 +44,16 @@ const RegisterProduct = () => {
 
     const uploadFile = async (file) => {
         const formData = new FormData();
-        formData.append("multipartFile", file);
+        formData.append("multipartFiles", file); // 키를 "multipartFiles"로 변경
 
         try {
             const response = await axios.post("/s3/file", formData, {
                 headers: {
-                    "Content-Type": "multipart/form-data",
+                    Authorization: `Bearer ${localStorage.getItem('jwt')}`,
                 },
             });
-            return response.data.fileId;
+            console.log("File upload response:", response.data);
+            return response.data;
         } catch (error) {
             console.error("File upload error: ", error);
             return null;
@@ -61,28 +62,30 @@ const RegisterProduct = () => {
 
     const handleFileChange = async (event) => {
         const files = Array.from(event.target.files);
-
+        console.log(files);
         if (files.length + imageSrcs.length > 10) {
             alert("사진은 최대 10개까지 선택할 수 있습니다.");
             return;
         }
 
         const uploadedFiles = await Promise.all(files.map(file => uploadFile(file)));
+        console.log(uploadedFiles);
         const validFiles = uploadedFiles.filter(file => file !== null);
-
+        console.log(validFiles);
         if (validFiles.length > 0) {
-            const newImageUrls = validFiles.map(file => file.url);
+            const newImageUrls = validFiles.map(file => file.result[0].fileUrl);
             const totalImageUrls = [...imageSrcs, ...newImageUrls].slice(0, 10);
-            const newFileIds = validFiles.map(file => file.id);
+            const newFileIds = validFiles.map(file => file.result[0].fileId);
             const totalFileIds = [...fileIds, ...newFileIds].slice(0, 10);
 
             setImageSrcs(totalImageUrls);
             setFileIds(totalFileIds);
-
+            console.log(fileIds);
             setProductData(prevProductData => ({
                 ...prevProductData,
                 images: totalFileIds
             }));
+
         }
     };
 
