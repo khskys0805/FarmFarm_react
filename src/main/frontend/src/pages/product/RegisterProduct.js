@@ -3,48 +3,48 @@ import Header from "../../component/Header";
 import InputBox from "../../component/InputBox";
 import Button from "../../component/Button";
 import TabBar from "../../component/TabBar";
-import {useCallback, useState} from "react";
+import { useCallback, useState } from "react";
 import axios from "axios";
 import API from "../../config";
-import {useNavigate} from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const RegisterProduct = () => {
     const navigate = useNavigate();
     const [imageSrcs, setImageSrcs] = useState([]);
     const [fileIds, setFileIds] = useState([]);
     const [productData, setProductData] = useState({
-        auction:false,
-        auction_quantity:"",
-        category:"1",
-        closeCalendar:"",
-        date:"",
-        detail:"",
-        direct:"",
-        direct_location:"",
-        group:false,
-        hour:"",
-        images:[],
-        low_price:"",
-        minute:"",
-        name:"",
-        open_status:0,
-        price:"",
-        productCategory:"",
-        quantity:"",
-        rating:"",
-        sales:"",
-        type:""
+        auction: false,
+        auction_quantity: "",
+        category: "1",
+        closeCalendar: "",
+        date: "",
+        detail: "",
+        direct: "",
+        direct_location: "",
+        group: false,
+        hour: "",
+        images: [],
+        low_price: "",
+        minute: "",
+        name: "",
+        open_status: 0,
+        price: "",
+        productCategory: "",
+        quantity: "",
+        rating: "",
+        sales: "",
+        productType: ""
     });
     const [showAuctionFields, setShowAuctionFields] = useState(false);
     const selectList = [
-        { value: 1, name: "과일" },
-        { value: 2, name: "채소" },
-        { value: 3, name: "기타" },
+        { value: "1", name: "과일" },
+        { value: "2", name: "채소" },
+        { value: "3", name: "기타" },
     ];
 
     const uploadFile = async (file) => {
         const formData = new FormData();
-        formData.append("multipartFiles", file); // 키를 "multipartFiles"로 변경
+        formData.append("multipartFiles", file);
 
         try {
             const response = await axios.post("/s3/file", formData, {
@@ -58,20 +58,19 @@ const RegisterProduct = () => {
             console.error("File upload error: ", error);
             return null;
         }
-    }
+    };
 
     const handleFileChange = async (event) => {
         const files = Array.from(event.target.files);
-        console.log(files);
+
         if (files.length + imageSrcs.length > 10) {
             alert("사진은 최대 10개까지 선택할 수 있습니다.");
             return;
         }
 
         const uploadedFiles = await Promise.all(files.map(file => uploadFile(file)));
-        console.log(uploadedFiles);
         const validFiles = uploadedFiles.filter(file => file !== null);
-        console.log(validFiles);
+
         if (validFiles.length > 0) {
             const newImageUrls = validFiles.map(file => file.result[0].fileUrl);
             const totalImageUrls = [...imageSrcs, ...newImageUrls].slice(0, 10);
@@ -80,17 +79,15 @@ const RegisterProduct = () => {
 
             setImageSrcs(totalImageUrls);
             setFileIds(totalFileIds);
-            console.log(fileIds);
             setProductData(prevProductData => ({
                 ...prevProductData,
                 images: totalFileIds
             }));
-
         }
     };
 
     const handleInputChange = useCallback((e) => {
-        const {name, value} = e.target;
+        const { name, value } = e.target;
         setProductData({
             ...productData,
             [name]: value,
@@ -106,7 +103,7 @@ const RegisterProduct = () => {
                 [fieldName]: value
             };
 
-            if (fieldName === "type") {
+            if (fieldName === "productType") {
                 const isAuction = value === "3";
                 setShowAuctionFields(isAuction);
                 newProductData.auction = isAuction;
@@ -117,7 +114,7 @@ const RegisterProduct = () => {
     };
 
     const fieldNames = {
-        type: "상품 유형",
+        productType: "상품 유형",
         name: "상품 이름",
         category: "상품 카테고리",
         quantity: "상품 수량",
@@ -127,7 +124,7 @@ const RegisterProduct = () => {
     };
 
     const validateForm = () => {
-        const requiredFields = ['type', 'name', 'category', 'quantity', 'detail', 'price', 'direct'];
+        const requiredFields = ['productType', 'name', 'category', 'quantity', 'detail', 'price', 'direct'];
         for (const field of requiredFields) {
             if (!productData[field]) {
                 alert(`${fieldNames[field]}을(를) 입력해주세요.`);
@@ -142,8 +139,15 @@ const RegisterProduct = () => {
         if (!validateForm()) {
             return;
         }
-        console.log(productData);
-        axios.post(API.REGISTERPRODUCT, productData, {
+
+        const formData = {
+            ...productData,
+            price: parseInt(productData.price, 10),
+            quantity: parseInt(productData.quantity, 10),
+            productType: parseInt(productData.productType, 10),
+        };
+
+        axios.post(API.REGISTERPRODUCT, formData, {
             headers: { Authorization: `Bearer ${localStorage.getItem('jwt')}` },
         })
             .then((res) => {
@@ -154,7 +158,7 @@ const RegisterProduct = () => {
             .catch((error) => {
                 console.error('상품 등록 중 오류 발생: ', error);
             });
-    }
+    };
 
     return (
         <div className={styles.box}>
@@ -164,9 +168,9 @@ const RegisterProduct = () => {
                     <h3>상품 유형</h3>
                     <p>상품 유형을 선택해주세요.</p>
                     <div>
-                        <InputBox type={"radio"} name={"type"} value={1} onChange={(e) => handleRadioChange(e, "type")} checked={productData.type === 1}/><span>일반 상품</span>
-                        <InputBox type={"radio"} name={"type"} value={2} onChange={(e) => handleRadioChange(e, "type")} checked={productData.type === 2}/><span>공동 구매</span>
-                        <InputBox type={"radio"} name={"type"} value={3} onChange={(e) => handleRadioChange(e, "type")} checked={productData.type === 3}/><span>경매 상품</span>
+                        <InputBox type={"radio"} name={"productType"} value={"1"} onChange={(e) => handleRadioChange(e, "productType")} checked={productData.productType === "1"}/><span>일반 상품</span>
+                        <InputBox type={"radio"} name={"productType"} value={"2"} onChange={(e) => handleRadioChange(e, "productType")} checked={productData.productType === "2"}/><span>공동 구매</span>
+                        <InputBox type={"radio"} name={"productType"} value={"3"} onChange={(e) => handleRadioChange(e, "productType")} checked={productData.productType === "3"}/><span>경매 상품</span>
                     </div>
                 </div>
                 {showAuctionFields && (
@@ -217,8 +221,8 @@ const RegisterProduct = () => {
                     <h3>거래 방법</h3>
                     <p>상품을 거래할 방법을 선택해주세요.</p>
                     <div>
-                        <InputBox type={"radio"} name={"direct"} value={1} onChange={(e) => handleRadioChange(e, "direct")} checked/><span>직거래</span>
-                        <InputBox type={"radio"} name={"direct"} value={2} onChange={(e) => handleRadioChange(e, "direct")}/><span>배송</span>
+                        <InputBox type={"radio"} name={"direct"} value={"1"} onChange={(e) => handleRadioChange(e, "direct")} checked={productData.direct === "1"}/><span>직거래</span>
+                        <InputBox type={"radio"} name={"direct"} value={"2"} onChange={(e) => handleRadioChange(e, "direct")} checked={productData.direct === "2"}/><span>배송</span>
                     </div>
                 </div>
                 <div className={styles.content_wrapper}>

@@ -11,7 +11,8 @@ import PopupPostCode from "../../component/PopupPostCode";
 
 const RegisterFarm = () => {
     const navigate = useNavigate();
-    const [imageSrc, setImageSrc] = useState("");
+    const [imageSrcs, setImageSrcs] = useState([]);
+    const [fileIds, setFileIds] = useState([]);
     const [farmData, setFarmData] = useState({
         name: "",
         locationCity: "",
@@ -19,27 +20,61 @@ const RegisterFarm = () => {
         locationFull: "",
         locationDetail: "",
         detail: "",
-        auction: true,
-        image: "",
+        auction:"",
+        images: "",
     });
 
     const handleInputChange = useCallback((e) => {
-        const {name, value} = e.target;
-        const newValue = value === "true";
-        setFarmData({
-            ...farmData,
-            [name]: newValue,
-        });
-    }, [farmData]);
-
-    const handleFileChange = (event) => {
-        const file = event.target.files[0];
-        const imageUrl = file ? URL.createObjectURL(file) : "";
-        setImageSrc(imageUrl);
-        setFarmData(prevFarmData => ({
+        const {name, value, type, checked} = e.target;
+        const newValue = type === "checkbox" ? checked : value;
+        setFarmData((prevFarmData) => ({
             ...prevFarmData,
-            image: imageUrl,
+            [name]: newValue,
         }));
+    }, []);
+
+    const uploadFile = async (file) => {
+        const formData = new FormData();
+        formData.append("multipartFiles", file);
+
+        try {
+            const response = await axios.post("/s3/file", formData, {
+                headers: {
+                    Authorization: `Bearer ${localStorage.getItem('jwt')}`,
+                },
+            });
+            console.log("File upload response:", response.data);
+            return response.data;
+        } catch (error) {
+            console.error("File upload error: ", error);
+            return null;
+        }
+    };
+
+    const handleFileChange = async (event) => {
+        const files = Array.from(event.target.files);
+
+        if (files.length + imageSrcs.length > 3) {
+            alert("사진은 최대 3개까지 선택할 수 있습니다.");
+            return;
+        }
+
+        const uploadedFiles = await Promise.all(files.map(file => uploadFile(file)));
+        const validFiles = uploadedFiles.filter(file => file !== null);
+
+        if (validFiles.length > 0) {
+            const newImageUrls = validFiles.map(file => file.result[0].fileUrl);
+            const totalImageUrls = [...imageSrcs, ...newImageUrls].slice(0, 10);
+            const newFileIds = validFiles.map(file => file.result[0].fileId);
+            const totalFileIds = [...fileIds, ...newFileIds].slice(0, 10);
+
+            setImageSrcs(totalImageUrls);
+            setFileIds(totalFileIds);
+            setFarmData(prevFarmData => ({
+                ...prevFarmData,
+                images: totalFileIds
+            }));
+        }
     };
 
     const handleComplete = (data) => {
@@ -52,20 +87,42 @@ const RegisterFarm = () => {
         });
     }
 
+    const fieldNames = {
+        name: "농장 이름",
+        locationFull: "농장 전체 주소",
+        locationDetail: "농장 상세 주소",
+        detail: "농장 설명",
+        auction: "경매 진행 여부"
+    };
+
+    const validateForm = () => {
+        const requiredFields = ['name', 'locationFull', 'locationDetail', 'detail', 'auction'];
+        for (const field of requiredFields) {
+            if (!farmData[field]) {
+                alert(`${fieldNames[field]}을(를) 입력해주세요.`);
+                return false;
+            }
+        }
+        return true;
+    };
+
     const handleSubmitForm = useCallback(e => {
         e.preventDefault();
         console.log(farmData);
-        axios.post(API.REGISTERFARM, farmData, {
-            headers: { Authorization: `Bearer ${localStorage.getItem('jwt')}` },
-        })
-            .then((res) => {
-                console.log(res);
-                navigate(`/home`);
-            })
-            .catch((error) => {
-                alert("농장 개설에 실패했습니다.");
-                console.error(error);
-            });
+        if (!validateForm()) {
+            return;
+        }
+        // axios.post(API.REGISTERFARM, farmData, {
+        //     headers: { Authorization: `Bearer ${localStorage.getItem('jwt')}` },
+        // })
+        //     .then((res) => {
+        //         console.log(res);
+        //         navigate(`/home`);
+        //     })
+        //     .catch((error) => {
+        //         alert("농장 개설에 실패했습니다.");
+        //         console.error(error);
+        //     });
     }, [farmData, navigate]);
 
     return (
@@ -107,13 +164,13 @@ const RegisterFarm = () => {
                     <h3>사진을 올려주세요 <span>(선택)</span></h3>
                     <div>
                         <label className={styles.file_label} htmlFor="chooseFile">파일 선택</label>
-                        <input className={styles.file} id="chooseFile" type="file" onChange={handleFileChange}/>
+                        <input className={styles.file} id="chooseFile" type="file" onChange={handleFileChange} multiple/>
                         <div className={styles.image_container}>
-                            {imageSrc && (
-                                <div className={styles.my_image}>
-                                    <img src={imageSrc} alt={imageSrc}/>
+                            {imageSrcs.map((src, index) =>(
+                                <div key={index} className={styles.my_image}>
+                                    <img src={src} alt={`Uploaded ${index + 1}`} />
                                 </div>
-                            )}
+                            ))}
                         </div>
                     </div>
                     <p style={{marginTop:"20px"}}>농장과 무관한 사진을 첨부하면 노출 제한 처리될 수 있습니다.<br/>
