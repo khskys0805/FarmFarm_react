@@ -33,9 +33,9 @@ const Home = () => {
         })
             .then((res) => {
                 console.log("전송 성공");
-                console.log(res.data);
+                console.log(res.data.result);
 
-                setFarms(res.data);
+                setFarms(res.data.result.farmList);
                 console.log("farm:" + res.data);
             })
             .catch((error) => {
@@ -49,9 +49,9 @@ const Home = () => {
         })
             .then((res) => {
                 console.log("전송 성공");
-                console.log(res.data);
+                console.log(res.data.result);
 
-                setProducts(res.data);
+                setProducts(res.data.result);
                 console.log("product:" + res.data);
             })
             .catch((error) => {
@@ -84,7 +84,7 @@ const Home = () => {
                     {farms.length > 0 ? (
                         <FarmList numToShow={numFarmsToShow} farms={farms} />
                     ) : (
-                        <p  style={{textAlign:"center", margin:"30px 0"}}>개설된 농장이 없어요.</p>
+                        <p style={{textAlign:"center", margin:"30px 0"}}>개설된 농장이 없어요.</p>
                     )}
                 </div>
                 <div className={styles.group}>

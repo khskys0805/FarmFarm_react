@@ -6,7 +6,6 @@ import SearchBar from '../../component/SearchBar';
 import Sort from '../../component/Sort';
 import Location from '../../component/Location';
 import { useLocation } from 'react-router-dom';
-import { BeatLoader } from 'react-spinners';
 
 const AllFarm = () => {
     const location = useLocation();
