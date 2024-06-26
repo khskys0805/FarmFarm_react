@@ -9,7 +9,6 @@ import {FaPen} from "react-icons/fa6";
 import {FaTrashAlt} from "react-icons/fa";
 import {FiShare2} from "react-icons/fi";
 import Tabs from "../../component/Tabs";
-import Location from "../../component/Location";
 const FarmDetails = () => {
     const { id } = useParams();
     const [farm, setFarm] = useState([]);
@@ -20,32 +19,26 @@ const FarmDetails = () => {
 
     useEffect(() => {
         axios.get(API.FARM(id), {
-            headers: { authorization: localStorage.getItem("jwt") },
+            headers: { Authorization: `Bearer ${localStorage.getItem('jwt')}` },
         })
             .then((res) => {
                 console.log("전송 성공");
                 console.log(res.data);
-                console.log(res.data.farm);
+                console.log(res.data.result);
 
-                setFarm(res.data.farm);
+                setFarm(res.data.result);
                 setFarmAllInfo(res.data);
                 const imageArray = [];
-                imageArray.push(<img key="image" src={res.data.farm.image} alt="Slide 1" style={{ objectFit:"cover", height:"100%" }} />);
+                if (res.data.farm.image) {
+                    imageArray.push(<img key="image" src={res.data.result.image} alt="Slide 1" style={{ objectFit:"cover", height:"100%" }} />);
+                } else {
+                    imageArray.push(<div key="no-image" style={{ backgroundColor: "white", height: "100%" }} />);
+                }
                 setImages(imageArray);
             })
             .catch((error) => {
                 console.error('작성한 게시물을 가져오는 중 오류 발생: ', error);
             });
-    }, []);
-
-    useEffect(() => {
-        // 세션 스토리지에서 사용자 정보 가져오기
-        const storedUser = sessionStorage.getItem("user");
-        console.log("user: " + storedUser);
-        if (storedUser) {
-            setUser(JSON.parse(storedUser)); // JSON 문자열을 파싱하여 객체로 변환
-        }
-        console.log("DDDDDDD:" + user);
     }, []);
 
     return (
@@ -63,7 +56,7 @@ const FarmDetails = () => {
                         </div>
                         <FiShare2 size="30" style={{cursor:"pointer"}}/>
                     </div>
-                    <Tabs type="farm" farmAllInfo={farmAllInfo}/>
+                    <Tabs type="farm" farm={farm}/>
                 </div>
             )}
         </div>

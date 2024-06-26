@@ -112,17 +112,17 @@ const RegisterFarm = () => {
         if (!validateForm()) {
             return;
         }
-        // axios.post(API.REGISTERFARM, farmData, {
-        //     headers: { Authorization: `Bearer ${localStorage.getItem('jwt')}` },
-        // })
-        //     .then((res) => {
-        //         console.log(res);
-        //         navigate(`/home`);
-        //     })
-        //     .catch((error) => {
-        //         alert("농장 개설에 실패했습니다.");
-        //         console.error(error);
-        //     });
+        axios.post(API.REGISTERFARM, farmData, {
+            headers: { Authorization: `Bearer ${localStorage.getItem('jwt')}` },
+        })
+            .then((res) => {
+                console.log(res.data);
+                navigate(`/home`);
+            })
+            .catch((error) => {
+                alert("농장 개설에 실패했습니다.");
+                console.error(error);
+            });
     }, [farmData, navigate]);
 
     return (

@@ -34,7 +34,7 @@ const Location = ({ farms, type }) => {
                         infowindow.open(map, marker);
                         kakao.maps.event.addListener(marker, 'click', function () {
                             console.log("클릭함! " + farm.fId);
-                            navigate(`/farm/${farm.fid}`)
+                            navigate(`/farmDetail/${farm.fid}`)
                         })
                         // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
                         map.setCenter(coords);

@@ -11,7 +11,7 @@ const FarmList = ({ numToShow, farms }) => {
                     {farms.slice(0, numToShow || farms.length).map((item, index) => (
                         <tr key={index}>
                             <th scope="row">{index + 1}</th>
-                            <Link to={`/farm/${item.fid}`}>
+                            <Link to={`/farmDetail/${item.fid}`}>
                                 <td>{item.name}</td>
                             </Link>
                         </tr>
