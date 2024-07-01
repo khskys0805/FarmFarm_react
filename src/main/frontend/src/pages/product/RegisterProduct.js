@@ -3,12 +3,14 @@ import Header from "../../component/Header";
 import InputBox from "../../component/InputBox";
 import Button from "../../component/Button";
 import TabBar from "../../component/TabBar";
-import { useCallback, useState } from "react";
+import {useCallback, useEffect, useState} from "react";
 import axios from "axios";
 import API from "../../config";
-import { useNavigate } from "react-router-dom";
+import {useNavigate, useParams} from "react-router-dom";
+import { FaCircleXmark } from "react-icons/fa6";
 
 const RegisterProduct = () => {
+    const { id } = useParams();
     const navigate = useNavigate();
     const [imageSrcs, setImageSrcs] = useState([]);
     const [fileIds, setFileIds] = useState([]);
@@ -40,6 +42,28 @@ const RegisterProduct = () => {
         { value: "2", name: "채소" },
         { value: "3", name: "기타" },
     ];
+
+    useEffect(() => {
+        if (id) {
+            axios.get(API.PRODUCT(id), {
+                headers: { Authorization: `Bearer ${localStorage.getItem('jwt')}` },
+            })
+                .then((res) => {
+                    const product = res.data.result;
+                    console.log(product);
+                    setProductData({
+                        ...product,
+                        images: product.images.map(img => img.fileId),
+                    });
+                    setImageSrcs(product.images.map(img => img.fileUrl));
+                    setFileIds(product.images.map(img => img.fileId));
+                    setShowAuctionFields(product.productType === "3");
+                })
+                .catch((error) => {
+                    console.error('상품 정보를 불러오는 중 오류 발생: ', error);
+                });
+        }
+    }, [id]);
 
     const uploadFile = async (file) => {
         const formData = new FormData();
@@ -83,6 +107,21 @@ const RegisterProduct = () => {
                 images: totalFileIds
             }));
         }
+    };
+
+    const handleRemoveImage = (index) => {
+        const newImageSrcs = [...imageSrcs];
+        const newFileIds = [...fileIds];
+
+        newImageSrcs.splice(index, 1);
+        newFileIds.splice(index, 1);
+
+        setImageSrcs(newImageSrcs);
+        setFileIds(newFileIds);
+        setProductData(prevProductData => ({
+            ...prevProductData,
+            images: newFileIds
+        }));
     };
 
     const handleInputChange = useCallback((e) => {
@@ -146,7 +185,7 @@ const RegisterProduct = () => {
             .then((res) => {
                 console.log("전송 성공");
                 console.log(res.data);
-                navigate(`/productDetail/${res.data.id}`);
+                navigate(`/productDetail/${res.data.result.pid}`);
             })
             .catch((error) => {
                 console.error('상품 등록 중 오류 발생: ', error);
@@ -228,6 +267,7 @@ const RegisterProduct = () => {
                             {imageSrcs.map((src, index) =>(
                                 <div key={index} className={styles.my_image}>
                                     <img src={src} alt={`Uploaded ${index + 1}`} />
+                                    <div className={styles.remove_image} onClick={() => handleRemoveImage(index)}><FaCircleXmark color={"#fff"} size={"20px"}/></div>
                                 </div>
                             ))}
                         </div>

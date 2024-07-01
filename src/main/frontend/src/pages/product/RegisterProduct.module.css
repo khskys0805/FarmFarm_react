@@ -98,10 +98,17 @@
 }
 .content_wrapper .my_image{
     margin-right: 15px;
+    position: relative;
 }
 .content_wrapper .my_image img{
     margin-top: 30px;
     height:200px;
+}
+.content_wrapper .my_image .remove_image{
+    cursor: pointer;
+    position: absolute;
+    top:17%;
+    right:10px;
 }
 
 

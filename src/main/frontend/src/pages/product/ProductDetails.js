@@ -15,7 +15,6 @@ const ProductDetails = () => {
     const { id } = useParams();
     const [product, setProduct] = useState([]);
     const [reviews, setReviews] = useState([]);
-    const [productAllInfo, setProductAllInfo] = useState([]);
     const [images, setImages] = useState([]);
     const [quantity, setQuantity] = useState(1);
     const [isGroupProductVisible, setIsGroupProductVisible] = useState(false);
@@ -33,7 +32,6 @@ const ProductDetails = () => {
                 setProduct(res.data.result);
                 setReviews(res.data.reviews);
                 // setGroups(res.data.groups);
-                setProductAllInfo(res.data);
                 const imageArray = [];
                 // if (res.data.product.image1) imageArray.push(<img key="image1" src={res.data.product.image1} alt="Slide 1" style={{ objectFit:"cover", height:"100%" }} />);
                 // if (res.data.product.image2) imageArray.push(<img key="image2" src={res.data.product.image2} alt="Slide 2" style={{ height: "70%" }} />);
@@ -76,12 +74,16 @@ const ProductDetails = () => {
         setIsGroupProductVisible(false);
     };
 
+    const handleEditClick = () => {
+        navigate(`/editProduct/${product.pid}`);
+    };
+
     return (
         <>
             <div className={styles.box}>
                 <SwiperComponent slides={images}/>
                 <IoIosArrowDropleftCircle className={styles.arrowLeft} size="30" color="#fff" onClick={() => navigate(-1)}/>
-                <FaPen className={styles.correct} size="25" color="#fff"/>
+                <FaPen className={styles.correct} size="25" color="#fff" onClick={handleEditClick}/>
                 <FaTrashAlt className={styles.delete} size="25" color="#fff"/>
                 {product && (
                     <div className={styles.content}>
@@ -108,7 +110,7 @@ const ProductDetails = () => {
                                 {/*<p className={styles.length}>({reviews.length} reviews)</p>*/}
                             </div>
                         </div>
-                        <Tabs type="product" productAllInfo={productAllInfo}/>
+                        <Tabs type="product" product={product}/>
                     </div>
                 )}
                 <div className={styles.under_bar}>

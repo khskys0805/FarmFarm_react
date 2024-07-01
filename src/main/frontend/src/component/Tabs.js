@@ -9,20 +9,19 @@ import Location from "./Location";
 import axios from "axios";
 import API from "../config"; // Review 컴포넌트 import
 
-const Tabs = ({ type, farm }) => {
+const Tabs = ({ type, farm, product }) => {
     const [tab, setTab] = useState(0);
     const [showEnquiryForm, setShowEnquiryForm] = useState(false);
-
+    const [productInfo, setProductInfo] = useState([]);
     const [productList, setProductList] = useState([]);
 
     useEffect(() => {
-        if (type === "farm") {
+        if (type === "farm" && farm.fid) {
             axios.get(API.FARMPRODUCTS(farm.fid), {
                 headers: { Authorization: `Bearer ${localStorage.getItem('jwt')}` },
             })
                 .then((res) => {
                     console.log("전송 성공");
-                    console.log(res.data);
                     console.log(res.data.result);
 
                     setProductList(res.data.result);
@@ -31,7 +30,21 @@ const Tabs = ({ type, farm }) => {
                     console.error('작성한 게시물을 가져오는 중 오류 발생: ', error);
                 });
         }
-    }, []);
+        else if (type === "product" && product.pid) {
+            axios.get(API.PRODUCT(product.pid), {
+                headers: { Authorization: `Bearer ${localStorage.getItem('jwt')}` },
+            })
+                .then((res) => {
+                    console.log("전송 성공");
+                    console.log(res.data.result);
+
+                    setProductInfo(res.data.result);
+                })
+                .catch((error) => {
+                    console.error('작성한 게시물을 가져오는 중 오류 발생: ', error);
+                });
+        }
+    }, [type, farm, product]);
 
     const productTab = [
         { name: '상품 설명' },
@@ -68,24 +81,24 @@ const Tabs = ({ type, farm }) => {
                 ))}
             </ul>
             <div className={styles.tab_content}>
-                {/*{type === 'product' && (*/}
-                {/*    <>*/}
-                {/*        {tab === 0 && product && <p>{product.detail}</p>}*/}
-                {/*        {tab === 1 && reviews && (*/}
-                {/*            <div>*/}
-                {/*                {reviews.map((review, index) => (*/}
-                {/*                    <Review key={index} review={review} type={1}/>*/}
-                {/*                ))}*/}
-                {/*            </div>*/}
-                {/*        )}*/}
-                {/*        {tab === 2 && (*/}
-                {/*            <div>*/}
-                {/*                <Button content={"문의 작성하기"} onClick={showForm} />*/}
-                {/*                {showEnquiryForm && <EnquiryForm />}*/}
-                {/*            </div>*/}
-                {/*        )}*/}
-                {/*    </>*/}
-                {/*)}*/}
+                {type === 'product' && (
+                    <>
+                        {tab === 0 && product && <p>{productInfo.detail}</p>}
+                        {/*{tab === 1 && reviews && (*/}
+                        {/*    <div>*/}
+                        {/*        {reviews.map((review, index) => (*/}
+                        {/*            <Review key={index} review={review} type={1}/>*/}
+                        {/*        ))}*/}
+                        {/*    </div>*/}
+                        {/*)}*/}
+                        {tab === 2 && (
+                            <div>
+                                <Button content={"문의 작성하기"} onClick={showForm} />
+                                {showEnquiryForm && <EnquiryForm />}
+                            </div>
+                        )}
+                    </>
+                )}
                 {type === 'farm' && (
                     <>
                         {tab === 0 && farm && (

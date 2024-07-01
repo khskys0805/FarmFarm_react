@@ -21,7 +21,6 @@ const FarmDetails = () => {
         })
             .then((res) => {
                 console.log("전송 성공");
-                console.log(res.data);
                 console.log(res.data.result);
 
                 setFarm(res.data.result);
