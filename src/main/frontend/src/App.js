@@ -46,11 +46,12 @@ function App() {
                     <Route path="/product/list" element={<AllProduct />} />
                     <Route path="/allFarm" element={<AllFarm />} />
                     <Route path="/auction/list" element={<AuctionList />} />
-                    <Route path="/product/:id" element={<ProductDetails />} />
+                    <Route path="/productDetail/:id" element={<ProductDetails />} />
                     <Route path="/farmDetail/:id" element={<FarmDetails />} />
                     <Route path="/myPage" element={<MyPage />} />
                     <Route path="/search" element={<SearchProduct />} />
                     <Route path="/registerFarm" element={<RegisterFarm />} />
+                    <Route path="/editFarm/:id" element={<RegisterFarm />} />
                     <Route path="/cart" element={<ProductShippingAddress />} />
                     <Route path="/myOrder" element={<MyOrderList />} />
                     <Route path="/myReview" element={<MyReviewList />} />

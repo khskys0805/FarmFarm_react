@@ -24,21 +24,20 @@ const ProductDetails = () => {
 
     useEffect(() => {
         axios.get(API.PRODUCT(id), {
-            headers: { authorization: localStorage.getItem("jwt") },
+            headers: { Authorization: `Bearer ${localStorage.getItem('jwt')}` },
         })
             .then((res) => {
                 console.log("전송 성공");
-                console.log(res.data.product);
-                console.log(res.data);
+                console.log(res.data.result);
 
-                setProduct(res.data.product);
+                setProduct(res.data.result);
                 setReviews(res.data.reviews);
-                setGroups(res.data.groups);
+                // setGroups(res.data.groups);
                 setProductAllInfo(res.data);
                 const imageArray = [];
-                if (res.data.product.image1) imageArray.push(<img key="image1" src={res.data.product.image1} alt="Slide 1" style={{ objectFit:"cover", height:"100%" }} />);
-                if (res.data.product.image2) imageArray.push(<img key="image2" src={res.data.product.image2} alt="Slide 2" style={{ height: "70%" }} />);
-                if (res.data.product.image3) imageArray.push(<img key="image3" src={res.data.product.image3} alt="Slide 3" style={{ height: "70%" }} />);
+                // if (res.data.product.image1) imageArray.push(<img key="image1" src={res.data.product.image1} alt="Slide 1" style={{ objectFit:"cover", height:"100%" }} />);
+                // if (res.data.product.image2) imageArray.push(<img key="image2" src={res.data.product.image2} alt="Slide 2" style={{ height: "70%" }} />);
+                // if (res.data.product.image3) imageArray.push(<img key="image3" src={res.data.product.image3} alt="Slide 3" style={{ height: "70%" }} />);
                 setImages(imageArray);
             })
             .catch((error) => {
@@ -106,7 +105,7 @@ const ProductDetails = () => {
                         <div className={styles.bottom}>
                             <div className={styles.review}>
                                 <FaStar size="18" color="#FFC42B"/>
-                                <p className={styles.length}>({reviews.length} reviews)</p>
+                                {/*<p className={styles.length}>({reviews.length} reviews)</p>*/}
                             </div>
                         </div>
                         <Tabs type="product" productAllInfo={productAllInfo}/>

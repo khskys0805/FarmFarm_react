@@ -13,8 +13,6 @@ const FarmDetails = () => {
     const { id } = useParams();
     const [farm, setFarm] = useState([]);
     const [images, setImages] = useState([]);
-    const [farmAllInfo, setFarmAllInfo] = useState([]);
-    const [user, setUser] = useState(null); // 사용자 정보 상태
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -27,12 +25,11 @@ const FarmDetails = () => {
                 console.log(res.data.result);
 
                 setFarm(res.data.result);
-                setFarmAllInfo(res.data);
                 const imageArray = [];
                 if (res.data.farm.image) {
                     imageArray.push(<img key="image" src={res.data.result.image} alt="Slide 1" style={{ objectFit:"cover", height:"100%" }} />);
                 } else {
-                    imageArray.push(<div key="no-image" style={{ backgroundColor: "white", height: "100%" }} />);
+                    imageArray.push(<div key="no-image" style={{ backgroundColor: "#94C015", height: "100%" }} />);
                 }
                 setImages(imageArray);
             })
@@ -41,11 +38,15 @@ const FarmDetails = () => {
             });
     }, []);
 
+    const handleEdit = () => {
+        navigate(`/editFarm/${id}`);
+    };
+
     return (
         <div className={styles.box}>
             <SwiperComponent slides={images}/>
             <IoIosArrowDropleftCircle className={styles.arrowLeft} size="30" color="#fff" onClick={() => navigate(-1)}/>
-            <FaPen className={styles.correct} size="25" color="#fff"/>
+            <FaPen className={styles.correct} size="25" color="#fff" onClick={handleEdit}/>
             <FaTrashAlt className={styles.delete} size="25" color="#fff"/>
             {farm && (
                 <div className={styles.content}>

@@ -8,7 +8,7 @@ const ProductList = ({ numToShow, products }) => {
             {products.length > 0 && (
                 products.slice(0, numToShow || products.length).map((item, index) => (
                     <div className={styles.item_box} key={index}>
-                        <Link to={`/product/${item.pid}`}>
+                        <Link to={`/productDetail/${item.pid}`}>
                             <div className={styles.item_media}>
                                 <img src={item.image1} alt=""/>
                             </div>

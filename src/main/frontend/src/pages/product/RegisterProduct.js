@@ -15,7 +15,6 @@ const RegisterProduct = () => {
     const [productData, setProductData] = useState({
         auction: false,
         auction_quantity: "",
-        category: "1",
         closeCalendar: "",
         date: "",
         detail: "",
@@ -29,7 +28,7 @@ const RegisterProduct = () => {
         name: "",
         open_status: 0,
         price: "",
-        productCategory: "",
+        productCategory: "1",
         quantity: "",
         rating: "",
         sales: "",
@@ -116,7 +115,7 @@ const RegisterProduct = () => {
     const fieldNames = {
         productType: "상품 유형",
         name: "상품 이름",
-        category: "상품 카테고리",
+        productCategory: "상품 카테고리",
         quantity: "상품 수량",
         detail: "상품 설명",
         price: "상품 가격",
@@ -124,7 +123,7 @@ const RegisterProduct = () => {
     };
 
     const validateForm = () => {
-        const requiredFields = ['productType', 'name', 'category', 'quantity', 'detail', 'price', 'direct'];
+        const requiredFields = ['productType', 'name', 'productCategory', 'quantity', 'detail', 'price', 'direct'];
         for (const field of requiredFields) {
             if (!productData[field]) {
                 alert(`${fieldNames[field]}을(를) 입력해주세요.`);
@@ -134,36 +133,31 @@ const RegisterProduct = () => {
         return true;
     };
 
-    const handleFormSubmit = (event) => {
-        event.preventDefault();
+    const handleSubmitForm = useCallback(e => {
+        e.preventDefault();
+        console.log(productData);
         if (!validateForm()) {
             return;
         }
 
-        const formData = {
-            ...productData,
-            price: parseInt(productData.price, 10),
-            quantity: parseInt(productData.quantity, 10),
-            productType: parseInt(productData.productType, 10),
-        };
-
-        axios.post(API.REGISTERPRODUCT, formData, {
+        axios.post(API.REGISTERPRODUCT, productData, {
             headers: { Authorization: `Bearer ${localStorage.getItem('jwt')}` },
         })
             .then((res) => {
                 console.log("전송 성공");
                 console.log(res.data);
-                navigate(`/product/${res.data.id}`);
+                navigate(`/productDetail/${res.data.id}`);
             })
             .catch((error) => {
                 console.error('상품 등록 중 오류 발생: ', error);
+                console.error('상품 등록 중 오류 발생: ', error.response?.data);
             });
-    };
+    }, [productData, navigate]);
 
     return (
         <div className={styles.box}>
             <Header title={"상품 등록"} go={-1}/>
-            <form className={styles.form} onSubmit={handleFormSubmit}>
+            <form className={styles.form} onSubmit={handleSubmitForm}>
                 <div className={styles.content_wrapper}>
                     <h3>상품 유형</h3>
                     <p>상품 유형을 선택해주세요.</p>
@@ -195,7 +189,7 @@ const RegisterProduct = () => {
                 </div>
                 <div className={styles.content_wrapper}>
                     <h3>상품 카테고리</h3>
-                    <select name={"category"} onChange={handleInputChange} value={productData.category}>
+                    <select name={"productCategory"} onChange={handleInputChange} value={productData.productCategory}>
                         {selectList.map((item) => (
                             <option value={item.value} key={item.value}>
                                 {item.name}
@@ -241,7 +235,7 @@ const RegisterProduct = () => {
                     <p style={{marginTop:"20px"}}>상품과 무관한 사진을 첨부하면 노출 제한 처리될 수 있습니다.<br/>
                         사진 첨부 시 개인정보가 노출되지 않도록 유의해주세요.</p>
                 </div>
-                <Button content={"상품 등록"} onClick={handleFormSubmit}/>
+                <Button content={"상품 등록"} />
             </form>
             <TabBar/>
         </div>

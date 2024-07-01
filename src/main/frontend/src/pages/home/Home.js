@@ -51,7 +51,7 @@ const Home = () => {
                 console.log("전송 성공");
                 console.log(res.data.result);
 
-                setProducts(res.data.result);
+                setProducts(res.data.result.productList);
                 console.log("product:" + res.data);
             })
             .catch((error) => {
