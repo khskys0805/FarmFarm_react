@@ -22,11 +22,21 @@ const FarmDetails = () => {
             .then((res) => {
                 console.log("전송 성공");
                 console.log(res.data.result);
+                const rslt = res.data.result;
+                setFarm(rslt);
 
-                setFarm(res.data.result);
                 const imageArray = [];
-                if (res.data.farm.image) {
-                    imageArray.push(<img key="image" src={res.data.result.image} alt="Slide 1" style={{ objectFit:"cover", height:"100%" }} />);
+                if (rslt.images && rslt.images.length > 0) {
+                    rslt.images.slice(0, 3).forEach((image, index) => {
+                        imageArray.push(
+                            <img
+                                key={`image-${index}`}
+                                src={image.fileUrl}
+                                alt={`Slide ${index + 1}`}
+                                style={{ objectFit: "cover", height: "100%" }}
+                            />
+                        );
+                    });
                 } else {
                     imageArray.push(<div key="no-image" style={{ backgroundColor: "#94C015", height: "100%" }} />);
                 }

@@ -42,8 +42,10 @@ const RegisterProduct = () => {
         { value: "2", name: "채소" },
         { value: "3", name: "기타" },
     ];
+    const [isEditMode, setIsEditMode] = useState(false); // 추가: 수정 모드 상태
 
     useEffect(() => {
+        setIsEditMode(true); // 추가: 수정 모드 활성화
         if (id) {
             axios.get(API.PRODUCT(id), {
                 headers: { Authorization: `Bearer ${localStorage.getItem('jwt')}` },
@@ -201,9 +203,9 @@ const RegisterProduct = () => {
                     <h3>상품 유형</h3>
                     <p>상품 유형을 선택해주세요.</p>
                     <div>
-                        <InputBox type={"radio"} name={"productType"} value={"1"} onChange={(e) => handleRadioChange(e, "productType")} checked={productData.productType === "1"}/><span>일반 상품</span>
-                        <InputBox type={"radio"} name={"productType"} value={"2"} onChange={(e) => handleRadioChange(e, "productType")} checked={productData.productType === "2"}/><span>공동 구매</span>
-                        <InputBox type={"radio"} name={"productType"} value={"3"} onChange={(e) => handleRadioChange(e, "productType")} checked={productData.productType === "3"}/><span>경매 상품</span>
+                        <input type={"radio"} name={"productType"} value={"1"} onChange={(e) => handleRadioChange(e, "productType")} checked={productData.productType === "1"}/><span>일반 상품</span>
+                        <input type={"radio"} name={"productType"} value={"2"} onChange={(e) => handleRadioChange(e, "productType")} checked={productData.productType === "2"}/><span>공동 구매</span>
+                        <input type={"radio"} name={"productType"} value={"3"} onChange={(e) => handleRadioChange(e, "productType")} checked={productData.productType === "3"}/><span>경매 상품</span>
                     </div>
                 </div>
                 {showAuctionFields && (
@@ -254,8 +256,8 @@ const RegisterProduct = () => {
                     <h3>거래 방법</h3>
                     <p>상품을 거래할 방법을 선택해주세요.</p>
                     <div>
-                        <InputBox type={"radio"} name={"direct"} value={"1"} onChange={(e) => handleRadioChange(e, "direct")} checked={productData.direct === "1"}/><span>직거래</span>
-                        <InputBox type={"radio"} name={"direct"} value={"2"} onChange={(e) => handleRadioChange(e, "direct")} checked={productData.direct === "2"}/><span>배송</span>
+                        <input type={"radio"} name={"direct"} value={"1"} onChange={(e) => handleRadioChange(e, "direct")} checked={productData.direct === "1"} readOnly={isEditMode}/><span>직거래</span>
+                        <input type={"radio"} name={"direct"} value={"2"} onChange={(e) => handleRadioChange(e, "direct")} checked={productData.direct === "2"} readOnly={isEditMode}/><span>배송</span>
                     </div>
                 </div>
                 <div className={styles.content_wrapper}>

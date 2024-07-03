@@ -1,15 +1,16 @@
-import {useCallback, useState} from "react";
+import { useCallback, useEffect, useState } from "react";
 import styles from "../product/RegisterProduct.module.css";
 import Header from "../../component/Header";
 import InputBox from "../../component/InputBox";
 import Button from "../../component/Button";
 import TabBar from "../../component/TabBar";
-import {useNavigate} from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import API from "../../config";
 import PopupPostCode from "../../component/PopupPostCode";
 
 const RegisterFarm = () => {
+    const { id } = useParams();
     const navigate = useNavigate();
     const [imageSrcs, setImageSrcs] = useState([]);
     const [fileIds, setFileIds] = useState([]);
@@ -20,13 +21,37 @@ const RegisterFarm = () => {
         locationFull: "",
         locationDetail: "",
         detail: "",
-        auction:"",
+        auction: false, // 초기 값을 false로 설정
         images: "",
     });
+    const [isEditMode, setIsEditMode] = useState(false); // 추가: 수정 모드 상태
+
+    useEffect(() => {
+        if (id) {
+            setIsEditMode(true); // 추가: 수정 모드 활성화
+            axios.get(API.FARM(id), {
+                headers: { Authorization: `Bearer ${localStorage.getItem('jwt')}` },
+            })
+                .then((res) => {
+                    const farm = res.data.result;
+                    console.log(farm);
+                    setFarmData({
+                        ...farm,
+                        auction: farm.auction, // 여기에 auction 값을 설정합니다
+                        images: farm.images.map(img => img.fileId),
+                    });
+                    setImageSrcs(farm.images.map(img => img.fileUrl));
+                    setFileIds(farm.images.map(img => img.fileId));
+                })
+                .catch((error) => {
+                    console.error('상품 정보를 불러오는 중 오류 발생: ', error);
+                });
+        }
+    }, [id]);
 
     const handleInputChange = useCallback((e) => {
-        const {name, value, type, checked} = e.target;
-        const newValue = type === "checkbox" ? checked : value;
+        const { name, value, type, checked } = e.target;
+        const newValue = type === "checkbox" ? checked : (type === "radio" ? JSON.parse(value) : value);
         setFarmData((prevFarmData) => ({
             ...prevFarmData,
             [name]: newValue,
@@ -64,9 +89,9 @@ const RegisterFarm = () => {
 
         if (validFiles.length > 0) {
             const newImageUrls = validFiles.map(file => file.result[0].fileUrl);
-            const totalImageUrls = [...imageSrcs, ...newImageUrls].slice(0, 10);
+            const totalImageUrls = [...imageSrcs, ...newImageUrls].slice(0, 3);
             const newFileIds = validFiles.map(file => file.result[0].fileId);
-            const totalFileIds = [...fileIds, ...newFileIds].slice(0, 10);
+            const totalFileIds = [...fileIds, ...newFileIds].slice(0, 3);
 
             setImageSrcs(totalImageUrls);
             setFileIds(totalFileIds);
@@ -127,11 +152,11 @@ const RegisterFarm = () => {
 
     return (
         <div className={styles.box}>
-            <Header title={"농장 개설"} go={-1}/>
+            <Header title={"농장 개설"} go={-1} />
             <form className={styles.form} onSubmit={handleSubmitForm}>
                 <div className={styles.content_wrapper}>
                     <h3>농장 이름</h3>
-                    <InputBox type={"text"} name={"name"} value={farmData.name} placeholder={"농장 이름을 입력해주세요."} onChange={handleInputChange}/>
+                    <InputBox type={"text"} name={"name"} value={farmData.name} placeholder={"농장 이름을 입력해주세요."} onChange={handleInputChange} />
                 </div>
                 <div className={styles.content_wrapper}>
                     <div className={styles.location_title}>
@@ -139,11 +164,11 @@ const RegisterFarm = () => {
                         <PopupPostCode onComplete={handleComplete} />
                     </div>
                     <div className={styles.location}>
-                        <InputBox type={"text"} name={"locationCity"} value={farmData.locationCity} placeholder={"OO시/도"} readOnly={true}/>
-                        <InputBox type={"text"} name={"locationGu"} value={farmData.locationGu} placeholder={"OO시/군/구"} readOnly={true}/>
+                        <InputBox type={"text"} name={"locationCity"} value={farmData.locationCity} placeholder={"OO시/도"} readOnly={true} />
+                        <InputBox type={"text"} name={"locationGu"} value={farmData.locationGu} placeholder={"OO시/군/구"} readOnly={true} />
                     </div>
-                    <InputBox type={"text"} name={"locationFull"} value={farmData.locationFull} placeholder={"전체 주소"} readOnly={true}/>
-                    <InputBox type={"text"} name={"locationDetail"} value={farmData.locationDetail} placeholder={"상세 주소"} onChange={handleInputChange}/>
+                    <InputBox type={"text"} name={"locationFull"} value={farmData.locationFull} placeholder={"전체 주소"} readOnly={true} />
+                    <InputBox type={"text"} name={"locationDetail"} value={farmData.locationDetail} placeholder={"상세 주소"} onChange={handleInputChange} />
                 </div>
                 <div className={styles.content_wrapper}>
                     <h3>농장 설명</h3>
@@ -152,33 +177,33 @@ const RegisterFarm = () => {
                 </div>
                 <div className={styles.content_wrapper}>
                     <h3>경매를 진행하실건가요?</h3>
-                    <p>경매는 상품을 등록한 시점부터 상품 등록시 설정한 경매 종료 시각까지 진행되며 <br/>
+                    <p>경매는 상품을 등록한 시점부터 상품 등록시 설정한 경매 종료 시각까지 진행되며 <br />
                         가격이 높은 경매건이 낙찰됩니다.
                     </p>
                     <div>
-                        <InputBox type={"radio"} name={"auction"} value={"true"} onChange={handleInputChange}/><span>네</span>
-                        <InputBox type={"radio"} name={"auction"} value={"false"} onChange={handleInputChange}/><span>아니오</span>
+                        <input type={"radio"} name={"auction"} value={true} checked={farmData.auction === true} onChange={handleInputChange} readOnly={isEditMode}/><span>네</span>
+                        <input type={"radio"} name={"auction"} value={false} checked={farmData.auction === false} onChange={handleInputChange} readOnly={isEditMode} /><span>아니오</span>
                     </div>
                 </div>
                 <div className={styles.content_wrapper}>
                     <h3>사진을 올려주세요 <span>(선택)</span></h3>
                     <div>
                         <label className={styles.file_label} htmlFor="chooseFile">파일 선택</label>
-                        <input className={styles.file} id="chooseFile" type="file" onChange={handleFileChange} multiple/>
+                        <input className={styles.file} id="chooseFile" type="file" onChange={handleFileChange} multiple />
                         <div className={styles.image_container}>
-                            {imageSrcs.map((src, index) =>(
+                            {imageSrcs.map((src, index) => (
                                 <div key={index} className={styles.my_image}>
                                     <img src={src} alt={`Uploaded ${index + 1}`} />
                                 </div>
                             ))}
                         </div>
                     </div>
-                    <p style={{marginTop:"20px"}}>농장과 무관한 사진을 첨부하면 노출 제한 처리될 수 있습니다.<br/>
+                    <p style={{ marginTop: "20px" }}>농장과 무관한 사진을 첨부하면 노출 제한 처리될 수 있습니다.<br />
                         사진 첨부 시 개인정보가 노출되지 않도록 유의해주세요.</p>
                 </div>
-                <Button content={"농장 개설"}/>
+                <Button content={"농장 개설"} />
             </form>
-            <TabBar/>
+            <TabBar />
         </div>
     )
 };
