@@ -8,6 +8,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import API from "../../config";
 import PopupPostCode from "../../component/PopupPostCode";
+import {FaCircleXmark} from "react-icons/fa6";
 
 const RegisterFarm = () => {
     const { id } = useParams();
@@ -25,6 +26,8 @@ const RegisterFarm = () => {
         images: "",
     });
     const [isEditMode, setIsEditMode] = useState(false); // 추가: 수정 모드 상태
+    const [addImages, setAddImages] = useState([]); // 추가: 추가된 이미지 파일 ID 배열
+    const [deleteImages, setDeleteImages] = useState([]); // 추가: 삭제된 이미지 파일 ID 배열
 
     useEffect(() => {
         if (id) {
@@ -99,6 +102,29 @@ const RegisterFarm = () => {
                 ...prevFarmData,
                 images: totalFileIds
             }));
+            if (isEditMode) {
+                setAddImages(prevAddImages => [...prevAddImages, ...newFileIds]); // 추가된 이미지 파일 ID 추가
+            }
+        }
+    };
+
+    const handleRemoveImage = (index) => {
+        const newImageSrcs = [...imageSrcs];
+        const newFileIds = [...fileIds];
+
+        const removedFileId = newFileIds.splice(index, 1)[0]; // 삭제할 파일 ID 가져오기
+
+        newImageSrcs.splice(index, 1);
+
+        setImageSrcs(newImageSrcs);
+        setFileIds(newFileIds);
+        setFarmData(prevFarmData => ({
+            ...prevFarmData,
+            images: newFileIds
+        }));
+
+        if (isEditMode) {
+            setDeleteImages(prevDeleteImages => [...prevDeleteImages, removedFileId]); // 삭제된 이미지 파일 ID 추가
         }
     };
 
@@ -121,7 +147,12 @@ const RegisterFarm = () => {
     };
 
     const validateForm = () => {
-        const requiredFields = ['name', 'locationFull', 'locationDetail', 'detail', 'auction'];
+        const requiredFields = ['name', 'locationFull', 'locationDetail', 'detail'];
+
+        if (!isEditMode) {
+            requiredFields.push('auction');
+        }
+
         for (const field of requiredFields) {
             if (!farmData[field]) {
                 alert(`${fieldNames[field]}을(를) 입력해주세요.`);
@@ -137,22 +168,45 @@ const RegisterFarm = () => {
         if (!validateForm()) {
             return;
         }
-        axios.post(API.REGISTERFARM, farmData, {
-            headers: { Authorization: `Bearer ${localStorage.getItem('jwt')}` },
-        })
-            .then((res) => {
-                console.log(res.data);
-                navigate(`/home`);
+
+        const formData = {
+            ...farmData,
+            addImages: addImages, // 추가된 이미지 파일 ID 배열 추가
+            deleteImages: deleteImages, // 삭제된 이미지 파일 ID 배열 추가
+        };
+        console.log(formData);
+
+        if (isEditMode) {
+            axios.patch(API.FARM(formData.fid), formData, {
+                headers: { Authorization: `Bearer ${localStorage.getItem('jwt')}` },
             })
-            .catch((error) => {
-                alert("농장 개설에 실패했습니다.");
-                console.error(error);
-            });
-    }, [farmData, navigate]);
+                .then((res) => {
+                    console.log(res.data);
+                    navigate(`/home`);
+                })
+                .catch((error) => {
+                    alert("농장 개설에 실패했습니다.");
+                    console.error(error);
+                });
+        }
+        else {
+            axios.post(API.REGISTERFARM, farmData, {
+                headers: { Authorization: `Bearer ${localStorage.getItem('jwt')}` },
+            })
+                .then((res) => {
+                    console.log(res.data);
+                    navigate(`/home`);
+                })
+                .catch((error) => {
+                    alert("농장 개설에 실패했습니다.");
+                    console.error(error);
+                });
+        }
+    }, [farmData, navigate, addImages, deleteImages]);
 
     return (
         <div className={styles.box}>
-            <Header title={"농장 개설"} go={-1} />
+            <Header title={isEditMode ? "농장 수정" : "농장 개설"} go={-1} />
             <form className={styles.form} onSubmit={handleSubmitForm}>
                 <div className={styles.content_wrapper}>
                     <h3>농장 이름</h3>
@@ -181,8 +235,8 @@ const RegisterFarm = () => {
                         가격이 높은 경매건이 낙찰됩니다.
                     </p>
                     <div>
-                        <input type={"radio"} name={"auction"} value={true} checked={farmData.auction === true} onChange={handleInputChange} readOnly={isEditMode}/><span>네</span>
-                        <input type={"radio"} name={"auction"} value={false} checked={farmData.auction === false} onChange={handleInputChange} readOnly={isEditMode} /><span>아니오</span>
+                        <input type={"radio"} name={"auction"} value={true} checked={farmData.auction === true} onChange={handleInputChange} disabled={isEditMode}/><span>네</span>
+                        <input type={"radio"} name={"auction"} value={false} checked={farmData.auction === false} onChange={handleInputChange} disabled={isEditMode} /><span>아니오</span>
                     </div>
                 </div>
                 <div className={styles.content_wrapper}>
@@ -194,6 +248,7 @@ const RegisterFarm = () => {
                             {imageSrcs.map((src, index) => (
                                 <div key={index} className={styles.my_image}>
                                     <img src={src} alt={`Uploaded ${index + 1}`} />
+                                    <div className={styles.remove_image} onClick={() => handleRemoveImage(index)}><FaCircleXmark color={"#fff"} size={"20px"}/></div>
                                 </div>
                             ))}
                         </div>
@@ -201,7 +256,7 @@ const RegisterFarm = () => {
                     <p style={{ marginTop: "20px" }}>농장과 무관한 사진을 첨부하면 노출 제한 처리될 수 있습니다.<br />
                         사진 첨부 시 개인정보가 노출되지 않도록 유의해주세요.</p>
                 </div>
-                <Button content={"농장 개설"} />
+                <Button content={isEditMode ? "농장 수정하기" : "농장 개설하기"}/>
             </form>
             <TabBar />
         </div>
