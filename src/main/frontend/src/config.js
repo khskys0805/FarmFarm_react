@@ -4,6 +4,9 @@ const API = {
     },
     REGISTERPRODUCT: "/product",
     ALLPRODUCT: "/product/list",
+    PRODUCTTOCART(ID){
+        return `/product/cart/${ID}`
+    },
     FARM(ID){
         return `/farm/${ID}`
     },
@@ -13,6 +16,7 @@ const API = {
     REGISTERFARM: "/farm",
     ALLFARM: "/farm/list",
     ALLAUCTION: "/product/auction/list",
+    CART: "/product/cart",
     MYPAGE: "/myPage",
     MYORDER: "/order",
     MYREVIEW: "/review/my",

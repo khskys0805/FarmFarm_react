@@ -20,6 +20,7 @@ import MyEnquiryList from "./pages/myPage/MyEnquiryList";
 import MyParticipateAuction from "./pages/myPage/MyParticipateAuction";
 import WriteReview from "./pages/review/WriteReview";
 import EditMyProfile from "./pages/myPage/EditMyProfile";
+import Cart from "./pages/cart/Cart";
 
 function App() {
     return (
@@ -53,7 +54,8 @@ function App() {
                     <Route path="/search" element={<SearchProduct />} />
                     <Route path="/registerFarm" element={<RegisterFarm />} />
                     <Route path="/editFarm/:id" element={<RegisterFarm />} />
-                    <Route path="/cart" element={<ProductShippingAddress />} />
+                    <Route path="/cart" element={<Cart />} />
+                    <Route path="/shippingAddress" element={<ProductShippingAddress />} />
                     <Route path="/myOrder" element={<MyOrderList />} />
                     <Route path="/myReview" element={<MyReviewList />} />
                     <Route path="/myEnquiry" element={<MyEnquiryList />} />

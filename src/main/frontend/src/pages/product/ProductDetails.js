@@ -80,6 +80,22 @@ const ProductDetails = () => {
         navigate(`/editProduct/${product.pid}`);
     };
 
+    const handleAddToCart = () => {
+        console.log("quantity" + quantity);
+        axios.post(API.PRODUCTTOCART(product.pid), { quantity: quantity }, {
+            headers: { Authorization: `Bearer ${localStorage.getItem('jwt')}` },
+        })
+            .then((res) => {
+                console.log("전송 성공");
+                console.log(res.data);
+                alert(`${quantity}개의 상품이 장바구니에 담겼습니다.`);
+                navigate(`/cart`);
+            })
+            .catch((error) => {
+                console.error('작성한 게시물을 가져오는 중 오류 발생: ', error);
+            });
+    }
+
     return (
         <>
             <div className={styles.box}>
@@ -122,7 +138,7 @@ const ProductDetails = () => {
                             <Button content={["혼자 주문", `${formatNumber(product.price)}원`]} width={"70%"}/>
                         </div>
                     ) : (
-                        <Button content={["혼자 주문", `${formatNumber(product.price)}원`]}/>
+                        <Button content={["혼자 주문", `${formatNumber(product.price)}원`]} onClick={handleAddToCart}/>
                     )}
                 </div>
             </div>
