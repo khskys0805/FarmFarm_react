@@ -1,5 +1,6 @@
 import styles from "./ProductList.module.css";
 import {Link} from "react-router-dom";
+import defaultImg from "../images/icon.png"
 
 const ProductList = ({ numToShow, products }) => {
     return (
@@ -10,7 +11,11 @@ const ProductList = ({ numToShow, products }) => {
                     <div className={styles.item_box} key={index}>
                         <Link to={`/productDetail/${item.pid}`}>
                             <div className={styles.item_media}>
-                                <img src={item.image1} alt=""/>
+                                {item.images && item.images.length > 0 ? (
+                                    <img src={item.images[0].fileUrl} alt=""/>
+                                ) : (
+                                    <img src={defaultImg} alt=""/>
+                                )}
                             </div>
                             <label className="bookmark-btn">
                                 <input type="checkbox" checked/>

@@ -185,7 +185,7 @@ const RegisterFarm = () => {
                     navigate(`/home`);
                 })
                 .catch((error) => {
-                    alert("농장 개설에 실패했습니다.");
+                    alert("농장 수정에 실패했습니다.");
                     console.error(error);
                 });
         }

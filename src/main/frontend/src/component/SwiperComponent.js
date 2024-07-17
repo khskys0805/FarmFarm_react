@@ -1,11 +1,13 @@
+// SwiperComponent.js
 import { Swiper, SwiperSlide } from 'swiper/react';
-import SwiperCore, { Navigation, Pagination, Autoplay } from "swiper";	// 추가
+import SwiperCore, { Navigation, Pagination, Autoplay } from "swiper";
 import 'swiper/swiper-bundle.min.css';
-import styles from "../pages/product/ProductDetails.module.css";
+import styles from "./SwiperComponent.module.css";
 
-SwiperCore.use([Navigation, Pagination, Autoplay])
+SwiperCore.use([Navigation, Pagination, Autoplay]);
+
 const SwiperComponent = ({ slides, useContainerStyle = true }) => {
-    return(
+    return (
         <div className={useContainerStyle ? styles.swiperContainer : ''}>
             <Swiper
                 className={styles.imageWrapper}
@@ -13,7 +15,7 @@ const SwiperComponent = ({ slides, useContainerStyle = true }) => {
                 slidesPerView={1}
                 navigation
                 pagination={{ clickable: true }}
-                // autoplay={{ delay: 3000 }}	// 추가
+                autoplay={{ delay: 3000 }}
                 loop={true}
             >
                 {slides.map((slide, index) => (
@@ -21,6 +23,7 @@ const SwiperComponent = ({ slides, useContainerStyle = true }) => {
                 ))}
             </Swiper>
         </div>
-    )
+    );
 }
+
 export default SwiperComponent;

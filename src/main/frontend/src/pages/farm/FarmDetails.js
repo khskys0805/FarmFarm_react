@@ -51,12 +51,25 @@ const FarmDetails = () => {
         navigate(`/editFarm/${id}`);
     };
 
+    const deleteFarm = () => {
+        axios.delete(API.FARM(id), {
+            headers: { Authorization: `Bearer ${localStorage.getItem('jwt')}` },
+        })
+            .then((res) => {
+                console.log("전송 성공");
+                console.log(res.data.result);
+            })
+            .catch((error) => {
+                console.error('작성한 게시물을 가져오는 중 오류 발생: ', error);
+            });
+    }
+
     return (
         <div className={styles.box}>
             <SwiperComponent slides={images}/>
             <IoIosArrowDropleftCircle className={styles.arrowLeft} size="30" color="#fff" onClick={() => navigate(-1)}/>
             <FaPen className={styles.correct} size="25" color="#fff" onClick={handleEdit}/>
-            <FaTrashAlt className={styles.delete} size="25" color="#fff"/>
+            <FaTrashAlt className={styles.delete} size="25" color="#fff" onClick={deleteFarm}/>
             {farm && (
                 <div className={styles.content}>
                     <div className={styles.top}>

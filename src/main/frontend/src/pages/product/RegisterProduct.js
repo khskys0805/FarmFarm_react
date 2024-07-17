@@ -144,7 +144,7 @@ const RegisterProduct = () => {
             };
 
             if (fieldName === "productType") {
-                const isAuction = value === "3";
+                const isAuction = value === "2";
                 setShowAuctionFields(isAuction);
                 newProductData.auction = isAuction;
             }
@@ -203,9 +203,9 @@ const RegisterProduct = () => {
                     <h3>상품 유형</h3>
                     <p>상품 유형을 선택해주세요.</p>
                     <div>
-                        <input type={"radio"} name={"productType"} value={"1"} onChange={(e) => handleRadioChange(e, "productType")} checked={productData.productType === "1"}/><span>일반 상품</span>
-                        <input type={"radio"} name={"productType"} value={"2"} onChange={(e) => handleRadioChange(e, "productType")} checked={productData.productType === "2"}/><span>공동 구매</span>
-                        <input type={"radio"} name={"productType"} value={"3"} onChange={(e) => handleRadioChange(e, "productType")} checked={productData.productType === "3"}/><span>경매 상품</span>
+                        <input type={"radio"} name={"productType"} value={"0"} onChange={(e) => handleRadioChange(e, "productType")} checked={productData.productType === "0"}/><span>일반 상품</span>
+                        <input type={"radio"} name={"productType"} value={"1"} onChange={(e) => handleRadioChange(e, "productType")} checked={productData.productType === "1"}/><span>공동 구매</span>
+                        <input type={"radio"} name={"productType"} value={"2"} onChange={(e) => handleRadioChange(e, "productType")} checked={productData.productType === "2"}/><span>경매 상품</span>
                     </div>
                 </div>
                 {showAuctionFields && (

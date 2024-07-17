@@ -33,7 +33,7 @@ const Home = () => {
         })
             .then((res) => {
                 console.log("전송 성공");
-                console.log(res.data.result);
+                console.log(res.data);
 
                 setFarms(res.data.result.farmList);
                 console.log("farm:" + res.data);
@@ -49,10 +49,12 @@ const Home = () => {
         })
             .then((res) => {
                 console.log("전송 성공");
-                console.log(res.data.result);
+                // const obj = JSON.parse(res.data);
+                console.log(res.data);
 
-                setProducts(res.data.result.productList);
                 console.log("product:" + res.data);
+                setProducts(res.data.result.productList);
+
             })
             .catch((error) => {
                 console.error('작성한 게시물을 가져오는 중 오류 발생: ', error);
