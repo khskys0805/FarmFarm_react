@@ -11,3 +11,91 @@
     margin-top: 20px;
     padding-bottom: 60px;
 }
+
+.cart_list{
+    display: flex;
+    justify-content: space-between;
+    margin: 10px 10px 0 10px;
+    border-bottom: 1px solid #eaeaea;
+    padding-bottom: 10px;
+}
+.cart_list .left{
+    display: flex;
+    align-items: center;
+}
+.cart_list .img{
+    width:100px;
+    margin-right: 20px;
+}
+.cart_list .img img{
+    width:100%;
+}
+.cart_list p{
+    font-size: 14px;
+}
+.cart_list .farm_name{
+    color:#7c7c7c;
+    margin-bottom: 10px;
+}
+.cart_list .product_name{
+    margin-bottom: 20px;
+}
+.cart_list .price{
+    margin-bottom: 30px;
+}
+.cart_list .total_price{
+    color:rgb(148, 192, 21);
+}
+
+.cart_list .right{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+.cart_list .remove{
+    text-align: right;
+}
+.cart_list .quantity{
+    text-align: right;
+}
+
+.stepper {
+    background-color: #EFEFEF;
+    height: 35px;
+    width: 115px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding:0 10px;
+}
+.stepper .stepper_button_plus,
+.stepper .stepper_button_minus {
+    width: 18px;
+    height:3px;
+    border: 0;
+    background-color: #0A3C48;
+    cursor: pointer;
+}
+.stepper .stepper_button_plus:after {
+    content: '';
+    width: 18px;
+    height:2.5px;
+    border: none;
+    display: block;
+    transform: rotate(90deg);
+    background-color: #0A3C48;
+    cursor: pointer;
+}
+.stepper .stepper_input_wrap {
+    border: 0;
+}
+.stepper .stepper_input_wrap input {
+    color: #0A3C48;
+    font-size: 18px;
+    font-weight: 500;
+    border: none;
+    outline: none;
+    width:30px;
+    background: none;
+    text-align: center;
+}

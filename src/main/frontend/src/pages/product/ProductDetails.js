@@ -31,10 +31,6 @@ const ProductDetails = () => {
 
                 setProduct(res.data.result);
                 setReviews(res.data.reviews);
-                // setGroups(res.data.groups);
-                // if (res.data.product.image1) imageArray.push(<img key="image1" src={res.data.product.image1} alt="Slide 1" style={{ objectFit:"cover", height:"100%" }} />);
-                // if (res.data.product.image2) imageArray.push(<img key="image2" src={res.data.product.image2} alt="Slide 2" style={{ height: "70%" }} />);
-                // if (res.data.product.image3) imageArray.push(<img key="image3" src={res.data.product.image3} alt="Slide 3" style={{ height: "70%" }} />);
                 const imageArray = res.data.result.images.map(image => (
                     <img key={image.fileId} src={image.fileUrl} alt={`Slide ${image.fileId}`} style={{ objectFit: "cover", height: "50%" }} />
                 ));
