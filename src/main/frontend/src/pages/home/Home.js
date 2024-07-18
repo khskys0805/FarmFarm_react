@@ -10,9 +10,10 @@ import ProductList from "../../component/ProductList";
 import FarmList from "../../component/FarmList";
 import AuctionList from "../../component/AuctionList";
 import {Link} from "react-router-dom";
-import {useEffect, useState} from "react";
+import {useContext, useEffect, useState} from "react";
 import axios from "axios";
 import API from "../../config";
+import {DataContext} from "../../context/DataContext";
 
 const Home = () => {
     const slides = [
@@ -24,42 +25,43 @@ const Home = () => {
     const numProductsToShow = 4; // 보여줄 상품 개수를 지정
     const numFarmsToShow = 5; // 보여줄 농장 개수를 지정
 
-    const [farms, setFarms] = useState([]);
-    const [products, setProducts] = useState([]);
+    // const [farms, setFarms] = useState([]);
+    // const [products, setProducts] = useState([]);
+    const { products, farms } = useContext(DataContext);
 
-    useEffect(() => {
-        axios.get(API.ALLFARM, {
-            headers: { Authorization: `Bearer ${localStorage.getItem('jwt')}` },
-        })
-            .then((res) => {
-                console.log("전송 성공");
-                console.log(res.data);
-
-                setFarms(res.data.result.farmList);
-                console.log("farm:" + res.data);
-            })
-            .catch((error) => {
-                console.error('작성한 게시물을 가져오는 중 오류 발생: ', error);
-            });
-    }, []);
-
-    useEffect(() => {
-        axios.get(API.ALLPRODUCT, {
-            headers: { Authorization: `Bearer ${localStorage.getItem('jwt')}` },
-        })
-            .then((res) => {
-                console.log("전송 성공");
-                // const obj = JSON.parse(res.data);
-                console.log(res.data);
-
-                console.log("product:" + res.data);
-                setProducts(res.data.result.productList);
-
-            })
-            .catch((error) => {
-                console.error('작성한 게시물을 가져오는 중 오류 발생: ', error);
-            });
-    }, []);
+    // useEffect(() => {
+    //     axios.get(API.ALLFARM, {
+    //         headers: { Authorization: `Bearer ${localStorage.getItem('jwt')}` },
+    //     })
+    //         .then((res) => {
+    //             console.log("전송 성공");
+    //             console.log(res.data);
+    //
+    //             setFarms(res.data.result.farmList);
+    //             console.log("farm:" + res.data);
+    //         })
+    //         .catch((error) => {
+    //             console.error('작성한 게시물을 가져오는 중 오류 발생: ', error);
+    //         });
+    // }, []);
+    //
+    // useEffect(() => {
+    //     axios.get(API.ALLPRODUCT, {
+    //         headers: { Authorization: `Bearer ${localStorage.getItem('jwt')}` },
+    //     })
+    //         .then((res) => {
+    //             console.log("전송 성공");
+    //             // const obj = JSON.parse(res.data);
+    //             console.log(res.data);
+    //
+    //             console.log("product:" + res.data);
+    //             setProducts(res.data.result.productList);
+    //
+    //         })
+    //         .catch((error) => {
+    //             console.error('작성한 게시물을 가져오는 중 오류 발생: ', error);
+    //         });
+    // }, []);
 
 
     return (
@@ -70,7 +72,7 @@ const Home = () => {
                 <div className={styles.group}>
                     <div className={styles.link}>
                         <h2>이 상품 어때요?</h2>
-                        <Link to="/product/list" state={{ products: products }}>
+                        <Link to="/productList">
                             <IoIosArrowDroprightCircle size="30" color="#94C015FF" style={{cursor:"pointer"}}/>
                         </Link>
                     </div>

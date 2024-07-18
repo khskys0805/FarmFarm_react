@@ -4,8 +4,10 @@ import React, {useEffect, useState} from "react";
 import axios from "axios";
 import API from "../../config";
 import img from "../../images/logo/farmfarm_logo.png";
-import {useNavigate} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 import {FaTrashAlt} from "react-icons/fa";
+import {IoIosArrowDroprightCircle} from "react-icons/io";
+import Button from "../../component/Button";
 
 const Cart = () => {
     const [carts, setCarts] = useState([]);
@@ -43,7 +45,15 @@ const Cart = () => {
         <div className={styles.box}>
             <Header title={"장바구니"} go={-1}/>
             <ul>
-                {carts.length > 0 && (
+                {carts.length === 0 ? (
+                    <div className={styles.no_list}>
+                        <p>아직 장바구니에 담긴 상품이 없습니다!<br/>
+                            상품을 구매해보세요!!</p>
+                        <Link to="/productList">
+                            <div>판매 상품 보러 가기</div>
+                        </Link>
+                    </div>
+                ) : (
                     carts.map((cart, index) => (
                         <>
                             <li key={index} className={styles.cart_list}>

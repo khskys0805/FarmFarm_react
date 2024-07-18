@@ -2,10 +2,10 @@ import Header from "../../component/Header";
 import styles from "./AllProduct.module.css";
 import ProductList from "../../component/ProductList";
 import Sort from "../../component/Sort";
-import {useLocation} from "react-router-dom";
+import {useContext} from "react";
+import {DataContext} from "../../context/DataContext";
 const AllProduct = () => {
-    const location = useLocation();
-    const products = location.state ? location.state.products : [];
+    const { products } = useContext(DataContext);
 
     return (
         <div className={styles.container}>

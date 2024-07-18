@@ -45,7 +45,7 @@ function App() {
                     <Route path="/tabbar" element={<TabBar />} />
                     <Route path="/registerProduct" element={<RegisterProduct />} />
                     <Route path="/editProduct/:id" element={<RegisterProduct />} />
-                    <Route path="/product/list" element={<AllProduct />} />
+                    <Route path="/productList" element={<AllProduct />} />
                     <Route path="/allFarm" element={<AllFarm />} />
                     <Route path="/auction/list" element={<AuctionList />} />
                     <Route path="/productDetail/:id" element={<ProductDetails />} />
