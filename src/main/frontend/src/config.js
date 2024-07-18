@@ -17,6 +17,9 @@ const API = {
     ALLFARM: "/farm/list",
     ALLAUCTION: "/product/auction/list",
     CART: "/product/cart",
+    CARTREMOVE(ID){
+        return `/product/cart/delete/${ID}`
+    },
     MYPAGE: "/myPage",
     MYORDER: "/order",
     MYREVIEW: "/review/my",

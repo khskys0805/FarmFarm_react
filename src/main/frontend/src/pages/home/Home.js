@@ -16,6 +16,7 @@ import API from "../../config";
 import {DataContext} from "../../context/DataContext";
 
 const Home = () => {
+    const { productList, farmList } = useContext(DataContext);
     const slides = [
         <img src={banner1} alt="Slide 1" style={{ width: "100%" }}/>,
         <img src={banner2} alt="Slide 2" style={{ width: "100%" }}/>,
@@ -24,45 +25,6 @@ const Home = () => {
 
     const numProductsToShow = 4; // 보여줄 상품 개수를 지정
     const numFarmsToShow = 5; // 보여줄 농장 개수를 지정
-
-    // const [farms, setFarms] = useState([]);
-    // const [products, setProducts] = useState([]);
-    const { products, farms } = useContext(DataContext);
-
-    // useEffect(() => {
-    //     axios.get(API.ALLFARM, {
-    //         headers: { Authorization: `Bearer ${localStorage.getItem('jwt')}` },
-    //     })
-    //         .then((res) => {
-    //             console.log("전송 성공");
-    //             console.log(res.data);
-    //
-    //             setFarms(res.data.result.farmList);
-    //             console.log("farm:" + res.data);
-    //         })
-    //         .catch((error) => {
-    //             console.error('작성한 게시물을 가져오는 중 오류 발생: ', error);
-    //         });
-    // }, []);
-    //
-    // useEffect(() => {
-    //     axios.get(API.ALLPRODUCT, {
-    //         headers: { Authorization: `Bearer ${localStorage.getItem('jwt')}` },
-    //     })
-    //         .then((res) => {
-    //             console.log("전송 성공");
-    //             // const obj = JSON.parse(res.data);
-    //             console.log(res.data);
-    //
-    //             console.log("product:" + res.data);
-    //             setProducts(res.data.result.productList);
-    //
-    //         })
-    //         .catch((error) => {
-    //             console.error('작성한 게시물을 가져오는 중 오류 발생: ', error);
-    //         });
-    // }, []);
-
 
     return (
         <div className={styles.box}>
@@ -76,17 +38,17 @@ const Home = () => {
                             <IoIosArrowDroprightCircle size="30" color="#94C015FF" style={{cursor:"pointer"}}/>
                         </Link>
                     </div>
-                    <ProductList numToShow={numProductsToShow} products={products}/>
+                    <ProductList numToShow={numProductsToShow} products={productList}/>
                 </div>
                 <div className={styles.group}>
                     <div className={styles.link}>
                         <h2>이 농장 어때요?</h2>
-                        <Link to="/allFarm" state={{ farms: farms }}>
+                        <Link to="/allFarm">
                             <IoIosArrowDroprightCircle size="30" color="#94C015FF" style={{cursor:"pointer"}}/>
                         </Link>
                     </div>
-                    {farms.length > 0 ? (
-                        <FarmList numToShow={numFarmsToShow} farms={farms} />
+                    {farmList.length > 0 ? (
+                        <FarmList numToShow={numFarmsToShow} farms={farmList} />
                     ) : (
                         <p style={{textAlign:"center", margin:"30px 0"}}>개설된 농장이 없어요.</p>
                     )}

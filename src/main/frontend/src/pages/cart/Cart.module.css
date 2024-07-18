@@ -9,6 +9,7 @@
 }
 .box ul{
     height:100vh;
+    position: relative;
 }
 .no_list{
     height: 100%;
@@ -68,6 +69,7 @@
 }
 .cart_list .remove{
     text-align: right;
+    cursor: pointer;
 }
 .cart_list .quantity{
     text-align: right;
@@ -112,4 +114,11 @@
     width:30px;
     background: none;
     text-align: center;
+}
+.box ul button{
+    width:500px !important;
+    position: fixed;
+    bottom: 10px;
+    left:50%;
+    transform: translateX(-50%);
 }

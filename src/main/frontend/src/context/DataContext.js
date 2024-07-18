@@ -5,15 +5,15 @@ import API from '../config';
 export const DataContext = createContext();
 
 export const DataProvider = ({ children }) => {
-    const [products, setProducts] = useState([]);
-    const [farms, setFarms] = useState([]);
+    const [productList, setProductList] = useState([]);
+    const [farmList, setFarmList] = useState([]);
 
     useEffect(() => {
         axios.get(API.ALLPRODUCT, {
             headers: { Authorization: `Bearer ${localStorage.getItem('jwt')}` },
         })
             .then((res) => {
-                setProducts(res.data.result.productList);
+                setProductList(res.data.result.productList);
             })
             .catch((error) => {
                 console.error('제품을 가져오는 중 오류 발생: ', error);
@@ -23,7 +23,7 @@ export const DataProvider = ({ children }) => {
             headers: { Authorization: `Bearer ${localStorage.getItem('jwt')}` },
         })
             .then((res) => {
-                setFarms(res.data.result.farmList);
+                setFarmList(res.data.result.farmList);
             })
             .catch((error) => {
                 console.error('농장을 가져오는 중 오류 발생: ', error);
@@ -31,7 +31,7 @@ export const DataProvider = ({ children }) => {
     }, []);
 
     return (
-        <DataContext.Provider value={{ products, farms }}>
+        <DataContext.Provider value={{ productList, farmList }}>
             {children}
         </DataContext.Provider>
     );

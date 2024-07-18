@@ -12,7 +12,7 @@ const MyOrderList = () => {
 
     useEffect(() => {
         axios.get(API.MYORDER, {
-            headers: { authorization: localStorage.getItem("jwt") },
+            headers: { Authorization: `Bearer ${localStorage.getItem('jwt')}` },
         })
             .then((res) => {
                 console.log("전송 성공");

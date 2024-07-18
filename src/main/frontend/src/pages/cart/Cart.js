@@ -6,7 +6,6 @@ import API from "../../config";
 import img from "../../images/logo/farmfarm_logo.png";
 import {Link, useNavigate} from "react-router-dom";
 import {FaTrashAlt} from "react-icons/fa";
-import {IoIosArrowDroprightCircle} from "react-icons/io";
 import Button from "../../component/Button";
 
 const Cart = () => {
@@ -41,6 +40,23 @@ const Cart = () => {
         setQuantity(prevQuantity => Math.min(prevQuantity + 1, 100));
     }
 
+    const handleRemoveItem = () => {
+        axios.delete(API.CARTREMOVE(), {
+            headers: { Authorization: `Bearer ${localStorage.getItem('jwt')}` },
+        })
+            .then((res) => {
+                console.log("전송 성공");
+                console.log(res.data);
+
+            })
+            .catch((error) => {
+                console.error('작성한 게시물을 가져오는 중 오류 발생: ', error);
+            });
+    }
+
+    const handleOrderItem = () => {
+        navigate(`/shippingAddress`);
+    }
     return (
         <div className={styles.box}>
             <Header title={"장바구니"} go={-1}/>
@@ -69,7 +85,7 @@ const Cart = () => {
                                     </div>
                                 </div>
                                 <div className={styles.right}>
-                                    <h4 className={styles.remove}><FaTrashAlt /></h4>
+                                    <h4 className={styles.remove} onClick={handleRemoveItem}><FaTrashAlt /></h4>
                                     <h4 className={styles.quantity}>
                                         <div className={styles.stepper}>
                                             <div className={styles.stepper_button_minus} onClick={decreaseValue}></div>
@@ -81,6 +97,7 @@ const Cart = () => {
                                     </h4>
                                 </div>
                             </li>
+                            <Button content={"주문하기"} onClick={handleOrderItem}/>
                         </>
                     ))
                 )}
