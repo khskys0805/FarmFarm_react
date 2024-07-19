@@ -1,9 +1,10 @@
 import styles from "./ProductShippingAddress.module.css";
 import Header from "../../component/Header";
 import InputBox from "../../component/InputBox";
-import { useCallback, useState } from "react";
+import {useCallback, useEffect, useState} from "react";
 import PopupPostCode from "../../component/PopupPostCode";
 import Button from "../../component/Button";
+import {useLocation} from "react-router-dom";
 
 const ProductShippingAddress = () => {
     const [shippingAddress, setShippingAddress] = useState({
@@ -15,6 +16,18 @@ const ProductShippingAddress = () => {
         delieveryAddressDetail:""
     });
     const [showDeliveryFields, setShowDeliveryFields] = useState(true);
+    const location = useLocation();
+    const isDirect = location.state?.isDirect; // isDirect 값을 가져옴
+
+    useEffect(() => {
+        if (isDirect === 1) {
+            setShippingAddress((prevAddress) => ({
+                ...prevAddress,
+                delivery: false,
+            }));
+            setShowDeliveryFields(false);
+        }
+    }, [isDirect]);
 
     const handleInputChange = useCallback((e) => {
         const { name, value } = e.target;
@@ -74,6 +87,7 @@ const ProductShippingAddress = () => {
                             value={"true"}
                             onChange={handleRadioChange}
                             checked={shippingAddress.delivery}
+                            disabled={isDirect === 1} // isDirect가 0이면 비활성화
                         /><span>배송</span>
                         <InputBox
                             type={"radio"}
@@ -98,15 +112,15 @@ const ProductShippingAddress = () => {
                         </div>
                         <div className={styles.content_wrapper}>
                             <div className={styles.location_title}>
-                                <h3>농장 위치</h3>
+                                <h3>주소</h3>
                                 <PopupPostCode onComplete={handleComplete} />
                             </div>
                             <InputBox type={"text"} name={"deliveryAddress"} value={shippingAddress.deliveryAddress} placeholder={"전체 주소"} readOnly={true} />
                             <InputBox type={"text"} name={"deliveryAddressDetail"} value={shippingAddress.delieveryAddressDetail} placeholder={"상세 주소"} onChange={handleInputChange} />
                         </div>
-                        <Button content={"결제하기"} />
                     </>
                 )}
+                <Button content={"결제하기"} />
             </form>
         </div>
     );

@@ -20,6 +20,7 @@ const API = {
     CARTREMOVE(ID){
         return `/product/cart/delete/${ID}`
     },
+    ORDERCART: "/order/cart",
     MYPAGE: "/myPage",
     MYORDER: "/order",
     MYREVIEW: "/review/my",
