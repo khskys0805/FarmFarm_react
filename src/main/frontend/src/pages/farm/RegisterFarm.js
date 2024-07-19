@@ -182,7 +182,7 @@ const RegisterFarm = () => {
             })
                 .then((res) => {
                     console.log(res.data);
-                    navigate(`/home`);
+                    navigate(`/farmDetail/${res.data.result.fid}`);
                 })
                 .catch((error) => {
                     alert("농장 수정에 실패했습니다.");
@@ -195,7 +195,7 @@ const RegisterFarm = () => {
             })
                 .then((res) => {
                     console.log(res.data);
-                    navigate(`/home`);
+                    navigate(`/farmDetail/${res.data.result.fid}`);
                 })
                 .catch((error) => {
                     alert("농장 개설에 실패했습니다.");

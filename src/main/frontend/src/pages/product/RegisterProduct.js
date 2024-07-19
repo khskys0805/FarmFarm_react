@@ -43,10 +43,12 @@ const RegisterProduct = () => {
         { value: "3", name: "기타" },
     ];
     const [isEditMode, setIsEditMode] = useState(false); // 추가: 수정 모드 상태
+    const [addImages, setAddImages] = useState([]); // 추가: 추가된 이미지 파일 ID 배열
+    const [deleteImages, setDeleteImages] = useState([]); // 추가: 삭제된 이미지 파일 ID 배열
 
     useEffect(() => {
-        setIsEditMode(true); // 추가: 수정 모드 활성화
         if (id) {
+            setIsEditMode(true); // 추가: 수정 모드 활성화
             axios.get(API.PRODUCT(id), {
                 headers: { Authorization: `Bearer ${localStorage.getItem('jwt')}` },
             })
@@ -108,6 +110,9 @@ const RegisterProduct = () => {
                 ...prevProductData,
                 images: totalFileIds
             }));
+            if (isEditMode) {
+                setAddImages(prevAddImages => [...prevAddImages, ...newFileIds]); // 추가된 이미지 파일 ID 추가
+            }
         }
     };
 
@@ -115,8 +120,9 @@ const RegisterProduct = () => {
         const newImageSrcs = [...imageSrcs];
         const newFileIds = [...fileIds];
 
+        const removedFileId = newFileIds.splice(index, 1)[0]; // 삭제할 파일 ID 가져오기
+
         newImageSrcs.splice(index, 1);
-        newFileIds.splice(index, 1);
 
         setImageSrcs(newImageSrcs);
         setFileIds(newFileIds);
@@ -124,6 +130,9 @@ const RegisterProduct = () => {
             ...prevProductData,
             images: newFileIds
         }));
+        if (isEditMode) {
+            setDeleteImages(prevDeleteImages => [...prevDeleteImages, removedFileId]); // 삭제된 이미지 파일 ID 추가
+        }
     };
 
     const handleInputChange = useCallback((e) => {
@@ -181,23 +190,44 @@ const RegisterProduct = () => {
             return;
         }
 
-        axios.post(API.REGISTERPRODUCT, productData, {
-            headers: { Authorization: `Bearer ${localStorage.getItem('jwt')}` },
-        })
-            .then((res) => {
-                console.log("전송 성공");
-                console.log(res.data);
-                navigate(`/productDetail/${res.data.result.pid}`);
+        const formData = {
+            ...productData,
+            addImages: addImages, // 추가된 이미지 파일 ID 배열 추가
+            deleteImages: deleteImages, // 삭제된 이미지 파일 ID 배열 추가
+        };
+        console.log(formData);
+
+        if (isEditMode) {
+            axios.patch(API.PRODUCT(formData.pid), formData, {
+                headers: { Authorization: `Bearer ${localStorage.getItem('jwt')}` },
             })
-            .catch((error) => {
-                console.error('상품 등록 중 오류 발생: ', error);
-                console.error('상품 등록 중 오류 발생: ', error.response?.data);
-            });
-    }, [productData, navigate]);
+                .then((res) => {
+                    console.log("전송 성공");
+                    console.log(res.data);
+                    navigate(`/productDetail/${res.data.result.pid}`);
+                })
+                .catch((error) => {
+                    console.error('상품 수정 중 오류 발생: ', error);
+                });        }
+        else {
+            axios.post(API.REGISTERPRODUCT, formData, {
+                headers: { Authorization: `Bearer ${localStorage.getItem('jwt')}` },
+            })
+                .then((res) => {
+                    console.log("전송 성공");
+                    console.log(res.data);
+                    navigate(`/productDetail/${res.data.result.pid}`);
+                })
+                .catch((error) => {
+                    console.error('상품 등록 중 오류 발생: ', error);
+                    console.error('상품 등록 중 오류 발생: ', error.response?.data);
+                });
+        }
+    }, [productData, navigate, addImages, deleteImages]);
 
     return (
         <div className={styles.box}>
-            <Header title={"상품 등록"} go={-1}/>
+            <Header title={isEditMode ? "상품 수정" : "상품 등록"} go={-1}/>
             <form className={styles.form} onSubmit={handleSubmitForm}>
                 <div className={styles.content_wrapper}>
                     <h3>상품 유형</h3>
@@ -277,7 +307,7 @@ const RegisterProduct = () => {
                     <p style={{marginTop:"20px"}}>상품과 무관한 사진을 첨부하면 노출 제한 처리될 수 있습니다.<br/>
                         사진 첨부 시 개인정보가 노출되지 않도록 유의해주세요.</p>
                 </div>
-                <Button content={"상품 등록"} />
+                <Button content={isEditMode ? "상품 수정하기" : "상품 등록하기"} />
             </form>
             <TabBar/>
         </div>
