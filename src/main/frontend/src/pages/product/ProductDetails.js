@@ -121,7 +121,7 @@ const ProductDetails = () => {
                 <SwiperComponent slides={images}/>
                 <IoIosArrowDropleftCircle className={styles.arrowLeft} size="30" color="#fff" onClick={() => navigate(-1)}/>
                 <FaPen className={styles.correct} size="25" color="#fff" onClick={handleEditClick}/>
-                <FaTrashAlt className={styles.delete} size="25" color="#fff"/>
+                <FaTrashAlt className={styles.delete} size="25" color="#fff" onClick={handleRemoveProduct}/>
                 {product && (
                     <div className={styles.content}>
                         <div className={styles.top}>

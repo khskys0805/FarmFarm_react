@@ -20,7 +20,7 @@ const RegisterProduct = () => {
         closeCalendar: "",
         date: "",
         detail: "",
-        direct: "",
+        direct: "2",
         direct_location: "",
         group: false,
         hour: "",
@@ -34,7 +34,7 @@ const RegisterProduct = () => {
         quantity: "",
         rating: "",
         sales: "",
-        productType: ""
+        productType: "0"
     });
     const [showAuctionFields, setShowAuctionFields] = useState(false);
     const selectList = [
@@ -165,7 +165,6 @@ const RegisterProduct = () => {
     const fieldNames = {
         productType: "상품 유형",
         name: "상품 이름",
-        productCategory: "상품 카테고리",
         quantity: "상품 수량",
         detail: "상품 설명",
         price: "상품 가격",
@@ -173,7 +172,7 @@ const RegisterProduct = () => {
     };
 
     const validateForm = () => {
-        const requiredFields = ['productType', 'name', 'productCategory', 'quantity', 'detail', 'price', 'direct'];
+        const requiredFields = ['productType', 'name', 'quantity', 'detail', 'price', 'direct'];
         for (const field of requiredFields) {
             if (!productData[field]) {
                 alert(`${fieldNames[field]}을(를) 입력해주세요.`);

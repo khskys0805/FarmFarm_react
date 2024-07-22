@@ -182,7 +182,7 @@ const RegisterFarm = () => {
             })
                 .then((res) => {
                     console.log(res.data);
-                    navigate(`/farmDetail/${res.data.result.fid}`);
+                    navigate(`/farmDetail/${formData.fid}`);
                 })
                 .catch((error) => {
                     alert("농장 수정에 실패했습니다.");
@@ -232,8 +232,9 @@ const RegisterFarm = () => {
                 <div className={styles.content_wrapper}>
                     <h3>경매를 진행하실건가요?</h3>
                     <p>경매는 상품을 등록한 시점부터 상품 등록시 설정한 경매 종료 시각까지 진행되며 <br />
-                        가격이 높은 경매건이 낙찰됩니다.
+                        가격이 높은 경매건이 낙찰됩니다. <br/>
                     </p>
+                    <p style={{color:"red"}}>경매 여부는 추후에 수정이 안되니 신중하게 선택하시길 바랍니다.</p>
                     <div>
                         <input type={"radio"} name={"auction"} value={true} checked={farmData.auction === true} onChange={handleInputChange} disabled={isEditMode}/><span>네</span>
                         <input type={"radio"} name={"auction"} value={false} checked={farmData.auction === false} onChange={handleInputChange} disabled={isEditMode} /><span>아니오</span>
