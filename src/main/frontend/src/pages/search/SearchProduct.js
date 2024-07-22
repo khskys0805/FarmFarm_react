@@ -1,18 +1,14 @@
 import Header from "../../component/Header";
 import styles from "./SearchProduct.module.css";
-import InputBox from "../../component/InputBox";
 import React, {useContext, useEffect, useState} from "react";
-import {HiMiniMagnifyingGlass} from "react-icons/hi2";
 import TabBar from "../../component/TabBar";
-import axios from "axios";
-import API from "../../config";
 import ProductList from "../../component/ProductList";
 import SearchBar from "../../component/SearchBar";
 import {DataContext} from "../../context/DataContext";
 
 const SearchProduct = () => {
     const [searchText, setSearchText] = useState("");
-    const {productList} = useContext(DataContext);
+    const { productList } = useContext(DataContext);
     const handleInputChange = (e) => {
         setSearchText(e.target.value);
     }

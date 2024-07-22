@@ -11,12 +11,10 @@ import FarmList from "../../component/FarmList";
 import AuctionList from "../../component/AuctionList";
 import {Link} from "react-router-dom";
 import {useContext, useEffect, useState} from "react";
-import axios from "axios";
-import API from "../../config";
 import {DataContext} from "../../context/DataContext";
 
 const Home = () => {
-    const { productList, farmList } = useContext(DataContext);
+    const { productList = [], farmList = [] } = useContext(DataContext);
     const slides = [
         <img src={banner1} alt="Slide 1" style={{ width: "100%" }}/>,
         <img src={banner2} alt="Slide 2" style={{ width: "100%" }}/>,

@@ -4,6 +4,7 @@ import ProductList from "../../component/ProductList";
 import Sort from "../../component/Sort";
 import {useContext} from "react";
 import {DataContext} from "../../context/DataContext";
+
 const AllProduct = () => {
     const { productList } = useContext(DataContext);
 

@@ -1,18 +1,21 @@
-import styles from "./ProductDetails.module.css";
-import SwiperComponent from "../../component/SwiperComponent";
-import { useEffect, useState } from "react";
+// ProductDetails.js
+import { useContext, useEffect, useState } from "react";
+import { DataContext } from "../../context/DataContext";
 import axios from "axios";
 import API from "../../config";
-import {useNavigate, useParams} from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { FiShare2 } from "react-icons/fi";
-import { FaStar, FaTrashAlt } from "react-icons/fa";
+import { FaStar, FaTrashAlt, FaPen } from "react-icons/fa";
 import { IoIosArrowDropleftCircle } from "react-icons/io";
 import { MdCancel } from "react-icons/md";
-import { FaPen } from "react-icons/fa6";
 import Tabs from "../../component/Tabs";
 import Button from "../../component/Button";
+import SwiperComponent from "../../component/SwiperComponent";
+import styles from "./ProductDetails.module.css";
+
 const ProductDetails = () => {
     const { id } = useParams();
+    const { fetchProductList } = useContext(DataContext);
     const [product, setProduct] = useState([]);
     const [reviews, setReviews] = useState([]);
     const [images, setImages] = useState([]);
@@ -30,7 +33,7 @@ const ProductDetails = () => {
                 console.log(res.data);
 
                 setProduct(res.data.result);
-                setReviews(res.data.reviews);
+                setReviews(res.data.reviews || []); // null을 빈 배열로 대체
                 const imageArray = res.data.result.images.map(image => (
                     <img key={image.fileId} src={image.fileUrl} alt={`Slide ${image.fileId}`} style={{ objectFit: "cover", height: "50%" }} />
                 ));
@@ -39,7 +42,7 @@ const ProductDetails = () => {
             .catch((error) => {
                 console.error('작성한 게시물을 가져오는 중 오류 발생: ', error);
             });
-    }, []);
+    }, [id]);
 
     const handleQuantityChange = (event) => {
         const newQuantity = parseInt(event.target.value);
@@ -56,7 +59,6 @@ const ProductDetails = () => {
     }
 
     const formatNumber = (value) => {
-        // 숫자를 형식에 맞게 처리하여 반환 (예: 1000원 -> 1,000원)
         return new Intl.NumberFormat().format(value);
     };
 
@@ -76,6 +78,23 @@ const ProductDetails = () => {
         navigate(`/editProduct/${product.pid}`);
     };
 
+    const handleRemoveProduct = () => {
+        if (window.confirm("상품을 삭제하시겠습니까?")) {
+            axios.delete(API.PRODUCT(product.pid), {
+                headers: { Authorization: `Bearer ${localStorage.getItem('jwt')}` },
+            })
+                .then((res) => {
+                    console.log("전송 성공");
+                    console.log(res.data);
+                    fetchProductList(); // 삭제 후 상품 목록 다시 가져오기
+                    navigate(`/productList`);
+                })
+                .catch((error) => {
+                    console.error('작성한 게시물을 가져오는 중 오류 발생: ', error);
+                });
+        }
+    }
+
     const handleAddToCart = () => {
         console.log("quantity" + quantity);
         axios.post(API.PRODUCTTOCART(product.pid), { quantity: quantity }, {
@@ -90,6 +109,10 @@ const ProductDetails = () => {
             .catch((error) => {
                 console.error('작성한 게시물을 가져오는 중 오류 발생: ', error);
             });
+    }
+
+    if (!product) {
+        return <p>상품 정보를 불러오는 중입니다...</p>;
     }
 
     return (
