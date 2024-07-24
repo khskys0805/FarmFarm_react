@@ -21,6 +21,9 @@ const API = {
         return `/product/cart/delete/${ID}`
     },
     ORDERCART: "/order/cart",
+    CREATEGROUP(ID){
+        return `/order/createGroup/${ID}`
+    },
     MYPAGE: "/myPage",
     MYORDER: "/order",
     MYREVIEW: "/review/my",

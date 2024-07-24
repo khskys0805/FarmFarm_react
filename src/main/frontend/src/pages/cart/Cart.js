@@ -13,6 +13,10 @@ const Cart = () => {
     const [quantity, setQuantity] = useState(1);
     const navigate = useNavigate();
     useEffect(() => {
+        fetchCartItems();
+    }, []);
+
+    const fetchCartItems = () => {
         axios.get(API.CART, {
             headers: { Authorization: `Bearer ${localStorage.getItem('jwt')}` },
         })
@@ -24,7 +28,7 @@ const Cart = () => {
             .catch((error) => {
                 console.error('장바구니 리스트를 가져오는 중 오류 발생: ', error);
             });
-    }, []);
+    };
 
     const handleQuantityChange = (event) => {
         const newQuantity = parseInt(event.target.value);
@@ -40,18 +44,20 @@ const Cart = () => {
         setQuantity(prevQuantity => Math.min(prevQuantity + 1, 100));
     }
 
-    const handleRemoveItem = () => {
-        axios.delete(API.CARTREMOVE(), {
-            headers: { Authorization: `Bearer ${localStorage.getItem('jwt')}` },
-        })
-            .then((res) => {
-                console.log("전송 성공");
-                console.log(res.data);
-
+    const handleRemoveItem = (product) => {
+        console.log(product.pid);
+        if (window.confirm("장바구니에서 상품을 삭제하시겠습니까?")) {
+            axios.delete(API.CARTREMOVE(product.pid), {
+                headers: { Authorization: `Bearer ${localStorage.getItem('jwt')}` },
             })
-            .catch((error) => {
-                console.error('작성한 게시물을 가져오는 중 오류 발생: ', error);
-            });
+                .then((res) => {
+                    console.log("상품 삭제 성공");
+                    fetchCartItems(); // 장바구니 리스트를 다시 가져옴
+                })
+                .catch((error) => {
+                    console.error('작성한 게시물을 가져오는 중 오류 발생: ', error);
+                });
+        }
     }
 
     const handleOrderItem = () => {
@@ -95,7 +101,7 @@ const Cart = () => {
                                     </div>
                                 </div>
                                 <div className={styles.right}>
-                                    <h4 className={styles.remove} onClick={handleRemoveItem}><FaTrashAlt /></h4>
+                                    <h4 className={styles.remove} onClick={() => handleRemoveItem(cart)}><FaTrashAlt /></h4>
                                     <h4 className={styles.quantity}>
                                         <div className={styles.stepper}>
                                             <div className={styles.stepper_button_minus} onClick={decreaseValue}></div>

@@ -4,9 +4,12 @@ import InputBox from "../../component/InputBox";
 import {useCallback, useEffect, useState} from "react";
 import PopupPostCode from "../../component/PopupPostCode";
 import Button from "../../component/Button";
-import {useLocation} from "react-router-dom";
+import {useLocation, useNavigate} from "react-router-dom";
+import axios from "axios";
+import API from "../../config";
 
 const ProductShippingAddress = () => {
+    const navigate = useNavigate();
     const [shippingAddress, setShippingAddress] = useState({
         delivery_name: "",
         delivery_phone: "",
@@ -16,8 +19,10 @@ const ProductShippingAddress = () => {
         delieveryAddressDetail:""
     });
     const [showDeliveryFields, setShowDeliveryFields] = useState(true);
+    const [showQuantityFields, setShowQuantityFields] = useState(false);
     const location = useLocation();
     const isDirect = location.state?.isDirect; // isDirect 값을 가져옴
+    const productType = location.state?.productType
 
     useEffect(() => {
         if (isDirect === 1) {
@@ -26,6 +31,9 @@ const ProductShippingAddress = () => {
                 delivery: false,
             }));
             setShowDeliveryFields(false);
+        }
+        if (productType === 1) {
+
         }
     }, [isDirect]);
 
@@ -52,6 +60,20 @@ const ProductShippingAddress = () => {
             deliveryAddress: data.locationFull,
             delieveryAddressDetail: data.locationDetail,
         });
+    }
+
+    const handleCreateGroup = (e) => {
+        e.preventDefault();
+        axios.post(API.CREATEGROUP(), {
+            headers: { Authorization: `Bearer ${localStorage.getItem('jwt')}` },
+        })
+            .then((res) => {
+                console.log("전송 성공");
+                console.log(res.data.result);
+            })
+            .catch((error) => {
+                console.error('작성한 게시물을 가져오는 중 오류 발생: ', error);
+            });
     }
 
     return (
@@ -120,7 +142,7 @@ const ProductShippingAddress = () => {
                         </div>
                     </>
                 )}
-                <Button content={"결제하기"} />
+                <Button content={"결제하기"} onClick={(e) => handleCreateGroup(e)}/>
             </form>
         </div>
     );

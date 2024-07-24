@@ -20,8 +20,10 @@ const ProductDetails = () => {
     const [reviews, setReviews] = useState([]);
     const [images, setImages] = useState([]);
     const [quantity, setQuantity] = useState(1);
-    const [isGroupProductVisible, setIsGroupProductVisible] = useState(false);
+    const [isGroup, setIsGroup] = useState(false);
+    const [showLayer, setShowLayer] = useState(false);
     const [groups, setGroups] = useState([]);
+    const [discount, setDiscount] = useState("");
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -33,6 +35,8 @@ const ProductDetails = () => {
                 console.log(res.data);
 
                 setProduct(res.data.result);
+                setIsGroup(res.data.result.type === 1);
+                if (res.data.result.type === 1) setDiscount(res.data.result.groupProductDiscount);
                 setReviews(res.data.reviews || []); // null을 빈 배열로 대체
                 const imageArray = res.data.result.images.map(image => (
                     <img key={image.fileId} src={image.fileUrl} alt={`Slide ${image.fileId}`} style={{ objectFit: "cover", height: "50%" }} />
@@ -63,15 +67,15 @@ const ProductDetails = () => {
     };
 
     const groupPrice = (price) => {
-        return price * 0.9;
+        return price * discount / 100;
     }
 
     const handleGroupProduct = () => {
-        setIsGroupProductVisible(true);
+        setShowLayer(true);
     }
 
     const handleCancelGroupProduct = () => {
-        setIsGroupProductVisible(false);
+        setShowLayer(false);
     };
 
     const handleEditClick = () => {
@@ -111,6 +115,22 @@ const ProductDetails = () => {
             });
     }
 
+    const handleOrderItem = (e) => {
+        e.preventDefault();
+        axios.post(API.CREATEGROUP(product.pid), {
+            headers: { Authorization: `Bearer ${localStorage.getItem('jwt')}` },
+        })
+            .then((res) => {
+                console.log("전송 성공");
+                console.log(res.data.result);
+                // navigate(`/shippingAddress`, { isDirect: res.data.result.isDirect, productType: res.data.result.productType });
+                navigate(`/shippingAddress`);
+            })
+            .catch((error) => {
+                console.error('작성한 게시물을 가져오는 중 오류 발생: ', error);
+            });
+    }
+
     if (!product) {
         return <p>상품 정보를 불러오는 중입니다...</p>;
     }
@@ -132,38 +152,40 @@ const ProductDetails = () => {
                             <FiShare2 size="30" style={{cursor:"pointer"}}/>
                         </div>
                         <div className={styles.middle}>
-                            <h2>{formatNumber(product.price)}원</h2>
-                            <div className={styles.stepper}>
-                                <div className={styles.stepper_button_minus} onClick={decreaseValue}></div>
-                                <div className={styles.stepper_input_wrap}>
-                                    <input type="number" value={quantity} onChange={handleQuantityChange} readOnly/>
+                            {isGroup ? (
+                                <h2>{formatNumber(groupPrice(product.price))}원 <span>{formatNumber(product.price)}원</span></h2>
+                            ) : (
+                                <h2>{formatNumber(product.price)}원</h2>
+                            )}
+                            {!isGroup && (
+                                <div className={styles.stepper}>
+                                    <div className={styles.stepper_button_minus} onClick={decreaseValue}></div>
+                                    <div className={styles.stepper_input_wrap}>
+                                        <input type="number" value={quantity} onChange={handleQuantityChange} readOnly/>
+                                    </div>
+                                    <div className={styles.stepper_button_plus} onClick={increaseValue}></div>
                                 </div>
-                                <div className={styles.stepper_button_plus} onClick={increaseValue}></div>
-                            </div>
+                            )}
                         </div>
                         <div className={styles.bottom}>
                             <div className={styles.review}>
                                 <FaStar size="18" color="#FFC42B"/>
-                                {/*<p className={styles.length}>({reviews.length} reviews)</p>*/}
                             </div>
                         </div>
                         <Tabs type="product" product={product}/>
                     </div>
                 )}
                 <div className={styles.under_bar}>
-                    {product.group ? (
-                        <div className={styles.group}>
-                            <Button content={["같이 주문", `${formatNumber(groupPrice(product.price))}원`]} width={"30%"} color={"#FFC42B"} onClick={handleGroupProduct}/>
-                            <Button content={["혼자 주문", `${formatNumber(product.price)}원`]} width={"70%"}/>
-                        </div>
+                    {isGroup ? (
+                        <Button content={"공동구매 참여하기"} color={"#FFC42B"} onClick={handleGroupProduct}/>
                     ) : (
-                        <Button content={["혼자 주문", `${formatNumber(product.price)}원`]} onClick={handleAddToCart}/>
+                        <Button content={["주문하기", `${formatNumber(product.price)}원`]} onClick={handleAddToCart}/>
                     )}
                 </div>
             </div>
-            <div className={styles.mask} style={{ display: isGroupProductVisible ? 'block' : 'none' }}></div>
-            {isGroupProductVisible && (
-                <div className={styles.layer} style={{ display: isGroupProductVisible ? 'block' : 'none' }}>
+            <div className={styles.mask} style={{ display: showLayer ? 'block' : 'none' }}></div>
+            {isGroup && (
+                <div className={styles.layer} style={{ display: showLayer ? 'block' : 'none' }}>
                     <form>
                         <div className={styles.title}>
                             <h3>공동구매 참여하기</h3>
@@ -173,7 +195,7 @@ const ProductDetails = () => {
                         </div>
                         <div>
                             <div className={styles.group_open_btn}>
-                                <Button content={"공구 개설"} width={"70px"} className="open" padding={"10px"} onClick={() => navigate(`/cart`)}/>
+                                <Button content={"공구 개설"} width={"70px"} className="open" padding={"10px"} onClick={(e) => handleOrderItem(e)}/>
                             </div>
                         </div>
                         {groups.length > 0 ? (
