@@ -34,8 +34,11 @@ const RegisterProduct = () => {
         quantity: "",
         rating: "",
         sales: "",
-        productType: "0"
+        productType: "0",
+        groupProductQuantity:"",
+        groupProductDiscount:""
     });
+    const [showGroupFileds, setShowGroupFields] = useState(false);
     const [showAuctionFields, setShowAuctionFields] = useState(false);
     const selectList = [
         { value: "1", name: "과일" },
@@ -61,6 +64,7 @@ const RegisterProduct = () => {
                     });
                     setImageSrcs(product.images.map(img => img.fileUrl));
                     setFileIds(product.images.map(img => img.fileId));
+                    setShowGroupFields(product.productType === "2");
                     setShowAuctionFields(product.productType === "3");
                 })
                 .catch((error) => {
@@ -156,6 +160,10 @@ const RegisterProduct = () => {
                 const isAuction = value === "2";
                 setShowAuctionFields(isAuction);
                 newProductData.auction = isAuction;
+
+                const isGroup = value === "1";
+                setShowGroupFields(isGroup);
+                newProductData.group = isGroup;
             }
 
             return newProductData;
@@ -271,6 +279,18 @@ const RegisterProduct = () => {
                     <h3>상품 수량</h3>
                     <InputBox type={"text"} name={"quantity"} value={productData.quantity} placeholder={"상품 수량을 입력해주세요."} onChange={handleInputChange}/>
                 </div>
+                {showGroupFileds && (
+                    <>
+                        <div className={styles.content_wrapper}>
+                            <h3>공동 구매 수량</h3>
+                            <InputBox type={"text"} name={"groupProductQuantity"} value={productData.groupProductQuantity} placeholder={"한 팀이 구매해야 하는 공동구매 수량을 입력해주세요"} onChange={handleInputChange}/>
+                        </div>
+                        <div className={styles.content_wrapper}>
+                            <h3>공동 구매 할인율</h3>
+                            <InputBox type={"text"} name={"groupProductDiscount"} value={productData.groupProductDiscount} placeholder={"공동구매시 적용될 할인율을 입력해주세요."} onChange={handleInputChange}/>
+                        </div>
+                    </>
+                )}
                 <div className={styles.content_wrapper}>
                     <h3>상품 설명</h3>
                     <p>상품과 관련된 내용들을 자유롭게 작성해주세요.</p>
