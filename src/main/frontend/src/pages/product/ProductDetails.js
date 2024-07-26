@@ -21,6 +21,7 @@ const ProductDetails = () => {
     const [images, setImages] = useState([]);
     const [quantity, setQuantity] = useState(1);
     const [isGroup, setIsGroup] = useState(false);
+    const [isDirect, setIsDirect] = useState(false);
     const [showLayer, setShowLayer] = useState(false);
     const [groups, setGroups] = useState([]);
     const [discount, setDiscount] = useState("");
@@ -37,6 +38,7 @@ const ProductDetails = () => {
                 setProduct(res.data.result);
                 setIsGroup(res.data.result.type === 1);
                 if (res.data.result.type === 1) setDiscount(res.data.result.groupProductDiscount);
+                setIsDirect(res.data.result.direct);
                 setReviews(res.data.reviews || []); // null을 빈 배열로 대체
                 const imageArray = res.data.result.images.map(image => (
                     <img key={image.fileId} src={image.fileUrl} alt={`Slide ${image.fileId}`} style={{ objectFit: "cover", height: "50%" }} />
@@ -115,16 +117,17 @@ const ProductDetails = () => {
             });
     }
 
-    const handleOrderItem = (e) => {
+    const handleCreateGroup = (e) => {
         e.preventDefault();
-        axios.post(API.CREATEGROUP(product.pid), {
+        axios.get(API.CREATEGROUP(product.pid), {
             headers: { Authorization: `Bearer ${localStorage.getItem('jwt')}` },
         })
             .then((res) => {
                 console.log("전송 성공");
                 console.log(res.data.result);
-                // navigate(`/shippingAddress`, { isDirect: res.data.result.isDirect, productType: res.data.result.productType });
-                navigate(`/shippingAddress`);
+                console.log(isDirect);
+                console.log(isGroup);
+                navigate(`/shippingAddress`, { state: { isDirect, isGroup } });
             })
             .catch((error) => {
                 console.error('작성한 게시물을 가져오는 중 오류 발생: ', error);
@@ -195,7 +198,7 @@ const ProductDetails = () => {
                         </div>
                         <div>
                             <div className={styles.group_open_btn}>
-                                <Button content={"공구 개설"} width={"70px"} className="open" padding={"10px"} onClick={(e) => handleOrderItem(e)}/>
+                                <Button content={"공구 개설"} width={"70px"} className="open" padding={"10px"} onClick={(e) => handleCreateGroup(e)}/>
                             </div>
                         </div>
                         {groups.length > 0 ? (

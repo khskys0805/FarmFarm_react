@@ -30,16 +30,7 @@ function App() {
             <DataProvider>
                 <div className="App">
                     <Routes>
-                        <Route
-                            path="/"
-                            element={
-                                localStorage.getItem("jwt") ? (
-                                    <Navigate replace to="/home" />
-                                ) : (
-                                    <Login />
-                                )
-                            }
-                        />
+                        <Route path="/" element={<Navigate replace to="/auth" />} />
                         <Route path="/auth" element={<Login />} />
                         <Route path="/home" element={<Home />} />
                         <Route path="/login/oauth_kakao" element={<Token />} />

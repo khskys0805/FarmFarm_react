@@ -13,27 +13,29 @@ const ProductShippingAddress = () => {
     const [shippingAddress, setShippingAddress] = useState({
         delivery_name: "",
         delivery_phone: "",
-        delivery: true, // 기본으로 '배송'
+        isDelivery: true, // 기본으로 '배송'
         delivery_memo: "",
         deliveryAddress:"",
-        delieveryAddressDetail:""
+        delieveryAddressDetail:"",
+        quantity:""
     });
     const [showDeliveryFields, setShowDeliveryFields] = useState(true);
-    const [showQuantityFields, setShowQuantityFields] = useState(false);
     const location = useLocation();
-    const isDirect = location.state?.isDirect; // isDirect 값을 가져옴
-    const productType = location.state?.productType
+    // const isDirect = location.state?.isDirect; // isDirect 값을 가져옴
+    const { isDirect, isGroup } = location.state || {}; // state가 undefined인 경우를 처리
+
+    useEffect(() => {
+        console.log("isGroup:", isGroup);
+        console.log("isDirect:", isDirect);
+    }, [])
 
     useEffect(() => {
         if (isDirect === 1) {
             setShippingAddress((prevAddress) => ({
                 ...prevAddress,
-                delivery: false,
+                isDelivery: false,
             }));
             setShowDeliveryFields(false);
-        }
-        if (productType === 1) {
-
         }
     }, [isDirect]);
 
@@ -49,7 +51,7 @@ const ProductShippingAddress = () => {
         const value = e.target.value === "true"; // 문자열을 불리언 값으로 변환
         setShippingAddress((prevAddressData) => ({
             ...prevAddressData,
-            delivery: value,
+            isDelivery: value,
         }));
         setShowDeliveryFields(value); // 불리언 값 그대로 사용하여 배송 요청사항 필드를 표시 또는 숨김
     };
@@ -100,23 +102,35 @@ const ProductShippingAddress = () => {
                         onChange={handleInputChange}
                     />
                 </div>
+                {isGroup && (
+                    <div className={styles.content_wrapper}>
+                        <h3>구매 수량</h3>
+                        <InputBox
+                            type={"text"}
+                            name={"delivery_phone"}
+                            value={shippingAddress.quantity}
+                            placeholder={"구매하실 수량을 입력해주세요."}
+                            onChange={handleInputChange}
+                        />
+                    </div>
+                )}
                 <div className={styles.content_wrapper}>
                     <h3>거래 방식</h3>
                     <div>
                         <InputBox
                             type={"radio"}
-                            name={"delivery"}
+                            name={"isDelivery"}
                             value={"true"}
                             onChange={handleRadioChange}
-                            checked={shippingAddress.delivery}
+                            checked={shippingAddress.isDelivery}
                             disabled={isDirect === 1} // isDirect가 0이면 비활성화
                         /><span>배송</span>
                         <InputBox
                             type={"radio"}
-                            name={"delivery"}
+                            name={"isDelivery"}
                             value={"false"}
                             onChange={handleRadioChange}
-                            checked={!shippingAddress.delivery}
+                            checked={!shippingAddress.isDelivery}
                         /><span>직거래</span>
                     </div>
                 </div>
