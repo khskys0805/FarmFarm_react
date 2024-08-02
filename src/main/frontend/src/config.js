@@ -24,6 +24,10 @@ const API = {
     CREATEGROUP(ID){
         return `/order/createGroup/${ID}`
     },
+    ORDER: "/order",
+    PAYMENT(ID){
+        return `/pay/order/${ID}`
+    },
     MYPAGE: "/myPage",
     MYORDER: "/order",
     MYREVIEW: "/review/my",

@@ -64,19 +64,34 @@ const ProductShippingAddress = () => {
         });
     }
 
-    const handleCreateGroup = (e) => {
+    const handleOrderAndPayment = (e) => {
         e.preventDefault();
-        axios.post(API.CREATEGROUP(), {
-            headers: { Authorization: `Bearer ${localStorage.getItem('jwt')}` },
+        axios.post(API.ORDER, shippingAddress, {
+            headers: { Authorization: `Bearer ${localStorage.getItem('jwt')}`}
         })
             .then((res) => {
-                console.log("전송 성공");
+                console.log("Order 전송 성공");
                 console.log(res.data.result);
+
+                // Order가 성공적으로 완료된 후 Payment 호출
+                return axios.get(API.PAYMENT(res.data.result.oid), {
+                    headers: { Authorization: `Bearer ${localStorage.getItem('jwt')}` },
+                });
+            })
+            .then((paymentRes) => {
+                console.log("Payment 전송 성공");
+                console.log(paymentRes.data.result);
+
+                const isMobile = /android|iphone|ipad|ipod|blackberry|iemobile|opera mini|mobile/.test(navigator.userAgent.toLowerCase());
+                const redirectUrl = isMobile ? paymentRes.data.result.next_redirect_mobile_url : paymentRes.data.result.next_redirect_pc_url;
+
+                // URL로 리디렉션
+                window.location.href = redirectUrl;
             })
             .catch((error) => {
-                console.error('작성한 게시물을 가져오는 중 오류 발생: ', error);
+                console.error('Order 또는 Payment 처리 중 오류 발생: ', error);
             });
-    }
+    };
 
     return (
         <div className={styles.box}>
@@ -156,7 +171,7 @@ const ProductShippingAddress = () => {
                         </div>
                     </>
                 )}
-                <Button content={"결제하기"} onClick={(e) => handleCreateGroup(e)}/>
+                <Button content={"결제하기"} onClick={(e) => handleOrderAndPayment(e)}/>
             </form>
         </div>
     );

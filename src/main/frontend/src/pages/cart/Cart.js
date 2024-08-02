@@ -67,7 +67,7 @@ const Cart = () => {
             .then((res) => {
                 console.log("전송 성공");
                 console.log(res.data.result.isDirect);
-                navigate(`/shippingAddress`, { isDirect: res.data.result.isDirect });
+                navigate(`/shippingAddress`, { state: { isDirect:res.data.result.isDirect } });
             })
             .catch((error) => {
                 console.error('작성한 게시물을 가져오는 중 오류 발생: ', error);

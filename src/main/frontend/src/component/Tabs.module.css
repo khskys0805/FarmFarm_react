@@ -1,3 +1,6 @@
+.tab_title{
+    padding-bottom: 50px;
+}
 .tab_title ul{
     display: flex;
     padding-bottom: 20px;
