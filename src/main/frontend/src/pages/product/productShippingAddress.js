@@ -1,10 +1,10 @@
 import styles from "./ProductShippingAddress.module.css";
 import Header from "../../component/Header";
 import InputBox from "../../component/InputBox";
-import {useCallback, useEffect, useState} from "react";
+import { useCallback, useEffect, useState } from "react";
 import PopupPostCode from "../../component/PopupPostCode";
 import Button from "../../component/Button";
-import {useLocation, useNavigate} from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
 import API from "../../config";
 
@@ -21,13 +21,12 @@ const ProductShippingAddress = () => {
     });
     const [showDeliveryFields, setShowDeliveryFields] = useState(true);
     const location = useLocation();
-    // const isDirect = location.state?.isDirect; // isDirect 값을 가져옴
-    const { isDirect, isGroup } = location.state || {}; // state가 undefined인 경우를 처리
+    const { isDirect, isGroup } = location.state || {};
 
     useEffect(() => {
         console.log("isGroup:", isGroup);
         console.log("isDirect:", isDirect);
-    }, [])
+    }, []);
 
     useEffect(() => {
         if (isDirect === 1) {
@@ -48,12 +47,12 @@ const ProductShippingAddress = () => {
     }, []);
 
     const handleRadioChange = (e) => {
-        const value = e.target.value === "true"; // 문자열을 불리언 값으로 변환
+        const value = e.target.value === "true";
         setShippingAddress((prevAddressData) => ({
             ...prevAddressData,
             isDelivery: value,
         }));
-        setShowDeliveryFields(value); // 불리언 값 그대로 사용하여 배송 요청사항 필드를 표시 또는 숨김
+        setShowDeliveryFields(value);
     };
 
     const handleComplete = (data) => {
@@ -62,10 +61,11 @@ const ProductShippingAddress = () => {
             deliveryAddress: data.locationFull,
             delieveryAddressDetail: data.locationDetail,
         });
-    }
+    };
 
     const handleOrderAndPayment = (e) => {
         e.preventDefault();
+        console.log(window.location.origin + '/payment-callback');
         axios.post(API.ORDER, shippingAddress, {
             headers: { Authorization: `Bearer ${localStorage.getItem('jwt')}`}
         })
@@ -73,9 +73,11 @@ const ProductShippingAddress = () => {
                 console.log("Order 전송 성공");
                 console.log(res.data.result);
 
-                // Order가 성공적으로 완료된 후 Payment 호출
                 return axios.get(API.PAYMENT(res.data.result.oid), {
                     headers: { Authorization: `Bearer ${localStorage.getItem('jwt')}` },
+                    params: {
+                        callback_url: window.location.origin + '/payment-callback' // 콜백 URL 수정
+                    }
                 });
             })
             .then((paymentRes) => {
@@ -85,7 +87,6 @@ const ProductShippingAddress = () => {
                 const isMobile = /android|iphone|ipad|ipod|blackberry|iemobile|opera mini|mobile/.test(navigator.userAgent.toLowerCase());
                 const redirectUrl = isMobile ? paymentRes.data.result.next_redirect_mobile_url : paymentRes.data.result.next_redirect_pc_url;
 
-                // URL로 리디렉션
                 window.location.href = redirectUrl;
             })
             .catch((error) => {
@@ -122,7 +123,7 @@ const ProductShippingAddress = () => {
                         <h3>구매 수량</h3>
                         <InputBox
                             type={"text"}
-                            name={"delivery_phone"}
+                            name={"quantity"}
                             value={shippingAddress.quantity}
                             placeholder={"구매하실 수량을 입력해주세요."}
                             onChange={handleInputChange}
@@ -138,7 +139,7 @@ const ProductShippingAddress = () => {
                             value={"true"}
                             onChange={handleRadioChange}
                             checked={shippingAddress.isDelivery}
-                            disabled={isDirect === 1} // isDirect가 0이면 비활성화
+                            disabled={isDirect === 1}
                         /><span>배송</span>
                         <InputBox
                             type={"radio"}
@@ -171,7 +172,7 @@ const ProductShippingAddress = () => {
                         </div>
                     </>
                 )}
-                <Button content={"결제하기"} onClick={(e) => handleOrderAndPayment(e)}/>
+                <Button content={"결제하기"} onClick={(e) => handleOrderAndPayment(e)} />
             </form>
         </div>
     );
