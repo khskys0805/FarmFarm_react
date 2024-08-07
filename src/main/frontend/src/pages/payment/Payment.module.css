@@ -1,0 +1,22 @@
+.box{
+    max-width: 500px;
+    margin:0 auto;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+    position: relative;
+}
+.box .wrapper{
+    height:100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+}
+.box .wrapper .success{
+    margin-bottom: 50px;
+}
+.box .wrapper button:nth-of-type(1){
+    margin-bottom: 20px;
+}

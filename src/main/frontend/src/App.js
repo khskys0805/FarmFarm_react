@@ -25,6 +25,7 @@ import EditMyProfile from './pages/myPage/EditMyProfile';
 import Cart from './pages/cart/Cart';
 import PaymentCallback from "./pages/payment/PaymentCallback";
 import PaymentSuccess from "./pages/payment/PaymentSuccess";
+import PaymentFail from "./pages/payment/PaymentFail";
 
 function App() {
     return (
@@ -57,8 +58,9 @@ function App() {
                         <Route path="/myParticipateAuction" element={<MyParticipateAuction />} />
                         <Route path="/review/write" element={<WriteReview />} />
                         <Route path="/editProfile" element={<EditMyProfile />} />
-                        <Route path="/payment-callback" element={<PaymentCallback />} />
+                        <Route path="/paymentCallback" element={<PaymentCallback />} />
                         <Route path="/paymentSuccess" element={<PaymentSuccess />} />
+                        <Route path="/paymentFail" element={<PaymentFail />} />
                     </Routes>
                 </div>
             </DataProvider>
