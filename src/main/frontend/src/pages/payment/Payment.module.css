@@ -13,10 +13,21 @@
     flex-direction: column;
     justify-content: center;
     text-align: center;
+    position: relative;
 }
-.box .wrapper .success{
-    margin-bottom: 50px;
+.box .wrapper .text{
+    margin-bottom: 100px;
 }
-.box .wrapper button:nth-of-type(1){
+.box .wrapper .text .success{
+    margin-bottom: 15px;
+}
+.box .wrapper .btn{
+    position: absolute;
+    bottom: 50px;
+    left:50%;
+    transform: translateX(-50%);
+    width: 100%;
+}
+.box .wrapper .btn button:nth-of-type(1){
     margin-bottom: 20px;
 }
