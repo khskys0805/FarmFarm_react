@@ -36,7 +36,7 @@ const Home = () => {
                             <IoIosArrowDroprightCircle size="30" color="#94C015FF" style={{cursor:"pointer"}}/>
                         </Link>
                     </div>
-                    <ProductList numToShow={numProductsToShow} productList={productList}/>
+                    <ProductList numToShow={numProductsToShow}/>
                 </div>
                 <div className={styles.group}>
                     <div className={styles.link}>
@@ -54,11 +54,11 @@ const Home = () => {
                 <div className={styles.group}>
                     <div className={styles.link}>
                         <h2>이 공동구매 상품 어때요?</h2>
-                        <Link to="/allGroupProduct">
+                        <Link to="/productList?type=group">
                             <IoIosArrowDroprightCircle size="30" color="#94C015FF" style={{cursor:"pointer"}}/>
                         </Link>
                     </div>
-                    <ProductList numToShow={numProductsToShow} productList={groupProductList}/>
+                    <ProductList numToShow={numProductsToShow} type="group"/>
                 </div>
                 <div className={styles.group}>
                     <div className={styles.link}>

@@ -5,14 +5,15 @@ import styles from "./ProductList.module.css";
 import defaultImg from "../images/icon.png";
 import {DataContext} from "../context/DataContext";
 
-const ProductList = ({ numToShow, productList }) => {
-    // const { productList = [] } = useContext(DataContext); // 기본값을 빈 배열로 설정
+const ProductList = ({ numToShow, type = 'product' }) => {
+    const { productList = [], groupProductList = [] } = useContext(DataContext); // 기본값을 빈 배열로 설정
+    const products = type === 'group' ? groupProductList : productList;
 
     return (
-        <div className={productList.length === 0 ? '' : styles.item_container}>
-            {productList.length === 0 && <p style={{ textAlign: "center", margin: "30px 0" }}>등록된 상품이 없어요.</p>}
-            {productList.length > 0 && (
-                productList.slice(0, numToShow || productList.length).map((item, index) => (
+        <div className={products.length === 0 ? '' : styles.item_container}>
+            {products.length === 0 && <p style={{ textAlign: "center", margin: "30px 0" }}>등록된 상품이 없어요.</p>}
+            {products.length > 0 && (
+                products.slice(0, numToShow || products.length).map((item, index) => (
                     <div className={styles.item_box} key={index}>
                         <Link to={`/productDetail/${item.pid}`}>
                             <div className={styles.item_media}>

@@ -37,7 +37,6 @@ export const DataProvider = ({ children }) => {
             const res = await axios.get(API.ALLGROUPPRODUCT, {
                 headers: { Authorization: `Bearer ${localStorage.getItem('jwt')}` },
             });
-            console.log(res.data.result.productList);
             setGroupProductList(res.data.result.productList);
         } catch (error) {
             console.error('Error fetching groupProduct: ', error);
