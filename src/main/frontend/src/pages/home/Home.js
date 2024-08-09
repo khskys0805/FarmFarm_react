@@ -14,7 +14,7 @@ import {useContext, useEffect, useState} from "react";
 import {DataContext} from "../../context/DataContext";
 
 const Home = () => {
-    const { productList = [], farmList = [] } = useContext(DataContext);
+    const { productList = [], farmList = [], groupProductList = [] } = useContext(DataContext);
     const slides = [
         <img src={banner1} alt="Slide 1" style={{ width: "100%" }}/>,
         <img src={banner2} alt="Slide 2" style={{ width: "100%" }}/>,
@@ -36,7 +36,7 @@ const Home = () => {
                             <IoIosArrowDroprightCircle size="30" color="#94C015FF" style={{cursor:"pointer"}}/>
                         </Link>
                     </div>
-                    <ProductList numToShow={numProductsToShow} products={productList}/>
+                    <ProductList numToShow={numProductsToShow} productList={productList}/>
                 </div>
                 <div className={styles.group}>
                     <div className={styles.link}>
@@ -50,6 +50,15 @@ const Home = () => {
                     ) : (
                         <p style={{textAlign:"center", margin:"30px 0"}}>개설된 농장이 없어요.</p>
                     )}
+                </div>
+                <div className={styles.group}>
+                    <div className={styles.link}>
+                        <h2>이 공동구매 상품 어때요?</h2>
+                        <Link to="/allGroupProduct">
+                            <IoIosArrowDroprightCircle size="30" color="#94C015FF" style={{cursor:"pointer"}}/>
+                        </Link>
+                    </div>
+                    <ProductList numToShow={numProductsToShow} productList={groupProductList}/>
                 </div>
                 <div className={styles.group}>
                     <div className={styles.link}>

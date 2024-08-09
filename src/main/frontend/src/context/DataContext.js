@@ -7,6 +7,7 @@ export const DataContext = createContext();
 export const DataProvider = ({ children }) => {
     const [productList, setProductList] = useState([]);
     const [farmList, setFarmList] = useState([]);
+    const [groupProductList, setGroupProductList] = useState([]);
     const [loading, setLoading] = useState(true);
 
     const fetchProductList = async () => {
@@ -31,11 +32,24 @@ export const DataProvider = ({ children }) => {
         }
     };
 
+    const fetchGroupProductList = async () => {
+        try {
+            const res = await axios.get(API.ALLGROUPPRODUCT, {
+                headers: { Authorization: `Bearer ${localStorage.getItem('jwt')}` },
+            });
+            console.log(res.data.result.productList);
+            setGroupProductList(res.data.result.productList);
+        } catch (error) {
+            console.error('Error fetching groupProduct: ', error);
+        }
+    }
+
     useEffect(() => {
         const jwt = localStorage.getItem('jwt');
         if (jwt) {
             fetchProductList();
             fetchFarmList();
+            fetchGroupProductList();
         } else {
             console.warn('JWT token is missing or invalid.');
         }
@@ -47,7 +61,7 @@ export const DataProvider = ({ children }) => {
     }
 
     return (
-        <DataContext.Provider value={{ productList, farmList, fetchProductList, fetchFarmList }}>
+        <DataContext.Provider value={{ productList, farmList, groupProductList, fetchProductList, fetchFarmList, fetchGroupProductList }}>
             {children}
         </DataContext.Provider>
     );

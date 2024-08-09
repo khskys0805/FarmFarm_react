@@ -5,8 +5,8 @@ import styles from "./ProductList.module.css";
 import defaultImg from "../images/icon.png";
 import {DataContext} from "../context/DataContext";
 
-const ProductList = ({ numToShow }) => {
-    const { productList = [] } = useContext(DataContext); // 기본값을 빈 배열로 설정
+const ProductList = ({ numToShow, productList }) => {
+    // const { productList = [] } = useContext(DataContext); // 기본값을 빈 배열로 설정
 
     return (
         <div className={productList.length === 0 ? '' : styles.item_container}>

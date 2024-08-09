@@ -4,6 +4,7 @@ const API = {
     },
     REGISTERPRODUCT: "/product",
     ALLPRODUCT: "/product/list",
+    ALLGROUPPRODUCT: "/product/group/list",
     PRODUCTTOCART(ID){
         return `/product/cart/${ID}`
     },
@@ -27,9 +28,6 @@ const API = {
     ORDER: "/order",
     PAYMENT(ID){
         return `/pay/order/${ID}`
-    },
-    PAYMENTSUCCESS(ID){
-        return `/pay/success/${ID}`
     },
     MYPAGE: "/myPage",
     MYORDER: "/order",

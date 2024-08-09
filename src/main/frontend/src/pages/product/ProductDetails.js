@@ -25,6 +25,7 @@ const ProductDetails = () => {
     const [showLayer, setShowLayer] = useState(false);
     const [groups, setGroups] = useState([]);
     const [discount, setDiscount] = useState("");
+    const [groupCapacity, setGroupCapacity] = useState("");
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -37,7 +38,10 @@ const ProductDetails = () => {
 
                 setProduct(res.data.result);
                 setIsGroup(res.data.result.type === 1);
-                if (res.data.result.type === 1) setDiscount(res.data.result.groupProductDiscount);
+                if (res.data.result.type === 1) {
+                    setDiscount(res.data.result.groupProductDiscount);
+                    setGroupCapacity(res.data.result.groupProductQuantity);
+                }
                 setIsDirect(res.data.result.direct);
                 setReviews(res.data.reviews || []); // null을 빈 배열로 대체
                 const imageArray = res.data.result.images.map(image => (
@@ -69,7 +73,7 @@ const ProductDetails = () => {
     };
 
     const groupPrice = (price) => {
-        return price * discount / 100;
+        return price * (100 - discount) / 100;
     }
 
     const handleGroupProduct = () => {
@@ -160,7 +164,9 @@ const ProductDetails = () => {
                             ) : (
                                 <h2>{formatNumber(product.price)}원</h2>
                             )}
-                            {!isGroup && (
+                            {isGroup ? (
+                                <h5>공동구매 수량: {groupCapacity}</h5>
+                            ) : (
                                 <div className={styles.stepper}>
                                     <div className={styles.stepper_button_minus} onClick={decreaseValue}></div>
                                     <div className={styles.stepper_input_wrap}>
