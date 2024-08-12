@@ -5,6 +5,9 @@ const API = {
     REGISTERPRODUCT: "/product",
     ALLPRODUCT: "/product/list",
     ALLGROUPPRODUCT: "/product/group/list",
+    GROUPLIST(ID){
+        return `/product/${ID}/groupList`
+    },
     PRODUCTTOCART(ID){
         return `/product/cart/${ID}`
     },

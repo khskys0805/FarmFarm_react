@@ -203,6 +203,17 @@ input::-webkit-inner-spin-button {
 .group_user .group_left .user_nickname{
     margin-left: 10px;
 }
+.group_user .group_right{
+    display: flex;
+    align-items: center;
+}
+.group_user .group_right .group_status{
+    display: flex;
+}
+.group_user .group_right .group_status .stock,
+.group_user .group_right .group_status .remain_time{
+    margin-right: 10px;
+}
 
 .no_groups{
     text-align: center;

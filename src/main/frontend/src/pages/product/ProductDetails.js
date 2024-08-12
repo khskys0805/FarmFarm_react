@@ -26,6 +26,7 @@ const ProductDetails = () => {
     const [groups, setGroups] = useState([]);
     const [discount, setDiscount] = useState("");
     const [groupCapacity, setGroupCapacity] = useState("");
+    const [groupList, setGroupList] = useState([]);
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -53,6 +54,61 @@ const ProductDetails = () => {
                 console.error('작성한 게시물을 가져오는 중 오류 발생: ', error);
             });
     }, [id]);
+
+    useEffect(() => {
+        if (isGroup) {
+            axios.get(API.GROUPLIST(id), {
+                headers: { Authorization: `Bearer ${localStorage.getItem('jwt')}` },
+            })
+                .then((res) => {
+                    console.log("그룹 목록 전송 성공");
+                    console.log(res.data.result.groupList);
+
+                    const updatedGroupList = res.data.result.groupList.map(group => {
+                        const remainingTime = calculateTimeLeft(group.closed_at);
+                        return { ...group, remainingTime };
+                    });
+
+                    setGroupList(updatedGroupList);
+                })
+                .catch((error) => {
+                    console.error('그룹 목록을 가져오는 중 오류 발생: ', error);
+                });
+        }
+    }, [id, isGroup]); // id와 isGroup이 변경될 때마다 실행
+
+    useEffect(() => {
+        const timer = setInterval(() => {
+            setGroupList(prevGroupList =>
+                prevGroupList.map(group => {
+                    const remainingTime = calculateTimeLeft(group.closed_at);
+                    return {
+                        ...group,
+                        remainingTime: remainingTime || { days: '00', hours: '00', minutes: '00', seconds: '00' }
+                    };
+                })
+            );
+        }, 1000);
+
+        return () => clearInterval(timer);
+    }, [groupList]);
+
+    const calculateTimeLeft = (closedAt) => {
+        const difference = new Date(closedAt) - new Date();
+        let timeLeft = {};
+
+        if (difference > 0) {
+            timeLeft = {
+                hours: String(Math.floor((difference / (1000 * 60 * 60)) % 24)).padStart(2, '0'),
+                minutes: String(Math.floor((difference / 1000 / 60) % 60)).padStart(2, '0'),
+                seconds: String(Math.floor((difference / 1000) % 60)).padStart(2, '0'),
+            };
+        } else {
+            timeLeft = { hours: '00', minutes: '00', seconds: '00' };
+        }
+
+        return timeLeft;
+    };
 
     const handleQuantityChange = (event) => {
         const newQuantity = parseInt(event.target.value);
@@ -207,28 +263,26 @@ const ProductDetails = () => {
                                 <Button content={"공구 개설"} width={"70px"} className="open" padding={"10px"} onClick={(e) => handleCreateGroup(e)}/>
                             </div>
                         </div>
-                        {groups.length > 0 ? (
-                            groups.map((group, index) => (
+                        {groupList.length > 0 ? (
+                            groupList.map((group, index) => (
                                 <div className={styles.group_user}>
                                     <div className={styles.group_left}>
                                         <div key={index} className={styles.user}>
-                                            {group.user1 && <img src={group.user1.image} alt={`Group ${index}`} />}
+                                            <img src={group.image} alt={`Group ${index}`} />
                                         </div>
-                                        <div key={index} className={styles.user}>
-                                            {group.user2 && <img src={group.user2.image} alt={`Group ${index}`} />}
-                                        </div>
-                                        <p className={styles.user_nickname}>{group.user1.nickname} ({2 - group.capacity}/2)</p>
+                                        <p className={styles.user_nickname}>{group.nickname}</p>
                                     </div>
                                     <div className={styles.group_right}>
-                                        {group.capacity === 1 && group.isClose !== 1 && (
+                                        {group.isClose !== 1 && (
                                             <>
                                                 <div className={styles.group_status}>
-                                                    <h5>1명 남음</h5>
-                                                    <h5 name="remain_time"></h5>
-                                                    <input type="hidden" name="back_time" value={group.closed_at} />
+                                                    <h5 className={styles.stock}>{group.stock}개 남음</h5>
+                                                    <h5 className={styles.remain_time}>
+                                                        {group.remainingTime.hours}:{group.remainingTime.minutes}:{group.remainingTime.seconds}
+                                                    </h5>
                                                 </div>
                                                 <div className={styles.group_action}>
-                                                    <button type="button">주문 참여</button>
+                                                    <Button content={"주문 참여"} color={"#FFC42BFF"} width={"70px"} padding={"10px"} />
                                                 </div>
                                             </>
                                         )}
