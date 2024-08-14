@@ -27,6 +27,7 @@ const ProductDetails = () => {
     const [discount, setDiscount] = useState("");
     const [groupCapacity, setGroupCapacity] = useState("");
     const [groupList, setGroupList] = useState([]);
+    const [closedGroups, setClosedGroups] = useState([]); // 추가: 이미 호출된 그룹 ID를 추적
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -78,20 +79,34 @@ const ProductDetails = () => {
     }, [id, isGroup]); // id와 isGroup이 변경될 때마다 실행
 
     useEffect(() => {
-        const timer = setInterval(() => {
+        const checkGroupTimes = () => {
             setGroupList(prevGroupList =>
                 prevGroupList.map(group => {
                     const remainingTime = calculateTimeLeft(group.closed_at);
+
+                    // 남은 시간이 00:00:00이고, 이미 처리되지 않은 그룹만 API 호출
+                    if (
+                        remainingTime.hours === '00' &&
+                        remainingTime.minutes === '00' &&
+                        remainingTime.seconds === '00' &&
+                        !closedGroups.includes(group.gid) // 이미 처리된 그룹이 아닌 경우에만
+                    ) {
+                        closeGroup(group.gid);  // 그룹 종료 API 호출
+                    }
+
                     return {
                         ...group,
-                        remainingTime: remainingTime || { days: '00', hours: '00', minutes: '00', seconds: '00' }
+                        remainingTime: remainingTime || { hours: '00', minutes: '00', seconds: '00' }
                     };
                 })
             );
-        }, 1000);
+        };
 
-        return () => clearInterval(timer);
-    }, [groupList]);
+        const intervalId = setInterval(checkGroupTimes, 1000); // 1초마다 상태를 확인
+
+        return () => clearInterval(intervalId); // 컴포넌트가 언마운트 될 때 interval 해제
+    }, [closedGroups]); // closedGroups만 의존성으로 추가, groupList 제거
+
 
     const calculateTimeLeft = (closedAt) => {
         const difference = new Date(closedAt) - new Date();
@@ -108,6 +123,19 @@ const ProductDetails = () => {
         }
 
         return timeLeft;
+    };
+
+    const closeGroup = (gId) => {
+        axios.delete(API.CLOSEGROUP(gId), {
+            headers: { Authorization: `Bearer ${localStorage.getItem('jwt')}` },
+        })
+            .then((res) => {
+                console.log("그룹 종료 및 환불 성공", res.data);
+                setClosedGroups(prev => [...prev, gId]); // 성공 시 그룹 ID 추가
+            })
+            .catch((error) => {
+                console.error('그룹 종료 중 오류 발생: ', error);
+            });
     };
 
     const handleQuantityChange = (event) => {
@@ -180,6 +208,23 @@ const ProductDetails = () => {
     const handleCreateGroup = (e) => {
         e.preventDefault();
         axios.get(API.CREATEGROUP(product.pid), {
+            headers: { Authorization: `Bearer ${localStorage.getItem('jwt')}` },
+        })
+            .then((res) => {
+                console.log("전송 성공");
+                console.log(res.data.result);
+                console.log(isDirect);
+                console.log(isGroup);
+                navigate(`/shippingAddress`, { state: { isDirect, isGroup } });
+            })
+            .catch((error) => {
+                console.error('작성한 게시물을 가져오는 중 오류 발생: ', error);
+            });
+    }
+
+    const handleAttendGroup = (e) => {
+        e.preventDefault();
+        axios.get(API.ATTENDGROUP(), {
             headers: { Authorization: `Bearer ${localStorage.getItem('jwt')}` },
         })
             .then((res) => {
@@ -273,7 +318,7 @@ const ProductDetails = () => {
                                         <p className={styles.user_nickname}>{group.nickname}</p>
                                     </div>
                                     <div className={styles.group_right}>
-                                        {group.isClose !== 1 && (
+                                        {group.capacity === 1 && group.isClose !== 1 && (
                                             <>
                                                 <div className={styles.group_status}>
                                                     <h5 className={styles.stock}>{group.stock}개 남음</h5>

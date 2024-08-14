@@ -28,6 +28,12 @@ const API = {
     CREATEGROUP(ID){
         return `/order/createGroup/${ID}`
     },
+    ATTENDGROUP(ID){
+        return `/order/attendGroup/${ID}`
+    },
+    CLOSEGROUP(ID){
+        return `/order/group/${ID}`
+    },
     ORDER: "/order",
     PAYMENT(ID){
         return `/pay/order/${ID}`
