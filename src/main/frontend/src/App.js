@@ -26,6 +26,7 @@ import Cart from './pages/cart/Cart';
 import PaymentCallback from "./pages/payment/PaymentCallback";
 import PaymentSuccess from "./pages/payment/PaymentSuccess";
 import PaymentFail from "./pages/payment/PaymentFail";
+import Category from "./pages/product/Category";
 
 function App() {
     return (
@@ -39,6 +40,7 @@ function App() {
                         <Route path="/login/oauth_kakao" element={<Token />} />
                         <Route path="/nickname" element={<CreateNickname />} />
                         <Route path="/tabbar" element={<TabBar />} />
+                        <Route path="/category" element={<Category />} />
                         <Route path="/registerProduct" element={<RegisterProduct />} />
                         <Route path="/editProduct/:id" element={<RegisterProduct />} />
                         <Route path="/productList" element={<AllProduct type={new URLSearchParams(window.location.search).get('type') || "product"} />} />

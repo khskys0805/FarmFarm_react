@@ -16,7 +16,7 @@ const TabBar = ({ Authorization }) => {
     // 경로에 따라 활성 탭을 반환하는 함수
     function getActiveTab(pathname) {
         if (pathname === '/home') return 'home';
-        if (pathname === '/menu') return 'menu';
+        if (pathname === '/category') return 'category';
         if (pathname === '/search') return 'search';
         if (pathname === '/cart') return 'cart';
         if (pathname === '/myPage') return 'myPage';
@@ -35,7 +35,7 @@ const TabBar = ({ Authorization }) => {
                 <button onClick={() => handleTabClick('home')}>
                     <TiHome style={{ fontSize: '20px', color: activeTab === 'home' ? '#000' : '#d9d9d9' }}/>
                 </button>
-                <button onClick={() => handleTabClick('menu')}>
+                <button onClick={() => handleTabClick('category')}>
                     <SlMenu style={{ fontSize: '20px', color: activeTab === 'menu' ? '#000' : '#d9d9d9' }}/>
                 </button>
                 <button onClick={() => handleTabClick('search')}>
