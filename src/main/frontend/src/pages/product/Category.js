@@ -1,6 +1,7 @@
 import styles from "./Category.module.css";
 import Header from "../../component/Header";
 import { IoIosArrowForward } from "react-icons/io";
+import TabBar from "../../component/TabBar";
 
 const Category = () => {
     const selectList = [
@@ -21,6 +22,7 @@ const Category = () => {
                     </div>
                 ))}
             </div>
+            <TabBar />
         </div>
     )
 }

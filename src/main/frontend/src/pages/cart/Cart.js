@@ -7,6 +7,7 @@ import img from "../../images/logo/farmfarm_logo.png";
 import {Link, useNavigate} from "react-router-dom";
 import {FaTrashAlt} from "react-icons/fa";
 import Button from "../../component/Button";
+import TabBar from "../../component/TabBar";
 
 const Cart = () => {
     const [carts, setCarts] = useState([]);
@@ -118,6 +119,7 @@ const Cart = () => {
                     ))
                 )}
             </ul>
+            <TabBar />
         </div>
     )
 }

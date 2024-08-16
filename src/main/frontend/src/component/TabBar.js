@@ -36,7 +36,7 @@ const TabBar = ({ Authorization }) => {
                     <TiHome style={{ fontSize: '20px', color: activeTab === 'home' ? '#000' : '#d9d9d9' }}/>
                 </button>
                 <button onClick={() => handleTabClick('category')}>
-                    <SlMenu style={{ fontSize: '20px', color: activeTab === 'menu' ? '#000' : '#d9d9d9' }}/>
+                    <SlMenu style={{ fontSize: '20px', color: activeTab === 'category' ? '#000' : '#d9d9d9' }}/>
                 </button>
                 <button onClick={() => handleTabClick('search')}>
                     <HiMiniMagnifyingGlass style={{ fontSize: '20px', color: activeTab === 'search' ? '#000' : '#d9d9d9' }}/>

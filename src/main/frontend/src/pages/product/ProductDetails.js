@@ -223,9 +223,9 @@ const ProductDetails = () => {
             });
     }
 
-    const handleAttendGroup = (e) => {
+    const handleAttendGroup = (gid, e) => {
         e.preventDefault();
-        axios.get(API.ATTENDGROUP(), {
+        axios.get(API.ATTENDGROUP(gid), {
             headers: { Authorization: `Bearer ${localStorage.getItem('jwt')}` },
         })
             .then((res) => {
@@ -328,7 +328,7 @@ const ProductDetails = () => {
                                                     </h5>
                                                 </div>
                                                 <div className={styles.group_action}>
-                                                    <Button content={"주문 참여"} color={"#FFC42BFF"} width={"70px"} padding={"10px"} />
+                                                    <Button content={"주문 참여"} color={"#FFC42BFF"} width={"70px"} padding={"10px"} onClick={(e) => handleAttendGroup(group.gid, e)}/>
                                                 </div>
                                             </>
                                         )}
