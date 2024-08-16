@@ -92,6 +92,7 @@ const ProductDetails = () => {
                         !closedGroups.includes(group.gid) // 이미 처리된 그룹이 아닌 경우에만
                     ) {
                         closeGroup(group.gid);  // 그룹 종료 API 호출
+                        setClosedGroups(prev => [...prev, group.gid]); // 성공 시 그룹 ID 추가
                     }
 
                     return {
