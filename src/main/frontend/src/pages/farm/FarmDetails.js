@@ -52,16 +52,18 @@ const FarmDetails = () => {
     };
 
     const deleteFarm = () => {
-        axios.delete(API.FARM(id), {
-            headers: { Authorization: `Bearer ${localStorage.getItem('jwt')}` },
-        })
-            .then((res) => {
-                console.log("전송 성공");
-                console.log(res.data.result);
+        if (window.confirm("상품을 삭제하시겠습니까?")) {
+            axios.delete(API.FARM(id), {
+                headers: { Authorization: `Bearer ${localStorage.getItem('jwt')}` },
             })
-            .catch((error) => {
-                console.error('작성한 게시물을 가져오는 중 오류 발생: ', error);
-            });
+                .then((res) => {
+                    console.log("전송 성공");
+                    console.log(res.data.result);
+                })
+                .catch((error) => {
+                    console.error('작성한 게시물을 가져오는 중 오류 발생: ', error);
+                });
+        }
     }
 
     return (

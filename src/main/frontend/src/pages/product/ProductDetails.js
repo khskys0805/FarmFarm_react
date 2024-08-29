@@ -332,10 +332,10 @@ const ProductDetails = () => {
                                                 </div>
                                             </>
                                         )}
-                                        {group.capacity === 0 && group.isClose !== 1 && (
+                                        {group.capacity === 0 && (
                                             <p>공동구매완료</p>
                                         )}
-                                        {group.isClose === 1 && (
+                                        {group.isClose === 1 && group.capacity === 1 && (
                                             <p>공동구매종료</p>
                                         )}
                                     </div>

@@ -20,7 +20,7 @@ const RegisterProduct = () => {
         closeCalendar: "",
         date: "",
         detail: "",
-        direct: "2",
+        shippingMethod: "",
         direct_location: "",
         group: false,
         hour: "",
@@ -176,11 +176,11 @@ const RegisterProduct = () => {
         quantity: "상품 수량",
         detail: "상품 설명",
         price: "상품 가격",
-        direct: "거래 방법"
+        shippingMethod: "거래 방법"
     };
 
     const validateForm = () => {
-        const requiredFields = ['productType', 'name', 'quantity', 'detail', 'price', 'direct'];
+        const requiredFields = ['productType', 'name', 'quantity', 'detail', 'price', 'shippingMethod'];
         for (const field of requiredFields) {
             if (!productData[field]) {
                 alert(`${fieldNames[field]}을(를) 입력해주세요.`);
@@ -241,9 +241,9 @@ const RegisterProduct = () => {
                     <h3>상품 유형</h3>
                     <p>상품 유형을 선택해주세요.</p>
                     <div>
-                        <input type={"radio"} name={"productType"} value={"0"} onChange={(e) => handleRadioChange(e, "productType")} checked={productData.type === 0} disabled={isEditMode}/><span>일반 상품</span>
-                        <input type={"radio"} name={"productType"} value={"1"} onChange={(e) => handleRadioChange(e, "productType")} checked={productData.type === 1} disabled={isEditMode}/><span>공동 구매</span>
-                        <input type={"radio"} name={"productType"} value={"2"} onChange={(e) => handleRadioChange(e, "productType")} checked={productData.type === 2} disabled={isEditMode}/><span>경매 상품</span>
+                        <input type={"radio"} name={"productType"} value={"0"} onChange={(e) => handleRadioChange(e, "productType")} checked={productData.productType === "0"} disabled={isEditMode}/><span>일반 상품</span>
+                        <input type={"radio"} name={"productType"} value={"1"} onChange={(e) => handleRadioChange(e, "productType")} checked={productData.productType === "1"} disabled={isEditMode}/><span>공동 구매</span>
+                        <input type={"radio"} name={"productType"} value={"2"} onChange={(e) => handleRadioChange(e, "productType")} checked={productData.productType === "2"} disabled={isEditMode}/><span>경매 상품</span>
                     </div>
                 </div>
                 {showAuctionFields && (
@@ -306,8 +306,23 @@ const RegisterProduct = () => {
                     <h3>거래 방법</h3>
                     <p>상품을 거래할 방법을 선택해주세요.</p>
                     <div>
-                        <input type={"radio"} name={"direct"} value={"1"} onChange={(e) => handleRadioChange(e, "direct")} checked={productData.direct === true} disabled={isEditMode}/><span>직거래</span>
-                        <input type={"radio"} name={"direct"} value={"2"} onChange={(e) => handleRadioChange(e, "direct")} checked={productData.direct === false} disabled={isEditMode}/><span>배송</span>
+                        <input
+                            type="radio"
+                            name="shippingMethod"
+                            value="DIRECT"
+                            onChange={(e) => handleRadioChange(e, "shippingMethod")}
+                            checked={productData.shippingMethod === "DIRECT"}
+                        />
+                        <span>직거래</span>
+
+                        <input
+                            type="radio"
+                            name="shippingMethod"
+                            value="DELIVERY"
+                            onChange={(e) => handleRadioChange(e, "shippingMethod")}
+                            checked={productData.shippingMethod === "DELIVERY"}
+                        />
+                        <span>배송</span>
                     </div>
                 </div>
                 <div className={styles.content_wrapper}>
