@@ -34,16 +34,16 @@ const RegisterProduct = () => {
         quantity: "",
         rating: "",
         sales: "",
-        productType: "0",
+        productType: 0,
         groupProductQuantity:"",
         groupProductDiscount:""
     });
     const [showGroupFileds, setShowGroupFields] = useState(false);
     const [showAuctionFields, setShowAuctionFields] = useState(false);
     const selectList = [
-        { value: "1", name: "과일" },
-        { value: "2", name: "채소" },
-        { value: "3", name: "기타" },
+        { value: "FRUIT", name: "과일" },
+        { value: "VEGETABLE", name: "채소" },
+        { value: "ETC", name: "기타" },
     ];
     const [isEditMode, setIsEditMode] = useState(false); // 추가: 수정 모드 상태
     const [addImages, setAddImages] = useState([]); // 추가: 추가된 이미지 파일 ID 배열
@@ -181,12 +181,23 @@ const RegisterProduct = () => {
 
     const validateForm = () => {
         const requiredFields = ['productType', 'name', 'quantity', 'detail', 'price', 'shippingMethod'];
+
         for (const field of requiredFields) {
-            if (!productData[field]) {
+            const value = productData[field];
+
+            // Check for empty strings
+            if (typeof value === 'string' && value.trim() === "") {
+                alert(`${fieldNames[field]}을(를) 입력해주세요.`);
+                return false;
+            }
+
+            // Check for non-string types (e.g., number, boolean)
+            if (value === null || value === undefined || value === '') {
                 alert(`${fieldNames[field]}을(를) 입력해주세요.`);
                 return false;
             }
         }
+
         return true;
     };
 
@@ -211,7 +222,7 @@ const RegisterProduct = () => {
                 .then((res) => {
                     console.log("전송 성공");
                     console.log(res.data);
-                    navigate(`/productDetail/${res.data.result.pid}`);
+                    navigate(`/productDetail/${formData.pid}`);
                 })
                 .catch((error) => {
                     console.error('상품 수정 중 오류 발생: ', error);
@@ -241,9 +252,16 @@ const RegisterProduct = () => {
                     <h3>상품 유형</h3>
                     <p>상품 유형을 선택해주세요.</p>
                     <div>
-                        <input type={"radio"} name={"productType"} value={"0"} onChange={(e) => handleRadioChange(e, "productType")} checked={productData.productType === "0"} disabled={isEditMode}/><span>일반 상품</span>
-                        <input type={"radio"} name={"productType"} value={"1"} onChange={(e) => handleRadioChange(e, "productType")} checked={productData.productType === "1"} disabled={isEditMode}/><span>공동 구매</span>
-                        <input type={"radio"} name={"productType"} value={"2"} onChange={(e) => handleRadioChange(e, "productType")} checked={productData.productType === "2"} disabled={isEditMode}/><span>경매 상품</span>
+                        <input type={"radio"} name={"productType"} value={"0"} onChange={(e) => handleRadioChange(e, "productType")} checked={productData.productType === 0} disabled={isEditMode}/><span>일반 상품</span>
+                        <input type={"radio"} name={"productType"} value={"1"} onChange={(e) => handleRadioChange(e, "productType")} checked={productData.productType === 1} disabled={isEditMode}/><span>공동 구매</span>
+                        <input type={"radio"} name={"productType"} value={"2"} onChange={(e) => handleRadioChange(e, "productType")} checked={productData.productType === 2} disabled={isEditMode}/><span>경매 상품</span>
+                        {isEditMode && (
+                            <input
+                                type="hidden"
+                                name="productType"
+                                value={productData.productType}
+                            />
+                        )}
                     </div>
                 </div>
                 {showAuctionFields && (
@@ -268,7 +286,19 @@ const RegisterProduct = () => {
                 </div>
                 <div className={styles.content_wrapper}>
                     <h3>상품 카테고리</h3>
-                    <select name={"productCategory"} onChange={handleInputChange} value={productData.productCategory}>
+                    {/*<select name={"productCategory"} onChange={handleInputChange} value={productData.productCategory}>*/}
+                    {/*    {selectList.map((item) => (*/}
+                    {/*        <option value={item.value} key={item.value}>*/}
+                    {/*            {item.name}*/}
+                    {/*        </option>*/}
+                    {/*    ))}*/}
+                    {/*</select>*/}
+                    <select
+                        name={"productCategory"}
+                        onChange={handleInputChange}
+                        value={productData.productCategory}
+                        disabled={isEditMode} // editMode일 때 수정 불가능하도록 비활성화
+                    >
                         {selectList.map((item) => (
                             <option value={item.value} key={item.value}>
                                 {item.name}
@@ -312,6 +342,7 @@ const RegisterProduct = () => {
                             value="DIRECT"
                             onChange={(e) => handleRadioChange(e, "shippingMethod")}
                             checked={productData.shippingMethod === "DIRECT"}
+                            disabled={isEditMode}
                         />
                         <span>직거래</span>
 
@@ -321,8 +352,16 @@ const RegisterProduct = () => {
                             value="DELIVERY"
                             onChange={(e) => handleRadioChange(e, "shippingMethod")}
                             checked={productData.shippingMethod === "DELIVERY"}
+                            disabled={isEditMode}
                         />
                         <span>배송</span>
+                        {isEditMode && (
+                            <input
+                                type="hidden"
+                                name="shippingMethod"
+                                value={productData.shippingMethod}
+                            />
+                        )}
                     </div>
                 </div>
                 <div className={styles.content_wrapper}>
