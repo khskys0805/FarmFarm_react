@@ -12,9 +12,9 @@
     overflow: hidden;
     cursor: pointer;
 }
-.item_box:nth-of-type(3), .item_box:nth-of-type(4){
-    margin-bottom: 0;
-}
+/*.item_box:nth-of-type(3), .item_box:nth-of-type(4){*/
+/*    margin-bottom: 0;*/
+/*}*/
 .item_media{
     padding: 0;
     margin: 0;

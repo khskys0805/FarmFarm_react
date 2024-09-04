@@ -52,13 +52,14 @@ const FarmDetails = () => {
     };
 
     const deleteFarm = () => {
-        if (window.confirm("상품을 삭제하시겠습니까?")) {
+        if (window.confirm("농장을 삭제하시겠습니까?")) {
             axios.delete(API.FARM(id), {
                 headers: { Authorization: `Bearer ${localStorage.getItem('jwt')}` },
             })
                 .then((res) => {
                     console.log("전송 성공");
                     console.log(res.data.result);
+                    navigate(`/farmList`);
                 })
                 .catch((error) => {
                     console.error('작성한 게시물을 가져오는 중 오류 발생: ', error);
