@@ -15,6 +15,7 @@ export const DataProvider = ({ children }) => {
             const res = await axios.get(API.ALLPRODUCT, {
                 headers: { Authorization: `Bearer ${localStorage.getItem('jwt')}` },
             });
+            console.log(res.data.result.productList);
             setProductList(res.data.result.productList);
         } catch (error) {
             console.error('Error fetching products: ', error);

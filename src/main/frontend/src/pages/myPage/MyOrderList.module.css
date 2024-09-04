@@ -7,11 +7,19 @@
     box-sizing: border-box;
     position: relative;
 }
+.box ul{
+    height:100%;
+}
 .no_list{
     display: flex;
     flex-direction: column;
     align-items: center;
     text-align: center;
+    height:100%;
+    justify-content: center;
+}
+.no_list p{
+    margin-bottom: 30px;
 }
 .order_date{
     position: relative;

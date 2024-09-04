@@ -39,7 +39,7 @@ const API = {
         return `/pay/order/${ID}`
     },
     MYPAGE: "/myPage",
-    MYORDER: "/order",
+    MYORDER: "/mypage/orderList",
     MYREVIEW: "/review/my",
     MYENQUIRY: "/enquiry/my",
     MYAUCTION: "/order/auction",

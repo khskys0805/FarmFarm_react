@@ -252,9 +252,9 @@ const RegisterProduct = () => {
                     <h3>상품 유형</h3>
                     <p>상품 유형을 선택해주세요.</p>
                     <div>
-                        <input type={"radio"} name={"productType"} value={"0"} onChange={(e) => handleRadioChange(e, "productType")} checked={productData.productType === 0} disabled={isEditMode}/><span>일반 상품</span>
-                        <input type={"radio"} name={"productType"} value={"1"} onChange={(e) => handleRadioChange(e, "productType")} checked={productData.productType === 1} disabled={isEditMode}/><span>공동 구매</span>
-                        <input type={"radio"} name={"productType"} value={"2"} onChange={(e) => handleRadioChange(e, "productType")} checked={productData.productType === 2} disabled={isEditMode}/><span>경매 상품</span>
+                        <input type={"radio"} name={"productType"} value={"0"} onChange={(e) => handleRadioChange(e, "productType")} checked={productData.productType === "0"} disabled={isEditMode}/><span>일반 상품</span>
+                        <input type={"radio"} name={"productType"} value={"1"} onChange={(e) => handleRadioChange(e, "productType")} checked={productData.productType === "1"} disabled={isEditMode}/><span>공동 구매</span>
+                        <input type={"radio"} name={"productType"} value={"2"} onChange={(e) => handleRadioChange(e, "productType")} checked={productData.productType === "2"} disabled={isEditMode}/><span>경매 상품</span>
                         {isEditMode && (
                             <input
                                 type="hidden"
@@ -329,7 +329,7 @@ const RegisterProduct = () => {
                 </div>
                 <div className={styles.content_wrapper}>
                     <h3>상품 가격</h3>
-                    <p>판매하시는 상품의 가격을 입력해주세요.</p>
+                    {showAuctionFields === true ? (<p>경매 상품의 경매 시작가를 입력해주세요.</p>) : (<p>판매하시는 상품의 가격을 입력해주세요.</p>)}
                     <InputBox type={"text"} name={"price"} value={productData.price} placeholder={"상품 가격을 입력해주세요."} onChange={handleInputChange}/>
                 </div>
                 <div className={styles.content_wrapper}>

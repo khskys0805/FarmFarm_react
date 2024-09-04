@@ -5,6 +5,7 @@ import axios from "axios";
 import API from "../../config";
 import img from "../../images/logo/farmfarm_logo.png";
 import {useNavigate} from "react-router-dom";
+import Button from "../../component/Button";
 
 const MyOrderList = () => {
     const [orderList, setOrderList] = useState([]);
@@ -16,14 +17,18 @@ const MyOrderList = () => {
         })
             .then((res) => {
                 console.log("전송 성공");
-                console.log(res.data);
+                console.log(res.data.result.myOrderList);
 
-                setOrderList(res.data)
+                setOrderList(res.data.result.myOrderList);
             })
             .catch((error) => {
                 console.error('작성한 게시물을 가져오는 중 오류 발생: ', error);
             });
     }, []);
+
+    const handleOrderProduct = () => {
+        navigate(`/productList`);
+    }
     return (
         <div className={styles.box}>
             <Header title={"주문 내역"} go={`/myPage`}/>
@@ -32,7 +37,7 @@ const MyOrderList = () => {
                     <div className={styles.no_list}>
                         <p>아직 주문 내역이 없습니다!<br/>
                             상품을 구매해보세요!!</p>
-                        <a href="/product/auction/list">판매 상품 보러가기</a>
+                        <Button content={"판매 상품 보러가기"} onClick={handleOrderProduct} />
                     </div>
                 ) : (
                     orderList.map((order, index) => (
