@@ -27,6 +27,7 @@ import PaymentCallback from "./pages/payment/PaymentCallback";
 import PaymentSuccess from "./pages/payment/PaymentSuccess";
 import PaymentFail from "./pages/payment/PaymentFail";
 import Category from "./pages/product/Category";
+import AuctionDetail from "./pages/product/AuctionDetail";
 
 function App() {
     return (
@@ -47,6 +48,7 @@ function App() {
                         <Route path="/allFarm" element={<AllFarm />} />
                         <Route path="/auction/list" element={<AuctionList />} />
                         <Route path="/productDetail/:id" element={<ProductDetails />} />
+                        <Route path="/auctionDetail/:id" element={<AuctionDetail />} />
                         <Route path="/farmDetail/:id" element={<FarmDetails />} />
                         <Route path="/myPage" element={<MyPage />} />
                         <Route path="/search" element={<SearchProduct />} />

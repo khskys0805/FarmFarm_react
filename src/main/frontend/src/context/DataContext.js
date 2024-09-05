@@ -17,7 +17,9 @@ export const DataProvider = ({ children }) => {
                 headers: { Authorization: `Bearer ${localStorage.getItem('jwt')}` },
             });
             console.log(res.data.result.productList);
-            setProductList(res.data.result.productList);
+
+            const filteredProductList = res.data.result.productList.filter(product => product.productType === 0 || product.productType === 1);
+            setProductList(filteredProductList);
         } catch (error) {
             console.error('Error fetching products: ', error);
         }
@@ -47,7 +49,7 @@ export const DataProvider = ({ children }) => {
 
     const fetchAuctionList = async () => {
         try {
-            const res = await axios.get(API.ALLGROUPPRODUCT, {
+            const res = await axios.get(API.ALLAUCTION, {
                 headers: { Authorization: `Bearer ${localStorage.getItem('jwt')}` },
             });
             setAuctionList(res.data.result.productList);
