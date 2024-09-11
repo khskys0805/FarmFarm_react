@@ -113,6 +113,7 @@ const Tabs = ({ type, farm, product }) => {
                                 <ProductList products={productList}/>
                             </>
                         )}
+                        {/*{tab === 2 && }*/}
                     </>
                 )}
             </div>

@@ -1,0 +1,23 @@
+.box{
+    max-width: 500px;
+    margin:0 auto;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+    position: relative;
+}
+
+.info{
+    margin:20px 0 20px 5px;
+}
+.info .farm{
+    margin-bottom: 5px;
+}
+.info .name{
+    margin-bottom: 15px;
+}
+.info .detail{
+    margin:50px 0;
+    text-align: center;
+}
