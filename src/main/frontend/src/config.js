@@ -20,6 +20,9 @@ const API = {
     REGISTERFARM: "/farm",
     ALLFARM: "/farm/list",
     ALLAUCTION: "/product/auction/list",
+    ATTENDAUCTION(ID){
+        return `/order/product/${ID}`
+    },
     CART: "/product/cart",
     CARTREMOVE(ID){
         return `/product/cart/delete/${ID}`

@@ -17,15 +17,17 @@ const ProductShippingAddress = () => {
         delivery_memo: "",
         deliveryAddress:"",
         delieveryAddressDetail:"",
-        quantity:""
+        quantity:"",
+        price:""
     });
     const [showDeliveryFields, setShowDeliveryFields] = useState(true);
     const location = useLocation();
-    const { isDirect, isGroup } = location.state || {};
+    const { isDirect, isGroup, isAuction, pid } = location.state || {};
 
     useEffect(() => {
         console.log("isGroup:", isGroup);
         console.log("isDirect:", isDirect);
+        console.log("isAuction:", isAuction); // 추가
     }, []);
 
     useEffect(() => {
@@ -94,10 +96,48 @@ const ProductShippingAddress = () => {
             });
     };
 
+    const handleParticipateAuction = (e) => {
+        e.preventDefault();
+        axios.post(API.ATTENDAUCTION(pid), shippingAddress, {
+            headers: { Authorization: `Bearer ${localStorage.getItem('jwt')}` },
+        })
+            .then((res) => {
+                console.log("전송 성공");
+                console.log(res.data.result);
+            })
+            .catch((error) => {
+                console.error('작성한 게시물을 가져오는 중 오류 발생: ', error);
+            });
+    }
+
     return (
         <div className={styles.box}>
             <Header title={"배송 정보 입력"} go={-1} />
             <form className={styles.form}>
+                {isAuction && (
+                    <>
+                        <div className={styles.content_wrapper}>
+                            <h3>상품 수량</h3>
+                            <InputBox
+                                type={"text"}
+                                name={"quantity"}
+                                value={shippingAddress.quantity}
+                                placeholder={"구매하실 수량을 입력해주세요."}
+                                onChange={handleInputChange}
+                            />
+                        </div>
+                        <div className={styles.content_wrapper}>
+                            <h3>경매 금액</h3>
+                            <InputBox
+                                type={"text"}
+                                name={"price"}
+                                value={shippingAddress.price}
+                                placeholder={"경매 금액을 입력해주세요."}
+                                onChange={handleInputChange}
+                            />
+                        </div>
+                    </>
+                )}
                 <div className={styles.content_wrapper}>
                     <h3>이름</h3>
                     <InputBox
@@ -172,7 +212,12 @@ const ProductShippingAddress = () => {
                         </div>
                     </>
                 )}
-                <Button content={"결제하기"} onClick={(e) => handleOrderAndPayment(e)} />
+                {isAuction ? (
+                    <Button content={"결제하기"} onClick={(e) => handleParticipateAuction(e)} />
+                ) : (
+                    <Button content={"결제하기"} onClick={(e) => handleOrderAndPayment(e)} />
+                )}
+
             </form>
         </div>
     );

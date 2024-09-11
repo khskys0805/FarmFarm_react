@@ -118,7 +118,7 @@
 .box ul button{
     width:500px !important;
     position: fixed;
-    bottom: 10px;
+    bottom: 60px;
     left:50%;
     transform: translateX(-50%);
 }
