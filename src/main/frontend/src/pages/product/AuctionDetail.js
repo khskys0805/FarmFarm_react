@@ -5,9 +5,8 @@ import {useNavigate, useParams} from "react-router-dom";
 import styles from "./AuctionDetail.module.css";
 import SwiperComponent from "../../component/SwiperComponent";
 import {FiShare2} from "react-icons/fi";
-import {FaStar} from "react-icons/fa";
-import Tabs from "../../component/Tabs";
 import Button from "../../component/Button";
+import {IoIosArrowDropleftCircle} from "react-icons/io";
 
 const AuctionDetail = () => {
     const { id } = useParams();
@@ -52,6 +51,7 @@ const AuctionDetail = () => {
     return (
         <div className={styles.box}>
             <SwiperComponent slides={images} />
+            <IoIosArrowDropleftCircle className={styles.arrowLeft} size="30" color="#fff" onClick={() => navigate(-1)}/>
             {product && (
                 <div className={styles.content}>
                     <div className={styles.top}>
@@ -67,7 +67,7 @@ const AuctionDetail = () => {
                     <div className={styles.detail}>
                         <h4>{product.detail}</h4>
                     </div>
-                    <div>
+                    <div className={styles.buttonWrap}>
                         <Button content={"경매 참여하기"} onClick={handleParticipateAuction}/>
                     </div>
                 </div>

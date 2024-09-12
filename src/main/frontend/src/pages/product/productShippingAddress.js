@@ -98,17 +98,36 @@ const ProductShippingAddress = () => {
 
     const handleParticipateAuction = (e) => {
         e.preventDefault();
+        // 경매 참여 API 요청
         axios.post(API.ATTENDAUCTION(pid), shippingAddress, {
             headers: { Authorization: `Bearer ${localStorage.getItem('jwt')}` },
         })
             .then((res) => {
-                console.log("전송 성공");
+                console.log("경매 참여 성공");
                 console.log(res.data.result);
+
+                // 경매 참여 성공 후, 결제 로직으로 연결
+                return axios.get(API.PAYMENT(res.data.result.oid), {
+                    headers: { Authorization: `Bearer ${localStorage.getItem('jwt')}` },
+                    params: {
+                        callback_url: window.location.origin + '/payment-callback' // 콜백 URL 수정
+                    }
+                });
+            })
+            .then((paymentRes) => {
+                console.log("Payment 전송 성공");
+                console.log(paymentRes.data.result);
+
+                const isMobile = /android|iphone|ipad|ipod|blackberry|iemobile|opera mini|mobile/.test(navigator.userAgent.toLowerCase());
+                const redirectUrl = isMobile ? paymentRes.data.result.next_redirect_mobile_url : paymentRes.data.result.next_redirect_pc_url;
+
+                window.location.href = redirectUrl;
             })
             .catch((error) => {
-                console.error('작성한 게시물을 가져오는 중 오류 발생: ', error);
+                console.error('경매 또는 결제 처리 중 오류 발생: ', error);
             });
     }
+
 
     return (
         <div className={styles.box}>

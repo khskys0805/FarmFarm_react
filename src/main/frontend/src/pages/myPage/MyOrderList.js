@@ -57,10 +57,10 @@ const MyOrderList = () => {
                                         <img src={img} alt="상품 이미지" />
                                     </div>
                                     <div>
-                                        <p className={styles.farm_name}>{order.orders[0].product.farm.name}</p>
-                                        <h5 className={styles.product_name}>{order.orders[0].product.name}</h5>
-                                        <h4 className={styles.price}>{order.orders[0].price}원</h4>
-                                        <h4 className={styles.total_price}>총 금액: {order.total_price}원</h4>
+                                        <p className={styles.farm_name}>{order.orderDetails[0].farmName}</p>
+                                        <h5 className={styles.product_name}>{order.orderDetails[0].productName}</h5>
+                                        <h4 className={styles.price}>{order.orderDetails[0].price}원</h4>
+                                        <h4 className={styles.total_price}>총 금액: {order.orderDetails[0].totalPrice}원</h4>
                                     </div>
                                 </div>
                                 <div>

@@ -82,3 +82,10 @@
     margin:70px 0;
     text-align: center;
 }
+.buttonWrap{
+    width:500px !important;
+    position: fixed;
+    bottom: 10px;
+    left:50%;
+    transform: translateX(-50%);
+}
