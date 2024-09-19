@@ -28,6 +28,7 @@ import PaymentSuccess from "./pages/payment/PaymentSuccess";
 import PaymentFail from "./pages/payment/PaymentFail";
 import Category from "./pages/product/Category";
 import AuctionDetail from "./pages/product/AuctionDetail";
+import AllAuction from "./pages/product/AllAuction";
 
 function App() {
     return (
@@ -46,6 +47,7 @@ function App() {
                         <Route path="/editProduct/:id" element={<RegisterProduct />} />
                         <Route path="/productList" element={<AllProduct type={new URLSearchParams(window.location.search).get('type') || "product"} />} />
                         <Route path="/allFarm" element={<AllFarm />} />
+                        <Route path="/allAuction" element={<AllAuction />} />
                         <Route path="/auction/list" element={<AuctionList />} />
                         <Route path="/productDetail/:id" element={<ProductDetails />} />
                         <Route path="/auctionDetail/:id" element={<AuctionDetail />} />

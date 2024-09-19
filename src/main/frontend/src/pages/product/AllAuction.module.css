@@ -1,0 +1,14 @@
+.container{
+    max-width: 500px;
+    margin: 0 auto;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+}
+.container .text_box{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin:30px 0 20px;
+}

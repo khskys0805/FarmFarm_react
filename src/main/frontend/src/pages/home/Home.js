@@ -63,7 +63,7 @@ const Home = () => {
                 <div className={styles.group}>
                     <div className={styles.link}>
                         <h2>진행 중인 경매</h2>
-                        <Link to="/auction/list">
+                        <Link to="/allAuction">
                             <IoIosArrowDroprightCircle size="30" color="#94C015FF" style={{cursor:"pointer"}}/>
                         </Link>
                     </div>
