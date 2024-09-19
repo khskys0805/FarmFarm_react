@@ -48,7 +48,6 @@ function App() {
                         <Route path="/productList" element={<AllProduct type={new URLSearchParams(window.location.search).get('type') || "product"} />} />
                         <Route path="/allFarm" element={<AllFarm />} />
                         <Route path="/allAuction" element={<AllAuction />} />
-                        <Route path="/auction/list" element={<AuctionList />} />
                         <Route path="/productDetail/:id" element={<ProductDetails />} />
                         <Route path="/auctionDetail/:id" element={<AuctionDetail />} />
                         <Route path="/farmDetail/:id" element={<FarmDetails />} />
@@ -59,9 +58,9 @@ function App() {
                         <Route path="/cart" element={<Cart />} />
                         <Route path="/shippingAddress" element={<ProductShippingAddress />} />
                         <Route path="/myOrder" element={<MyOrderList />} />
+                        <Route path="/myAuction" element={<MyParticipateAuction />} />
                         <Route path="/myReview" element={<MyReviewList />} />
                         <Route path="/myEnquiry" element={<MyEnquiryList />} />
-                        <Route path="/myParticipateAuction" element={<MyParticipateAuction />} />
                         <Route path="/review/write" element={<WriteReview />} />
                         <Route path="/editProfile" element={<EditMyProfile />} />
                         <Route path="/paymentCallback" element={<PaymentCallback />} />
