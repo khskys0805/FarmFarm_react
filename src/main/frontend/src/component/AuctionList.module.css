@@ -31,7 +31,9 @@
     box-sizing: border-box;
     color: #fff;
     z-index: 1;
-    display: block;
+    display: flex;
+    justify-content: space-between;
+    align-items: end;
 }
 .item_box .auction_time{
     position:absolute;
