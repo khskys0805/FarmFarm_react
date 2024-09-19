@@ -14,6 +14,8 @@ const AuctionDetail = () => {
     const [images, setImages] = useState([]);
     const [isDirect, setIsDirect] = useState(0);
     const [isAuction, setIsAuction] = useState(true);
+    const [timeLeft, setTimeLeft] = useState({});
+    const [days, setDays] = useState('00'); // days는 별도로 관리
     const navigate = useNavigate();
 
     const formatNumber = (value) => {
@@ -39,11 +41,58 @@ const AuctionDetail = () => {
                 } else {
                     setIsDirect(0);
                 }
+
+                // 1초마다 남은 시간을 갱신
+                const initialTimeLeft = calculateTimeLeft(res.data.result.closedAt);
+                setTimeLeft(initialTimeLeft);
+                setDays(initialTimeLeft.days); // 초기 days 설정
+
+                // 1초마다 남은 시간을 갱신
+                const timer = setInterval(() => {
+                    const updatedTimeLeft = calculateTimeLeft(res.data.result.closedAt);
+                    setTimeLeft(updatedTimeLeft);
+
+                    // days가 바뀌었을 때만 업데이트
+                    if (updatedTimeLeft.days !== days) {
+                        setDays(updatedTimeLeft.days);
+                    }
+
+                    // 경매 시간이 종료되면 타이머 정지
+                    if (
+                        updatedTimeLeft.days === '00' &&
+                        updatedTimeLeft.hours === '00' &&
+                        updatedTimeLeft.minutes === '00' &&
+                        updatedTimeLeft.seconds === '00'
+                    ) {
+                        clearInterval(timer);
+                    }
+                }, 1000);
+
+                // 컴포넌트가 언마운트될 때 타이머 정리
+                return () => clearInterval(timer);
             })
             .catch((error) => {
                 console.error('작성한 게시물을 가져오는 중 오류 발생: ', error);
             });
-    }, []);
+    }, [id, days]); // days가 바뀔 때마다 타이머 체크
+
+    const calculateTimeLeft = (closedAt) => {
+        const difference = new Date(closedAt) - new Date();
+        let timeLeft = {};
+
+        if (difference > 0) {
+            timeLeft = {
+                days: String(Math.floor(difference / (1000 * 60 * 60 * 24))).padStart(2, '0'),
+                hours: String(Math.floor((difference / (1000 * 60 * 60)) % 24)).padStart(2, '0'),
+                minutes: String(Math.floor((difference / 1000 / 60) % 60)).padStart(2, '0'),
+                seconds: String(Math.floor((difference / 1000) % 60)).padStart(2, '0'),
+            };
+        } else {
+            timeLeft = { days: '00', hours: '00', minutes: '00', seconds: '00' };
+        }
+
+        return timeLeft;
+    };
 
     const handleParticipateAuction = () => {
         navigate(`/shippingAddress`, { state: { isDirect, isAuction, pid:id } });
@@ -63,6 +112,7 @@ const AuctionDetail = () => {
                     </div>
                     <div className={styles.middle}>
                         <h2>경매시작가: {formatNumber(product.price)}원</h2>
+                        <h3>{timeLeft.days}일 {timeLeft.hours}:{timeLeft.minutes}:{timeLeft.seconds}</h3>
                     </div>
                     <div className={styles.detail}>
                         <h4>{product.detail}</h4>

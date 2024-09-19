@@ -39,8 +39,8 @@ const ProductDetails = () => {
                 console.log(res.data);
 
                 setProduct(res.data.result);
-                setIsGroup(res.data.result.type === 1);
-                if (res.data.result.type === 1) {
+                setIsGroup(res.data.result.productType === 1);
+                if (res.data.result.productType === 1) {
                     setDiscount(res.data.result.groupProductDiscount);
                     setGroupCapacity(res.data.result.groupProductQuantity);
                 }

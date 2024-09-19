@@ -54,7 +54,7 @@ const MyOrderList = () => {
                             <li key={index} className={styles.order_list}>
                                 <div className={styles.left}>
                                     <div className={styles.img}>
-                                        <img src={img} alt="상품 이미지" />
+                                        <img src={order.orderDetails[0].fileUrl} alt="상품 이미지" />
                                     </div>
                                     <div>
                                         <p className={styles.farm_name}>{order.orderDetails[0].farmName}</p>
@@ -65,7 +65,7 @@ const MyOrderList = () => {
                                 </div>
                                 <div>
                                     <h4 className={styles.review} onClick={() => navigate(`/review/write`)}>리뷰 작성</h4>
-                                    <h4 className={styles.quantity}>X {order.total_quantity}</h4>
+                                    <h4 className={styles.quantity}>X {order.orderDetails[0].quantity}</h4>
                                 </div>
                             </li>
                         </>

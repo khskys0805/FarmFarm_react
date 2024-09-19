@@ -222,7 +222,11 @@ const RegisterProduct = () => {
                 .then((res) => {
                     console.log("전송 성공");
                     console.log(res.data);
-                    navigate(`/productDetail/${formData.pid}`);
+                    if (productData.productType === "2") {
+                        navigate(`/auctionDetail/${formData.pid}`);
+                    } else {
+                        navigate(`/productDetail/${formData.pid}`);
+                    }
                 })
                 .catch((error) => {
                     console.error('상품 수정 중 오류 발생: ', error);

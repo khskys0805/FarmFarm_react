@@ -16,7 +16,7 @@ const PaymentSuccess = () => {
                 </div>
                 <div className={styles.btn}>
                     <Button content={"홈 화면으로 가기"} onClick={() => navigate(`/home`)}/>
-                    <Button content={"내 주문 내역 보기"} />
+                    <Button content={"내 주문 내역 보기"} onClick={() => navigate(`/myOrder`)} />
                 </div>
             </div>
         </div>

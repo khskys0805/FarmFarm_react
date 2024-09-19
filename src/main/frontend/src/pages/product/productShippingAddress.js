@@ -11,10 +11,10 @@ import API from "../../config";
 const ProductShippingAddress = () => {
     const navigate = useNavigate();
     const [shippingAddress, setShippingAddress] = useState({
-        delivery_name: "",
-        delivery_phone: "",
+        deliveryName: "",
+        deliveryPhone: "",
         isDelivery: true, // 기본으로 '배송'
-        delivery_memo: "",
+        deliveryMemo: "",
         deliveryAddress:"",
         delieveryAddressDetail:"",
         quantity:"",
@@ -42,11 +42,21 @@ const ProductShippingAddress = () => {
 
     const handleInputChange = useCallback((e) => {
         const { name, value } = e.target;
-        setShippingAddress((prevAddress) => ({
-            ...prevAddress,
-            [name]: value,
-        }));
+
+        // quantity와 price는 숫자로 변환
+        if (name === 'quantity' || name === 'price') {
+            setShippingAddress((prevAddress) => ({
+                ...prevAddress,
+                [name]: value === '' ? '' : Number(value), // 공백이면 빈 문자열, 그렇지 않으면 숫자로 변환
+            }));
+        } else {
+            setShippingAddress((prevAddress) => ({
+                ...prevAddress,
+                [name]: value, // 숫자가 아닌 경우에는 그대로 사용
+            }));
+        }
     }, []);
+
 
     const handleRadioChange = (e) => {
         const value = e.target.value === "true";
@@ -98,7 +108,8 @@ const ProductShippingAddress = () => {
 
     const handleParticipateAuction = (e) => {
         e.preventDefault();
-        // 경매 참여 API 요청
+        console.log(shippingAddress);
+        // 1. order/product/pid API 요청
         axios.post(API.ATTENDAUCTION(pid), shippingAddress, {
             headers: { Authorization: `Bearer ${localStorage.getItem('jwt')}` },
         })
@@ -106,11 +117,21 @@ const ProductShippingAddress = () => {
                 console.log("경매 참여 성공");
                 console.log(res.data.result);
 
-                // 경매 참여 성공 후, 결제 로직으로 연결
-                return axios.get(API.PAYMENT(res.data.result.oid), {
+                // 2. order API 호출 (위 주문의 oid 사용)
+                return axios.post(API.ORDER, shippingAddress, {
+                    headers: { Authorization: `Bearer ${localStorage.getItem('jwt')}` }
+                });
+            })
+            .then((orderRes) => {
+                console.log("Order 전송 성공");
+                console.log(orderRes.data.result);
+                const oid = orderRes.data.result.oid; // 주문 성공 후 oid 받아옴
+
+                // 3. 결제 요청 (oid로 결제 API 호출)
+                return axios.get(API.PAYMENT(oid), {
                     headers: { Authorization: `Bearer ${localStorage.getItem('jwt')}` },
                     params: {
-                        callback_url: window.location.origin + '/payment-callback' // 콜백 URL 수정
+                        callback_url: window.location.origin + '/payment-callback'
                     }
                 });
             })
@@ -121,12 +142,14 @@ const ProductShippingAddress = () => {
                 const isMobile = /android|iphone|ipad|ipod|blackberry|iemobile|opera mini|mobile/.test(navigator.userAgent.toLowerCase());
                 const redirectUrl = isMobile ? paymentRes.data.result.next_redirect_mobile_url : paymentRes.data.result.next_redirect_pc_url;
 
+                // 결제 페이지로 이동
                 window.location.href = redirectUrl;
             })
             .catch((error) => {
-                console.error('경매 또는 결제 처리 중 오류 발생: ', error);
+                console.error('경매 또는 결제 처리 중 오류 발생: ', error.response ? error.response.data : error.message);
             });
-    }
+    };
+
 
 
     return (
@@ -161,8 +184,8 @@ const ProductShippingAddress = () => {
                     <h3>이름</h3>
                     <InputBox
                         type={"text"}
-                        name={"delivery_name"}
-                        value={shippingAddress.delivery_name}
+                        name={"deliveryName"}
+                        value={shippingAddress.deliveryName}
                         placeholder={"이름을 입력해주세요."}
                         onChange={handleInputChange}
                     />
@@ -171,8 +194,8 @@ const ProductShippingAddress = () => {
                     <h3>전화번호</h3>
                     <InputBox
                         type={"text"}
-                        name={"delivery_phone"}
-                        value={shippingAddress.delivery_phone}
+                        name={"deliveryPhone"}
+                        value={shippingAddress.deliveryPhone}
                         placeholder={"전화번호를 입력해주세요."}
                         onChange={handleInputChange}
                     />
@@ -215,8 +238,8 @@ const ProductShippingAddress = () => {
                             <h3>배송 요청사항</h3>
                             <InputBox
                                 type={"text"}
-                                name={"delivery_memo"}
-                                value={shippingAddress.delivery_memo}
+                                name={"deliveryMemo"}
+                                value={shippingAddress.deliveryMemo}
                                 placeholder={"배송 요청사항을 입력해주세요."}
                                 onChange={handleInputChange}
                             />
