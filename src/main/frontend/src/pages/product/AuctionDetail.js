@@ -43,13 +43,13 @@ const AuctionDetail = () => {
                 }
 
                 // 1초마다 남은 시간을 갱신
-                const initialTimeLeft = calculateTimeLeft(res.data.result.closedAt);
+                const initialTimeLeft = calculateTimeLeft(res.data.result.closeCalendar);
                 setTimeLeft(initialTimeLeft);
                 setDays(initialTimeLeft.days); // 초기 days 설정
 
                 // 1초마다 남은 시간을 갱신
                 const timer = setInterval(() => {
-                    const updatedTimeLeft = calculateTimeLeft(res.data.result.closedAt);
+                    const updatedTimeLeft = calculateTimeLeft(res.data.result.closeCalendar);
                     setTimeLeft(updatedTimeLeft);
 
                     // days가 바뀌었을 때만 업데이트
