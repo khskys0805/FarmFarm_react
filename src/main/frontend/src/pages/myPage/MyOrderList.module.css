@@ -42,6 +42,12 @@
     position: absolute;
     right:5%;
 }
+/* 전체 orderList 중 마지막 주문의 마지막 .order_list 스타일 적용 */
+.order_date:last-of-type(1) .order_list:last-of-type(1) {
+    padding-bottom: 50px;
+    border: none;
+}
+
 .order_list{
     display: flex;
     justify-content: space-between;
@@ -49,10 +55,14 @@
     border-bottom: 1px solid #eaeaea;
     padding-bottom: 10px;
 }
+/*.order_list:nth-last-of-type(1){*/
+/*    padding-bottom: 30px;*/
+/*}*/
 .order_list .left{
     display: flex;
     align-items: center;
 }
+
 .order_list .img{
     width:100px;
     margin-right: 20px;
