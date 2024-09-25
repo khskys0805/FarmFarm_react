@@ -28,6 +28,26 @@ const MyOrderList = () => {
             });
     }, []);
 
+    const getStatusInfo = (status) => {
+        switch (status) {
+            case "BEFORE_PAYMENT":
+                return {
+                    text: "결제 미완료",
+                    className: styles.status_before
+                };
+            case "PAYMENT_COMPLETED":
+                return {
+                    text: "결제 완료",
+                    className: styles.status_completed
+                };
+            case "PAYMENT_CANCELED":
+                return {
+                    text: "결제 취소",
+                    className: styles.status_canceled
+                };
+        }
+    };
+
     const handleOrderProduct = () => {
         navigate(`/productList`);
     }
@@ -42,7 +62,9 @@ const MyOrderList = () => {
                         <Button content={"판매 상품 보러가기"} onClick={handleOrderProduct} />
                     </div>
                 ) : (
-                    orderList.map((order, index) => (
+                    orderList.map((order, index) => {
+                        const statusInfo = getStatusInfo(order.paymentStatus);
+                        return (
                         <div key={index}>
                             <div className={styles.order_date}>
                                 {order.paymentStatus === "PAYMENT_COMPLETED" && (
@@ -55,7 +77,7 @@ const MyOrderList = () => {
                                         day: 'numeric'
                                     })}
                                 </h4>
-                                <p className={styles.order_status}>{order.paymentStatus}</p>
+                                <h5 className={`${styles.order_status} ${statusInfo.className}`}>{statusInfo.text}</h5>
                             </div>
                             {order.orderDetails.map((detail, detailIndex) => (
                                 <li key={detailIndex} className={styles.order_list}>
@@ -77,7 +99,8 @@ const MyOrderList = () => {
                                 </li>
                             ))}
                         </div>
-                    ))
+                        );
+                    })
                 )}
             </ul>
         </div>

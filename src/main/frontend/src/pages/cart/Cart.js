@@ -92,7 +92,7 @@ const Cart = () => {
                             <li key={index} className={styles.cart_list}>
                                 <div className={styles.left}>
                                     <div className={styles.img}>
-                                        <img src={img} alt="상품 이미지" />
+                                        <img src={cart.images[0].fileUrl} alt="상품 이미지" />
                                     </div>
                                     <div>
                                         <p className={styles.farm_name}>{cart.farmName}</p>
