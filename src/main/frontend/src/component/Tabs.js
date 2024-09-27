@@ -7,7 +7,8 @@ import EnquiryForm from "./EnquiryForm";
 import ProductList from "./ProductList";
 import Location from "./Location";
 import axios from "axios";
-import API from "../config"; // Review 컴포넌트 import
+import API from "../config";
+import SellerPage from "../pages/seller/SellerPage"; // Review 컴포넌트 import
 
 const Tabs = ({ type, farm, product }) => {
     const [tab, setTab] = useState(0);
@@ -55,6 +56,7 @@ const Tabs = ({ type, farm, product }) => {
         { name: '농장 설명' },
         { name: '판매 상품' },
         { name: '경매' },
+        { name: '판매자 페이지 '}
     ];
 
     const tabs = type === 'product' ? productTab : farmTab;
@@ -67,6 +69,18 @@ const Tabs = ({ type, farm, product }) => {
         setShowEnquiryForm(!showEnquiryForm);
     }
 
+    const onPopup = () => {
+        const width = 1000; // 팝업 창의 너비
+        const height = 600; // 팝업 창의 높이
+        const left = (window.screen.width / 2) - (width / 2); // 화면 중앙에 위치시키기 위한 left 위치
+        const top = (window.screen.height / 2) - (height / 2); // 화면 중앙에 위치시키기 위한 top 위치
+
+        window.open(
+            `/sellerPage`, // 열고자 하는 URL
+            "_blank", // 새 창으로 열기
+            `width=${width},height=${height},left=${left},top=${top},noopener,noreferrer` // 팝업 창의 옵션 설정
+        );
+    }
     return (
         <div className={styles.tab_title}>
             <ul>
@@ -114,6 +128,9 @@ const Tabs = ({ type, farm, product }) => {
                             </>
                         )}
                         {/*{tab === 2 && }*/}
+                        {tab === 3 && (
+                            <Button content={"판매자 페이지 열기"} onClick={onPopup} />
+                        )}
                     </>
                 )}
             </div>

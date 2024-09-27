@@ -6,7 +6,6 @@ import CreateNickname from './pages/login/CreateNickname';
 import Token from './pages/join/Token';
 import TabBar from './component/TabBar';
 import Home from './pages/home/Home';
-import AuctionList from './component/AuctionList';
 import AllProduct from './pages/product/AllProduct';
 import AllFarm from './pages/farm/AllFarm';
 import ProductDetails from './pages/product/ProductDetails';
@@ -29,6 +28,7 @@ import PaymentFail from "./pages/payment/PaymentFail";
 import Category from "./pages/product/Category";
 import AuctionDetail from "./pages/product/AuctionDetail";
 import AllAuction from "./pages/product/AllAuction";
+import SellerPage from "./pages/seller/SellerPage";
 
 function App() {
     return (
@@ -66,6 +66,7 @@ function App() {
                         <Route path="/paymentCallback" element={<PaymentCallback />} />
                         <Route path="/paymentSuccess" element={<PaymentSuccess />} />
                         <Route path="/paymentFail" element={<PaymentFail />} />
+                        <Route path="/sellerPage" element={<SellerPage />} />
                     </Routes>
                 </div>
             </DataProvider>

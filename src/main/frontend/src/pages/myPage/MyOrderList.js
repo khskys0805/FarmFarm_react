@@ -3,7 +3,6 @@ import Header from "../../component/Header";
 import {useEffect, useState} from "react";
 import axios from "axios";
 import API from "../../config";
-import img from "../../images/logo/farmfarm_logo.png";
 import {useNavigate} from "react-router-dom";
 import Button from "../../component/Button";
 
@@ -19,7 +18,7 @@ const MyOrderList = () => {
                 console.log("전송 성공");
                 console.log(res.data.result.myOrderList);
                 const myOrder = res.data.result.myOrderList.filter((item) =>
-                    item.orderDetails[0].type != 2
+                    item.orderDetails[0].type !== 2
                 );
                 setOrderList(myOrder);
             })
