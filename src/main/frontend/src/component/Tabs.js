@@ -15,6 +15,7 @@ const Tabs = ({ type, farm, product }) => {
     const [showEnquiryForm, setShowEnquiryForm] = useState(false);
     const [productInfo, setProductInfo] = useState([]);
     const [productList, setProductList] = useState([]);
+    const [groupProductList, setGroupProductList] = useState([]);
 
     useEffect(() => {
         if (type === "farm" && farm.fid) {
@@ -26,6 +27,19 @@ const Tabs = ({ type, farm, product }) => {
                     console.log(res.data.result);
 
                     setProductList(res.data.result.productList);
+                })
+                .catch((error) => {
+                    console.error('작성한 게시물을 가져오는 중 오류 발생: ', error);
+                });
+
+            axios.get(API.FARMGROUPPRODUCTS(farm.fid), {
+                headers: { Authorization: `Bearer ${localStorage.getItem('jwt')}` },
+            })
+                .then((res) => {
+                    console.log("전송 성공");
+                    console.log(res.data.result);
+
+                    setGroupProductList(res.data.result.productList);
                 })
                 .catch((error) => {
                     console.error('작성한 게시물을 가져오는 중 오류 발생: ', error);
@@ -54,7 +68,8 @@ const Tabs = ({ type, farm, product }) => {
     ];
     const farmTab = [
         { name: '농장 설명' },
-        { name: '판매 상품' },
+        { name: '일반 상품' },
+        { name: '공동구매' },
         { name: '경매' },
         { name: '판매자 페이지 '}
     ];
@@ -127,8 +142,14 @@ const Tabs = ({ type, farm, product }) => {
                                 <ProductList products={productList}/>
                             </>
                         )}
-                        {/*{tab === 2 && }*/}
-                        {tab === 3 && (
+                        {tab === 2 && groupProductList && (
+                            <>
+                                <div className={styles.btn_wrapper}><a href="/registerProduct" className={styles.product_add_button}>판매 상품 등록</a></div>
+                                <ProductList products={groupProductList} type={"group"}/>
+                            </>
+                        )}
+
+                        {tab === 4 && (
                             <Button content={"판매자 페이지 열기"} onClick={onPopup} />
                         )}
                     </>
