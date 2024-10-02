@@ -23,6 +23,7 @@ const Home = () => {
 
     const numProductsToShow = 4; // 보여줄 상품 개수를 지정
     const numFarmsToShow = 5; // 보여줄 농장 개수를 지정
+    const numAuctionToShow = 1;
 
     return (
         <div className={styles.box}>
@@ -67,7 +68,7 @@ const Home = () => {
                             <IoIosArrowDroprightCircle size="30" color="#94C015FF" style={{cursor:"pointer"}}/>
                         </Link>
                     </div>
-                    <AuctionList/>
+                    <AuctionList numToShow={numAuctionToShow}/>
                 </div>
             </div>
             <TabBar />

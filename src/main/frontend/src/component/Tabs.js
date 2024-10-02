@@ -123,7 +123,7 @@ const Tabs = ({ type, farm, product }) => {
                         {tab === 2 && (
                             <div>
                                 <Button content={"문의 작성하기"} onClick={showForm} />
-                                {showEnquiryForm && <EnquiryForm />}
+                                {showEnquiryForm && <EnquiryForm pid={productInfo.pid}/>}
                             </div>
                         )}
                     </>
