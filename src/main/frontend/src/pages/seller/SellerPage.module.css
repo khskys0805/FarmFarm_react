@@ -1,3 +1,13 @@
+.button{
+    display: flex;
+    margin:20px 90px;
+}
+.button button:nth-of-type(1){
+    margin-right: 10px;
+}
+.button button{
+    padding: 10px 0px !important;
+}
 .table{
     width:90%;
     margin: 10px auto;

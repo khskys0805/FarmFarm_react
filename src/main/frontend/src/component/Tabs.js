@@ -85,7 +85,7 @@ const Tabs = ({ type, farm, product }) => {
     }
 
     const onPopup = () => {
-        const width = 1000; // 팝업 창의 너비
+        const width = 1200; // 팝업 창의 너비
         const height = 600; // 팝업 창의 높이
         const left = (window.screen.width / 2) - (width / 2); // 화면 중앙에 위치시키기 위한 left 위치
         const top = (window.screen.height / 2) - (height / 2); // 화면 중앙에 위치시키기 위한 top 위치
