@@ -50,6 +50,11 @@ const MyOrderList = () => {
     const handleOrderProduct = () => {
         navigate(`/productList`);
     }
+
+    const goToWriteReview = (id) => {
+        console.log(id);
+        navigate(`/review/write`, {state: {odId:id}});
+    }
     return (
         <div className={styles.box}>
             <Header title={"주문 내역"} go={`/myPage`} />
@@ -91,10 +96,12 @@ const MyOrderList = () => {
                                             <h4 className={styles.total_price}>총 금액: {detail.totalPrice}원</h4>
                                         </div>
                                     </div>
-                                    <div>
-                                        <h4 className={styles.review} onClick={() => navigate(`/review/write`)}>리뷰 작성</h4>
-                                        <h4 className={styles.quantity}>X {detail.quantity}</h4>
-                                    </div>
+                                    {order.paymentStatus === "PAYMENT_COMPLETED" && (
+                                        <div>
+                                            <h4 className={styles.review} onClick={() => goToWriteReview(order.orderDetails[0].odId)}>리뷰 작성</h4>
+                                            <h4 className={styles.quantity}>X {detail.quantity}</h4>
+                                        </div>
+                                    )}
                                 </li>
                             ))}
                         </div>

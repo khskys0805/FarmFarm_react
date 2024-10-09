@@ -50,6 +50,9 @@ const API = {
     REGISTERENQUIRY(ID){
         return `/enquiry/${ID}`
     },
+    WRITEREVIEW(ID){
+        return `/review/${ID}`
+    },
     MYPAGE: "/myPage",
     MYORDER: "/mypage/orderList",
     MYAUCTION: "/mypage/auctionList",

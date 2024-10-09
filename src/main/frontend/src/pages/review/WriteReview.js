@@ -3,13 +3,54 @@ import Header from "../../component/Header";
 import { FaRegStar, FaStar } from "react-icons/fa";
 import Button from "../../component/Button";
 import {useState} from "react";
+import axios from "axios";
+import API from "../../config";
+import {useLocation, useNavigate} from "react-router-dom";
 const WriteReview = () => {
-    const [farmScore, setFarmScore] = useState(3);
-    const [productScore, setProductScore] = useState(3);
-    const [review, setReview] = useState("");
+    const [reviewData, setReviewData] = useState({
+        farmScore:3,
+        productScore:3,
+        review:""
+    })
+    const navigate = useNavigate();
+    const location = useLocation();
+    const { odId } = location.state;
+    console.log(odId);
 
-    const handleSetValue = e => {
-        setReview(e.target.value);
+    const handleSetValue = (e) => {
+        setReviewData({
+            ...reviewData,
+            review: e.target.value
+        });
+    };
+
+    const setFarmScore = (score) => {
+        setReviewData({
+            ...reviewData,
+            farmScore: score
+        });
+    }
+
+    const setProductScore = (score) => {
+        setReviewData({
+            ...reviewData,
+            productScore: score
+        })
+    }
+
+    const handleWriteReview = () => {
+        axios.post(API.WRITEREVIEW(odId), reviewData, {
+            headers: { Authorization: `Bearer ${localStorage.getItem('jwt')}` },
+        })
+            .then((res) => {
+                console.log("전송 성공");
+                console.log(res.data);
+                navigate(`/myReview`);
+            })
+            .catch((error) => {
+                console.error('상품 등록 중 오류 발생: ', error);
+                console.error('상품 등록 중 오류 발생: ', error.response?.data);
+            });
     }
 
     return (
@@ -19,11 +60,11 @@ const WriteReview = () => {
                 <h3 className={styles.title}>농장의 별점을 입력해주세요.</h3>
                 <div>
                     <ul className={styles.rating_list}>
-                        {[...Array(farmScore)].map((a, i) => (
+                        {[...Array(reviewData.farmScore)].map((a, i) => (
                             <li><FaStar key={i} onClick={() => setFarmScore(i + 1)} /></li>
                         ))}
-                        {[...Array(5 - farmScore)].map((a, i) => (
-                            <li><FaRegStar key={i} onClick={() => setFarmScore(farmScore + i + 1)} /></li>
+                        {[...Array(5 - reviewData.farmScore)].map((a, i) => (
+                            <li><FaRegStar key={i} onClick={() => setFarmScore(reviewData.farmScore + i + 1)} /></li>
                         ))}
                     </ul>
                 </div>
@@ -32,22 +73,22 @@ const WriteReview = () => {
                     다른 고객님들을 위해 솔직한 의견 남겨주세요:)</p>
                 <div>
                     <ul className={styles.rating_list}>
-                        {[...Array(productScore)].map((a, i) => (
+                        {[...Array(reviewData.productScore)].map((a, i) => (
                             <li><FaStar key={i} onClick={() => setProductScore(i + 1)} /></li>
                         ))}
-                        {[...Array(5 - productScore)].map((a, i) => (
-                            <li><FaRegStar key={i} onClick={() => setProductScore(productScore + i + 1)} /></li>
+                        {[...Array(5 - reviewData.productScore)].map((a, i) => (
+                            <li><FaRegStar key={i} onClick={() => setProductScore(reviewData.productScore + i + 1)} /></li>
                         ))}
                     </ul>
                 </div>
                 <div>
                     <p><b>상품에 대한 의견을 남겨주세요</b></p>
-                    <div class={styles.input_wrap}>
-                        <textarea placeholder="이곳에 의견을 남겨주세요" name="comment" value={review} onChange={(e) => handleSetValue(e)}/>
+                    <div className={styles.input_wrap}>
+                        <textarea placeholder="이곳에 의견을 남겨주세요" name="comment" value={reviewData.review} onChange={(e) => handleSetValue(e)}/>
                     </div>
                 </div>
             </form>
-            <Button content={"리뷰 등록"} width={"inherit"}/>
+            <Button content={"리뷰 등록"} width={"inherit"} onClick={() => handleWriteReview()}/>
         </div>
     )
 }

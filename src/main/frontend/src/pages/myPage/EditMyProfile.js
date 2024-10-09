@@ -4,6 +4,7 @@ import icon from "../../images/icon.png";
 import InputBox from "../../component/InputBox";
 import {useState} from "react";
 import Button from "../../component/Button";
+import {useNavigate} from "react-router-dom";
 const EditMyProfile = () => {
     const [nickName, setNickName] = useState("");
     const [profileImage, setProfileImage] = useState(icon); // 초기 아이콘 설정
@@ -21,7 +22,7 @@ const EditMyProfile = () => {
     };
     return (
         <div className={styles.box}>
-            <Header title={"프로필 수정"} />
+            <Header title={"프로필 수정"} go={-1} />
             <form className={styles.profile}>
                 <div className={styles.img}>
                     <img src={profileImage} alt="프로필 이미지" /> {/* 이미지 미리보기 */}
