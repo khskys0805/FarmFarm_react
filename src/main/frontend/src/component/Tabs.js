@@ -8,7 +8,8 @@ import ProductList from "./ProductList";
 import Location from "./Location";
 import axios from "axios";
 import API from "../config";
-import SellerPage from "../pages/seller/SellerPage"; // Review 컴포넌트 import
+import SellerPage from "../pages/seller/SellerPage";
+import Enquiry from "./Enquiry"; // Review 컴포넌트 import
 
 const Tabs = ({ type, farm, product }) => {
     const [tab, setTab] = useState(0);
@@ -16,6 +17,7 @@ const Tabs = ({ type, farm, product }) => {
     const [productInfo, setProductInfo] = useState([]);
     const [productList, setProductList] = useState([]);
     const [groupProductList, setGroupProductList] = useState([]);
+    const [enquiryList, setEnquiryList] = useState([]);
 
     useEffect(() => {
         if (type === "farm" && farm.fid) {
@@ -54,6 +56,19 @@ const Tabs = ({ type, farm, product }) => {
                     console.log(res.data.result);
 
                     setProductInfo(res.data.result);
+                })
+                .catch((error) => {
+                    console.error('작성한 게시물을 가져오는 중 오류 발생: ', error);
+                });
+
+            axios.get(API.ENQUIRY(product.pid), {
+                headers: { Authorization: `Bearer ${localStorage.getItem('jwt')}` },
+            })
+                .then((res) => {
+                    console.log("전송 성공");
+                    console.log(res.data.result);
+
+                    setEnquiryList(res.data.result);
                 })
                 .catch((error) => {
                     console.error('작성한 게시물을 가져오는 중 오류 발생: ', error);
@@ -124,6 +139,7 @@ const Tabs = ({ type, farm, product }) => {
                             <div>
                                 <Button content={"문의 작성하기"} onClick={showForm} />
                                 {showEnquiryForm && <EnquiryForm pid={productInfo.pid}/>}
+                                {enquiryList && <Enquiry enquiry={enquiryList}/>}
                             </div>
                         )}
                     </>

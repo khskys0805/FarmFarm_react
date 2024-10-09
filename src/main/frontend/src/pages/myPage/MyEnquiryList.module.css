@@ -7,11 +7,16 @@
     box-sizing: border-box;
     position: relative;
 }
+.box ul{
+    height:100vh;
+}
 .no_list{
     display: flex;
     flex-direction: column;
     align-items: center;
     text-align: center;
+    justify-content: center;
+    height: 100%;
 }
 .enquiry_list{
     display: flex;

@@ -44,6 +44,9 @@ const API = {
     PAYMENT(ID){
         return `/pay/order/${ID}`
     },
+    ENQUIRY(ID){
+        return `/enquiry/${ID}`
+    },
     REGISTERENQUIRY(ID){
         return `/enquiry/${ID}`
     },
