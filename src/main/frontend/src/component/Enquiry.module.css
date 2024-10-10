@@ -14,6 +14,20 @@
     display: flex;
     justify-content: space-between;
 }
+.enquiry_item .content .edit_input{
+    width: 100%;
+    height: 150px;
+    border-radius: 16px;
+    padding:15px;
+    margin-bottom: 10px;
+    outline: none;
+    border:1px solid #B1B1B1;
+    flex-grow: 1;
+}
+.enquiry_item .content .pen,
+.enquiry_item .content .trash{
+    cursor: pointer;
+}
 .enquiry_item .content .trash{
     margin-left: 7px;
 }
