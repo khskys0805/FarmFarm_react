@@ -66,9 +66,9 @@ const Tabs = ({ type, farm, product }) => {
             })
                 .then((res) => {
                     console.log("전송 성공");
-                    console.log(res.data.result);
+                    console.log(res.data.result.enquiryList);
 
-                    setEnquiryList(res.data.result);
+                    setEnquiryList(res.data.result.enquiryList);
                 })
                 .catch((error) => {
                     console.error('작성한 게시물을 가져오는 중 오류 발생: ', error);
@@ -139,7 +139,7 @@ const Tabs = ({ type, farm, product }) => {
                             <div>
                                 <Button content={"문의 작성하기"} onClick={showForm} />
                                 {showEnquiryForm && <EnquiryForm pid={productInfo.pid}/>}
-                                {enquiryList && <Enquiry enquiry={enquiryList}/>}
+                                {enquiryList && <Enquiry enquiries={enquiryList}/>}
                             </div>
                         )}
                     </>

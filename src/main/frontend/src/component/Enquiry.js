@@ -1,11 +1,20 @@
-const Enquiry = ({enquiry}) => {
+import styles from "./Enquiry.module.css";
+import { FaPen, FaTrash } from "react-icons/fa";
+const Enquiry = ({enquiries}) => {
     return (
-        <div className="enquiry_list">
-            <div className="item-title-row">
-                <div className="item-title">${enquiry.user.nickname}님</div>
-            </div>
-            <p className="li_en">${enquiry.content}</p>
-            <i className="fa-regular fa-trash-can" onClick="confirmAndDeleteEnquiry(${enquiry.EId})"></i>
+        <div className={styles.enquiry_list}>
+            {enquiries.map((enquiry, index) => (
+                <div key={index} className={styles.enquiry_item}>
+                    <h4 className={styles.enquiry_nickname}>현수님</h4>
+                    <div className={styles.content}>
+                        <p className="li_en">{enquiry.content}</p>
+                        <span>
+                            <span><FaPen /></span>
+                            <span className={styles.trash}><FaTrash /></span>
+                        </span>
+                    </div>
+                </div>
+            ))}
         </div>
     )
 }
