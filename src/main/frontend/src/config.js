@@ -20,6 +20,9 @@ const API = {
     FARMGROUPPRODUCTS(ID){
         return `/farm/${ID}/groupProduct`
     },
+    FARMAUCTIONPRODUCTS(ID){
+        return `/farm/${ID}/auctionProduct`
+    },
     REGISTERFARM: "/farm",
     ALLFARM: "/farm/list",
     ALLAUCTION: "/product/auction/list",

@@ -9,7 +9,8 @@ import Location from "./Location";
 import axios from "axios";
 import API from "../config";
 import SellerPage from "../pages/seller/SellerPage";
-import Enquiry from "./Enquiry"; // Review 컴포넌트 import
+import Enquiry from "./Enquiry";
+import AuctionList from "./AuctionList"; // Review 컴포넌트 import
 
 const Tabs = ({ type, farm, product }) => {
     const [tab, setTab] = useState(0);
@@ -17,6 +18,7 @@ const Tabs = ({ type, farm, product }) => {
     const [productInfo, setProductInfo] = useState([]);
     const [productList, setProductList] = useState([]);
     const [groupProductList, setGroupProductList] = useState([]);
+    const [auctionList, setAuctionList] = useState([]);
     const [enquiryList, setEnquiryList] = useState([]);
 
     useEffect(() => {
@@ -42,6 +44,19 @@ const Tabs = ({ type, farm, product }) => {
                     console.log(res.data.result);
 
                     setGroupProductList(res.data.result.productList);
+                })
+                .catch((error) => {
+                    console.error('작성한 게시물을 가져오는 중 오류 발생: ', error);
+                });
+
+            axios.get(API.FARMAUCTIONPRODUCTS(farm.fid), {
+                headers: { Authorization: `Bearer ${localStorage.getItem('jwt')}` },
+            })
+                .then((res) => {
+                    console.log("전송 성공");
+                    console.log(res.data.result);
+
+                    setAuctionList(res.data.result.productList);
                 })
                 .catch((error) => {
                     console.error('작성한 게시물을 가져오는 중 오류 발생: ', error);
@@ -178,7 +193,12 @@ const Tabs = ({ type, farm, product }) => {
                                 <ProductList products={groupProductList} type={"group"}/>
                             </>
                         )}
-
+                        {tab === 3 && auctionList && (
+                            <>
+                                <div className={styles.btn_wrapper}><a href="/registerProduct" className={styles.product_add_button}>판매 상품 등록</a></div>
+                                <AuctionList />
+                            </>
+                        )}
                         {tab === 4 && (
                             <Button content={"배송관리 페이지 열기"} onClick={onPopupDelivery} />
                         )}

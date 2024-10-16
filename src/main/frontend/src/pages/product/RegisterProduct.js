@@ -239,7 +239,11 @@ const RegisterProduct = () => {
                 .then((res) => {
                     console.log("전송 성공");
                     console.log(res.data);
-                    navigate(`/productDetail/${res.data.result.pid}`);
+                    if (productData.productType === "2") {  // 경매 상품이면
+                        navigate(`/auctionDetail/${res.data.result.pid}`);
+                    } else {
+                        navigate(`/productDetail/${res.data.result.pid}`);
+                    }
                 })
                 .catch((error) => {
                     console.error('상품 등록 중 오류 발생: ', error);
