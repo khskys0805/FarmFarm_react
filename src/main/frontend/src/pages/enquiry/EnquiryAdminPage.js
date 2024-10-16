@@ -1,7 +1,12 @@
 import styles from "./EnquiryAdminPage.module.css";
 import {useState} from "react";
+import {IoIosClose} from "react-icons/io";
+import Button from "../../component/Button";
 
 const EnquiryAdminPage = () => {
+    const [popupVisible, setPopupVisible] = useState(false);
+    const [selectedContent, setSelectedContent] = useState("");
+    const [enquiryAnswer, setEnquiryAnswer] = useState("");
     const [data, setData] = useState([
         { inquiryNumber: 1, productName: "일반 딸기", inquirerName: "김현수", inquiryContent: "배송은 얼마나 걸리나요?", answerStatus: "답변 완료", inquiryDate: "2024-10-01" },
         { inquiryNumber: 2, productName: "신선 블루베리", inquirerName: "박지민", inquiryContent: "보관 방법이 궁금합니다.", answerStatus: "답변 대기", inquiryDate: "2024-10-02" },
@@ -24,6 +29,19 @@ const EnquiryAdminPage = () => {
         { inquiryNumber: 19, productName: "고구마", inquirerName: "이종민", inquiryContent: "크기가 어느 정도인가요?", answerStatus: "답변 완료", inquiryDate: "2024-10-13" },
         { inquiryNumber: 20, productName: "파프리카", inquirerName: "홍예진", inquiryContent: "유통기한이 얼마 남았나요?", answerStatus: "답변 대기", inquiryDate: "2024-10-13" }
     ]);
+
+    const handleInput = (e) => {
+        const answer = e.target.value;
+        setEnquiryAnswer(answer);
+    }
+    const showPopup = (content) => {
+        setSelectedContent(content);
+        setPopupVisible(true);
+    };
+
+    const closePopup = () => {
+        setPopupVisible(false);
+    };
 
     const handleAnswer = (inquiryNumber) => {
         // 답변하기 버튼을 눌렀을 때 동작하는 함수
@@ -52,7 +70,7 @@ const EnquiryAdminPage = () => {
                         <td>{item.inquiryContent}</td>
                         <td>
                             {item.answerStatus === "답변 대기" ? (
-                                <button className={styles.answerBtn} onClick={() => handleAnswer(item.inquiryNumber)}>답변하기</button>
+                                <button className={styles.answerBtn} onClick={() => showPopup(item.inquiryContent)}>답변하기</button>
                             ) : (
                                 item.answerStatus
                             )}
@@ -62,6 +80,31 @@ const EnquiryAdminPage = () => {
                 ))}
                 </tbody>
             </table>
+            {/* 팝업 */}
+            {popupVisible && (
+                <div className={styles.popup}>
+                    <h4>문의내용: <span>{selectedContent}</span></h4>
+                    <textarea value={enquiryAnswer} onChange={(e) => handleInput(e)} />
+                    <div className={styles.close_popup}><IoIosClose onClick={closePopup} size="25"/></div>
+                    <Button content={"답변하기"} padding={"10px 0"} />
+                </div>
+            )}
+            {/* 팝업 배경 (클릭 시 팝업 닫기) */}
+            {popupVisible && (
+                <div
+                    style={{
+                        position: "fixed",
+                        top: 0,
+                        left: 0,
+                        width: "100%",
+                        height: "100%",
+                        backgroundColor: "rgba(0, 0, 0, 0.5)",
+                        zIndex: 999
+                    }}
+                    onClick={closePopup}
+                >
+                </div>
+            )}
         </div>
     )
 }
