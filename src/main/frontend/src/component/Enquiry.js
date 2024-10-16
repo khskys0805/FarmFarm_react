@@ -32,8 +32,22 @@ const Enquiry = ({enquiries}) => {
             });
     }
 
-    const handleRemoveEnquiry = () => {
-
+    const handleRemoveEnquiry = (e, eid) => {
+        e.preventDefault();
+        if (window.confirm("문의를 삭제하시겠습니까?")) {
+            axios.delete(API.ENQUIRY(eid), {
+                headers: { Authorization: `Bearer ${localStorage.getItem('jwt')}` },
+            })
+                .then((res) => {
+                    console.log("전송 성공");
+                    console.log(res.data);
+                    alert(`문의가 삭제되었습니다.`);
+                    // window.location.reload();
+                })
+                .catch((error) => {
+                    console.error('작성한 게시물을 가져오는 중 오류 발생: ', error);
+                });
+        }
     }
     return (
         <div className={styles.enquiry_list}>
@@ -64,7 +78,7 @@ const Enquiry = ({enquiries}) => {
                                     <FaPen onClick={() => handleEditClick(index, enquiry.content)} />
                                 </span>
                                 <span className={styles.trash}>
-                                    <FaTrash />
+                                    <FaTrash onClick={(e) => handleRemoveEnquiry(e, enquiry.eid)}/>
                                 </span>
                             </span>
                         )}

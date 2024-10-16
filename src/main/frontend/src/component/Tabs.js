@@ -86,7 +86,8 @@ const Tabs = ({ type, farm, product }) => {
         { name: '일반 상품' },
         { name: '공동구매' },
         { name: '경매' },
-        { name: '판매자 페이지 '}
+        { name: '배송관리'},
+        { name: '문의관리'}
     ];
 
     const tabs = type === 'product' ? productTab : farmTab;
@@ -99,14 +100,27 @@ const Tabs = ({ type, farm, product }) => {
         setShowEnquiryForm(!showEnquiryForm);
     }
 
-    const onPopup = () => {
+    const onPopupDelivery = () => {
         const width = 1200; // 팝업 창의 너비
         const height = 600; // 팝업 창의 높이
         const left = (window.screen.width / 2) - (width / 2); // 화면 중앙에 위치시키기 위한 left 위치
         const top = (window.screen.height / 2) - (height / 2); // 화면 중앙에 위치시키기 위한 top 위치
 
         window.open(
-            `/sellerPage`, // 열고자 하는 URL
+            `/deliveryAdmin`, // 열고자 하는 URL
+            "_blank", // 새 창으로 열기
+            `width=${width},height=${height},left=${left},top=${top},noopener,noreferrer` // 팝업 창의 옵션 설정
+        );
+    }
+
+    const onPopupEnquiry = () => {
+        const width = 1200; // 팝업 창의 너비
+        const height = 600; // 팝업 창의 높이
+        const left = (window.screen.width / 2) - (width / 2); // 화면 중앙에 위치시키기 위한 left 위치
+        const top = (window.screen.height / 2) - (height / 2); // 화면 중앙에 위치시키기 위한 top 위치
+
+        window.open(
+            `/enquiryAdmin`, // 열고자 하는 URL
             "_blank", // 새 창으로 열기
             `width=${width},height=${height},left=${left},top=${top},noopener,noreferrer` // 팝업 창의 옵션 설정
         );
@@ -166,7 +180,10 @@ const Tabs = ({ type, farm, product }) => {
                         )}
 
                         {tab === 4 && (
-                            <Button content={"판매자 페이지 열기"} onClick={onPopup} />
+                            <Button content={"배송관리 페이지 열기"} onClick={onPopupDelivery} />
+                        )}
+                        {tab === 5 && (
+                            <Button content={"문의관리 페이지 열기"} onClick={onPopupEnquiry} />
                         )}
                     </>
                 )}

@@ -11,13 +11,13 @@ const MyEnquiryList = () => {
     const [enquiryList, setEnquiryList] = useState([]);
     useEffect(() => {
         axios.get(API.MYENQUIRY, {
-            headers: { authorization: localStorage.getItem("jwt") },
+            headers: { Authorization: `Bearer ${localStorage.getItem('jwt')}` },
         })
             .then((res) => {
                 console.log("전송 성공");
-                console.log(res.data);
+                console.log(res.data.result.enquiryList);
 
-                setEnquiryList(res.data)
+                setEnquiryList(res.data.result.enquiryList)
             })
             .catch((error) => {
                 console.error('작성한 게시물을 가져오는 중 오류 발생: ', error);
@@ -39,7 +39,7 @@ const MyEnquiryList = () => {
                                     <img src={img} alt="경매 이미지" />
                                 </div>
                                 <div>
-                                    <h4 className={styles.product_name}>{enquiry.product.name}</h4>
+                                    {/*<h4 className={styles.product_name}>{enquiry.product.name}</h4>*/}
                                     <p className={styles.content}>{enquiry.content}</p>
                                 </div>
                             </div>

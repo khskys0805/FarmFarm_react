@@ -29,6 +29,7 @@ import Category from "./pages/product/Category";
 import AuctionDetail from "./pages/product/AuctionDetail";
 import AllAuction from "./pages/product/AllAuction";
 import SellerPage from "./pages/seller/SellerPage";
+import EnquiryAdminPage from "./pages/enquiry/EnquiryAdminPage";
 
 function App() {
     return (
@@ -66,7 +67,8 @@ function App() {
                         <Route path="/paymentCallback" element={<PaymentCallback />} />
                         <Route path="/paymentSuccess" element={<PaymentSuccess />} />
                         <Route path="/paymentFail" element={<PaymentFail />} />
-                        <Route path="/sellerPage" element={<SellerPage />} />
+                        <Route path="/deliveryAdmin" element={<SellerPage />} />
+                        <Route path="/enquiryAdmin" element={<EnquiryAdminPage />} />
                     </Routes>
                 </div>
             </DataProvider>
