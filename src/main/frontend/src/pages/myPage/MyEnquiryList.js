@@ -9,7 +9,12 @@ import {FaPen} from "react-icons/fa6";
 
 const MyEnquiryList = () => {
     const [enquiryList, setEnquiryList] = useState([]);
+
     useEffect(() => {
+        fetchEnquiryList();
+    }, []);
+
+    const fetchEnquiryList = () => {
         axios.get(API.MYENQUIRY, {
             headers: { Authorization: `Bearer ${localStorage.getItem('jwt')}` },
         })
@@ -22,7 +27,30 @@ const MyEnquiryList = () => {
             .catch((error) => {
                 console.error('작성한 게시물을 가져오는 중 오류 발생: ', error);
             });
-    }, []);
+    }
+    const handleEditEnquiry = (e) => {
+        e.preventDefault();
+
+    }
+
+    const handleRemoveEnquiry = (e, eid) => {
+        e.preventDefault();
+        if (window.confirm("문의를 삭제하시겠습니까?")){
+            axios.delete(API.ENQUIRY(eid), {
+                headers: { Authorization: `Bearer ${localStorage.getItem('jwt')}` },
+            })
+                .then((res) => {
+                    console.log("전송 성공");
+                    console.log(res.data);
+                    fetchEnquiryList();
+                    console.log(enquiryList);
+                    // window.location.reload();
+                })
+                .catch((error) => {
+                    console.error('작성한 게시물을 가져오는 중 오류 발생: ', error);
+                });
+        }
+    }
     return (
         <div className={styles.box}>
             <Header title={"문의 내역"} go={`/myPage`}/>
@@ -46,7 +74,7 @@ const MyEnquiryList = () => {
                             <div className={styles.right}>
                                 <div className={styles.button}>
                                     <div><FaPen /></div>
-                                    <div><FaTrashAlt /></div>
+                                    <div><FaTrashAlt onClick={(e) => handleRemoveEnquiry(e, enquiry.eid)}/></div>
                                 </div>
                             </div>
                         </li>
