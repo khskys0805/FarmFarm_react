@@ -72,6 +72,17 @@
 .modal_content h3, .modal_content h5{
     margin-bottom: 15px;
 }
+.modal_content .rating_list{
+    display: flex;
+    justify-content: center;
+    margin-bottom: 30px;
+}
+.modal_content .rating_list li{
+    margin-right: 10px;
+    font-size: 30px;
+    color:#FFC42B;
+    cursor: pointer;
+}
 .modal_content textarea{
     width:300px;
     height:200px;

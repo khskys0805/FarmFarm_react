@@ -1,6 +1,6 @@
 import styles from "./Review.module.css";
 import React, {useState} from 'react';
-import {FaStar, FaTrashAlt} from "react-icons/fa";
+import {FaRegStar, FaStar, FaTrashAlt} from "react-icons/fa";
 import {FaPen} from "react-icons/fa6";
 import axios from "axios";
 import API from "../config";
@@ -9,8 +9,9 @@ import Button from "./Button";
 const Review = ({ review, type, fetchReviewList }) => {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [currentReview, setCurrentReview] = useState({});
+    const [productScore, setProductScore] = useState(review.productStar || 0); // productScore로 변경
     const renderStarRating = (productStar) => {
-        const starCount = Math.floor(productStar);
+        const starCount = Math.floor(productStar || 0);
         const starArray = [];
 
         for (let i = 0; i < 5; i++) {
@@ -26,11 +27,14 @@ const Review = ({ review, type, fetchReviewList }) => {
     const handleEditReview = (e, review) => {
         e.preventDefault();
         setCurrentReview(review);
+        setProductScore(review.productStar); // 기존 별점 초기화
         setIsModalOpen(true);
-
     }
     const handleUpdateReview = () => {
-        axios.patch(API.ENQUIRY(currentReview.rid), { comment: currentReview.comment }, {
+        axios.patch(API.ENQUIRY(currentReview.rid), {
+            comment: currentReview.comment,
+            productStar: productScore, // 별점 업데이트
+        }, {
             headers: { Authorization: `Bearer ${localStorage.getItem('jwt')}` },
         })
             .then((res) => {
@@ -93,13 +97,24 @@ const Review = ({ review, type, fetchReviewList }) => {
                     <div className={styles.modal_content}>
                         <h3>리뷰 수정</h3>
                         <h5>{currentReview.productName}</h5>
+                        <h5 className={styles.title}>농장의 별점을 입력해주세요.</h5>
+                        <div>
+                            <ul className={styles.rating_list}>
+                                {[...Array(productScore)].map((a, i) => (
+                                    <li><FaStar key={i} onClick={() => setProductScore(i + 1)} /></li>
+                                ))}
+                                {[...Array(5 - productScore)].map((a, i) => (
+                                    <li><FaRegStar key={i} onClick={() => setProductScore(productScore + i + 1)} /></li>
+                                ))}
+                            </ul>
+                        </div>
                         <textarea
                             value={currentReview.comment}
                             onChange={(e) => setCurrentReview({...currentReview, comment: e.target.value })}
                         />
                         <div className={styles.buttons}>
-                            <Button content={"수정 완료"} onClick={handleUpdateReview} padding={"10px 0"}/>
                             <Button content={"취소"} onClick={() => setIsModalOpen(false)} padding={"10px 0"}/>
+                            <Button content={"수정 완료"} onClick={handleUpdateReview} padding={"10px 0"}/>
                         </div>
                     </div>
                 </div>
