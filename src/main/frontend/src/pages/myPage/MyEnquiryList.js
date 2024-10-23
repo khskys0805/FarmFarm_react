@@ -36,10 +36,10 @@ const MyEnquiryList = () => {
                         <li key={index} className={styles.enquiry_list}>
                             <div className={styles.left}>
                                 <div className={styles.img}>
-                                    <img src={img} alt="경매 이미지" />
+                                    <img src={enquiry.images[0].fileUrl} alt="경매 이미지" />
                                 </div>
                                 <div>
-                                    {/*<h4 className={styles.product_name}>{enquiry.product.name}</h4>*/}
+                                    <h5 className={styles.product_name}>{enquiry.productName}</h5>
                                     <p className={styles.content}>{enquiry.content}</p>
                                 </div>
                             </div>
