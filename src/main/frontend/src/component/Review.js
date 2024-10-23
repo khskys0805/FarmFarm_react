@@ -21,7 +21,7 @@ const Review = ({ review, type }) => {
         <>
             {type === 1 && (
                 <div className={`${styles.review_box} ${styles.type1}`}>
-                    <div className={styles.user_img}><img src={review.user.image} alt="user_img"/></div>
+                    <div className={styles.user_img}><img src={review.images[0].fileUrl} alt="user_img"/></div>
                     <div className={styles.review_content}>
                         <h4>{review.user.nickname}</h4>
                         <p>{review.comment}</p>
@@ -31,9 +31,9 @@ const Review = ({ review, type }) => {
             )}
             {type === 2 && (
                 <div className={`${styles.review_box} ${styles.type2}`}>
-                    <div className={styles.user_img}><img src={review.user.image} alt="user_img"/></div>
+                    <div className={styles.user_img}><img src={review.images[0].fileUrl} alt="user_img"/></div>
                     <div className={styles.review_content}>
-                        <h4>{review.orderDetail.product.name}</h4>
+                        <h4>{review.productName}</h4>
                         <p>{review.comment}</p>
                     </div>
                     <div className={styles.right}>

@@ -8,9 +8,9 @@ import API from "../../config";
 import {useLocation, useNavigate} from "react-router-dom";
 const WriteReview = () => {
     const [reviewData, setReviewData] = useState({
-        farmScore:3,
-        productScore:3,
-        review:""
+        farmStar:3,
+        productStar:3,
+        comment:""
     })
     const navigate = useNavigate();
     const location = useLocation();
@@ -20,21 +20,21 @@ const WriteReview = () => {
     const handleSetValue = (e) => {
         setReviewData({
             ...reviewData,
-            review: e.target.value
+            comment: e.target.value
         });
     };
 
     const setFarmScore = (score) => {
         setReviewData({
             ...reviewData,
-            farmScore: score
+            farmStar: score
         });
     }
 
     const setProductScore = (score) => {
         setReviewData({
             ...reviewData,
-            productScore: score
+            productStar: score
         })
     }
 
@@ -60,11 +60,11 @@ const WriteReview = () => {
                 <h3 className={styles.title}>농장의 별점을 입력해주세요.</h3>
                 <div>
                     <ul className={styles.rating_list}>
-                        {[...Array(reviewData.farmScore)].map((a, i) => (
+                        {[...Array(reviewData.farmStar)].map((a, i) => (
                             <li><FaStar key={i} onClick={() => setFarmScore(i + 1)} /></li>
                         ))}
-                        {[...Array(5 - reviewData.farmScore)].map((a, i) => (
-                            <li><FaRegStar key={i} onClick={() => setFarmScore(reviewData.farmScore + i + 1)} /></li>
+                        {[...Array(5 - reviewData.farmStar)].map((a, i) => (
+                            <li><FaRegStar key={i} onClick={() => setFarmScore(reviewData.farmStar + i + 1)} /></li>
                         ))}
                     </ul>
                 </div>
@@ -73,18 +73,18 @@ const WriteReview = () => {
                     다른 고객님들을 위해 솔직한 의견 남겨주세요:)</p>
                 <div>
                     <ul className={styles.rating_list}>
-                        {[...Array(reviewData.productScore)].map((a, i) => (
+                        {[...Array(reviewData.productStar)].map((a, i) => (
                             <li><FaStar key={i} onClick={() => setProductScore(i + 1)} /></li>
                         ))}
-                        {[...Array(5 - reviewData.productScore)].map((a, i) => (
-                            <li><FaRegStar key={i} onClick={() => setProductScore(reviewData.productScore + i + 1)} /></li>
+                        {[...Array(5 - reviewData.productStar)].map((a, i) => (
+                            <li><FaRegStar key={i} onClick={() => setProductScore(reviewData.productStar + i + 1)} /></li>
                         ))}
                     </ul>
                 </div>
                 <div>
                     <p><b>상품에 대한 의견을 남겨주세요</b></p>
                     <div className={styles.input_wrap}>
-                        <textarea placeholder="이곳에 의견을 남겨주세요" name="comment" value={reviewData.review} onChange={(e) => handleSetValue(e)}/>
+                        <textarea placeholder="이곳에 의견을 남겨주세요" name="comment" value={reviewData.comment} onChange={(e) => handleSetValue(e)}/>
                     </div>
                 </div>
             </form>
