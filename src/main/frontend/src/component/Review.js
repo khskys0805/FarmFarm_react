@@ -2,8 +2,10 @@ import styles from "./Review.module.css";
 import React from 'react';
 import {FaStar, FaTrashAlt} from "react-icons/fa";
 import {FaPen} from "react-icons/fa6";
+import axios from "axios";
+import API from "../config";
 
-const Review = ({ review, type }) => {
+const Review = ({ review, type, fetchReviewList }) => {
     const renderStarRating = (productStar) => {
         const starCount = Math.floor(productStar);
         const starArray = [];
@@ -16,6 +18,25 @@ const Review = ({ review, type }) => {
             }
         }
         return starArray;
+    }
+
+    const handleRemoveReview = (e, rid) => {
+        e.preventDefault();
+        if (window.confirm("리뷰를 삭제하시겠습니까?")){
+            axios.delete(API.REVIEW(rid), {
+                headers: { Authorization: `Bearer ${localStorage.getItem('jwt')}` },
+            })
+                .then((res) => {
+                    console.log("전송 성공");
+                    console.log(res.data);
+                    fetchReviewList();
+                    // console.log(enquiryList);
+                    // window.location.reload();
+                })
+                .catch((error) => {
+                    console.error('작성한 게시물을 가져오는 중 오류 발생: ', error);
+                });
+        }
     }
     return (
         <>
@@ -40,7 +61,7 @@ const Review = ({ review, type }) => {
                         <div className={styles.star}>{renderStarRating(review.productStar)}</div>
                         <div className={styles.button}>
                             <div><FaPen /></div>
-                            <div><FaTrashAlt /></div>
+                            <div><FaTrashAlt onClick={(e) => handleRemoveReview(e, review.rid)}/></div>
                         </div>
                     </div>
                 </div>

@@ -1,26 +1,30 @@
 import styles from "./MyReviewList.module.css";
 import Header from "../../component/Header";
-import {useEffect, useState} from "react";
+import {useCallback, useEffect, useState} from "react";
 import axios from "axios";
 import API from "../../config";
 import Review from "../../component/Review";
 
 const MyReviewList = () => {
     const [reviewList, setReviewList] = useState([]);
-    useEffect(() => {
+
+    const fetchReviewList = useCallback(() => {
         axios.get(API.MYREVIEW, {
             headers: { Authorization: `Bearer ${localStorage.getItem('jwt')}` },
         })
             .then((res) => {
                 console.log("전송 성공");
-                console.log(res.data.result.reviewList);
-
                 setReviewList(res.data.result.reviewList);
             })
             .catch((error) => {
                 console.error('작성한 게시물을 가져오는 중 오류 발생: ', error);
             });
-    }, []);
+    }, []); // 빈 의존성 배열로 인해 한 번만 생성
+
+    useEffect(() => {
+        fetchReviewList();
+    }, [fetchReviewList]);
+
     return (
         <div className={styles.box}>
             <Header title={"상품 후기 내역"} go={`/myPage`}/>
@@ -31,7 +35,7 @@ const MyReviewList = () => {
                     </div>
                 ) : (
                     reviewList.map((review, index) => (
-                        <Review key={index} review={review} type={2} />
+                        <Review key={index} review={review} type={2} fetchReviewList={fetchReviewList}/>
                     ))
                 )}
             </ul>
