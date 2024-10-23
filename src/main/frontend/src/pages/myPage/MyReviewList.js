@@ -14,6 +14,7 @@ const MyReviewList = () => {
         })
             .then((res) => {
                 console.log("전송 성공");
+                console.log(res.data.result.reviewList);
                 setReviewList(res.data.result.reviewList);
             })
             .catch((error) => {
