@@ -15,12 +15,9 @@ const MyPage = () => {
         })
             .then((res) => {
                 console.log("전송 성공");
-                console.log(res.data);
-                console.log(res.data.user);
-                console.log(res.data.myFarm);
+                console.log(res.data.result);
 
-                setUser(res.data.user);
-                setFarm(res.data.myFarm);
+                setUser(res.data.result);
             })
             .catch((error) => {
                 console.error('작성한 게시물을 가져오는 중 오류 발생: ', error);
@@ -50,12 +47,12 @@ const MyPage = () => {
                     </tr>
                     <tr>
                         <td className={styles.my_profile}>
-                            {farm ? (
+                            {user.farmName ? (
                                 <div className={styles.my_profile_inner}>
                                     <div className={styles.image_box}>
                                         <img src={farm.image} alt=""/>
                                     </div>
-                                    <span>{farm.name}</span>
+                                    <span>{user.farmName}</span>
                                 </div>
                             ) : (
                                 <div className={styles.my_profile_inner}>
@@ -66,7 +63,7 @@ const MyPage = () => {
                                 </div>
                             )}
                             <div>
-                                {farm ? (
+                                {user.farmName ? (
                                     <a href="/farm/my" className={styles.profile_edit_btn}>
                                         농장 관리
                                     </a>

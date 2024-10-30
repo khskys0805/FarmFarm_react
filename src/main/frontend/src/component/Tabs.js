@@ -20,6 +20,7 @@ const Tabs = ({ type, farm, product }) => {
     const [groupProductList, setGroupProductList] = useState([]);
     const [auctionList, setAuctionList] = useState([]);
     const [enquiryList, setEnquiryList] = useState([]);
+    const [reviewList, setReviewList] = useState([]);
 
     useEffect(() => {
         if (type === "farm" && farm.fid) {
@@ -84,6 +85,18 @@ const Tabs = ({ type, farm, product }) => {
                     console.log(res.data.result.enquiryList);
 
                     setEnquiryList(res.data.result.enquiryList);
+                })
+                .catch((error) => {
+                    console.error('작성한 게시물을 가져오는 중 오류 발생: ', error);
+                });
+            axios.get(API.REVIEW(product.pid), {
+                headers: { Authorization: `Bearer ${localStorage.getItem('jwt')}` },
+            })
+                .then((res) => {
+                    console.log("전송 성공");
+                    console.log(res.data.result.reviewList);
+
+                    setReviewList(res.data.result.reviewList);
                 })
                 .catch((error) => {
                     console.error('작성한 게시물을 가져오는 중 오류 발생: ', error);
@@ -157,13 +170,13 @@ const Tabs = ({ type, farm, product }) => {
                 {type === 'product' && (
                     <>
                         {tab === 0 && product && <p>{productInfo.detail}</p>}
-                        {/*{tab === 1 && reviews && (*/}
-                        {/*    <div>*/}
-                        {/*        {reviews.map((review, index) => (*/}
-                        {/*            <Review key={index} review={review} type={1}/>*/}
-                        {/*        ))}*/}
-                        {/*    </div>*/}
-                        {/*)}*/}
+                        {tab === 1 && reviewList && (
+                            <div>
+                                {reviewList.map((review, index) => (
+                                    <Review key={index} review={review} type={1}/>
+                                ))}
+                            </div>
+                        )}
                         {tab === 2 && (
                             <div>
                                 <Button content={"문의 작성하기"} onClick={showForm} />

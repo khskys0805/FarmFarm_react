@@ -7,7 +7,7 @@
     box-sizing: border-box;
     position: relative;
 }
-.box ul{
+.box > ul{
     height:100vh;
 }
 .no_list{

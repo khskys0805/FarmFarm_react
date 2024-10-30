@@ -59,7 +59,8 @@ const API = {
     WRITEREVIEW(ID){
         return `/review/${ID}`
     },
-    MYPAGE: "/myPage",
+    MYPAGE: "/mypage",
+    MYFARM:"/mypage/farm",
     MYORDER: "/mypage/orderList",
     MYAUCTION: "/mypage/auctionList",
     MYREVIEW: "/review/my",
