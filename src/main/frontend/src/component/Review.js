@@ -54,8 +54,6 @@ const Review = ({ review, type, fetchReviewList }) => {
             });
     }
 
-
-
     const handleRemoveReview = (e, rid) => {
         e.preventDefault();
         if (window.confirm("리뷰를 삭제하시겠습니까?")){

@@ -4,10 +4,12 @@ import API from "../../config";
 import styles from "./MyPage.module.css";
 import Header from "../../component/Header";
 import TabBar from "../../component/TabBar";
+import {useNavigate} from "react-router-dom";
 
 const MyPage = () => {
     const [user, setUser] = useState([]);
     const [farm, setFarm] = useState([]);
+    const navigate = useNavigate();
 
     useEffect(() => {
         axios.get(API.MYPAGE, {
@@ -24,6 +26,9 @@ const MyPage = () => {
             });
     }, []);
 
+    const navigateToEditProfile = () => {
+        navigate(`/editProfile`, {state: {user:user}})
+    }
     return (
         <div className={styles.box}>
             <Header title={"마이페이지"} go={`/home`}/>
@@ -33,13 +38,16 @@ const MyPage = () => {
                         <td className={styles.my_profile}>
                             <div className={styles.my_profile_inner}>
                                 <div className={styles.image_box}>
-                                    <img src={user.image} alt=""/>
+                                    <img src={user.profileImage} alt=""/>
                                 </div>
-                                <span>{user.nickname}</span>
+                                <span>{user.userName}</span>
                                 님
                             </div>
                             <div>
-                                <a href="/editProfile" className={styles.profile_edit_btn}>
+                                <a
+                                    className={styles.profile_edit_btn}
+                                    onClick={navigateToEditProfile}
+                                >
                                     프로필 관리
                                 </a>
                             </div>
@@ -50,7 +58,7 @@ const MyPage = () => {
                             {user.farmName ? (
                                 <div className={styles.my_profile_inner}>
                                     <div className={styles.image_box}>
-                                        <img src={farm.image} alt=""/>
+                                        <img src={user.farmImages && user.farmImages.length > 0 ? user.farmImages[0].fileUrl : ""} alt=""/>
                                     </div>
                                     <span>{user.farmName}</span>
                                 </div>

@@ -46,6 +46,7 @@
     background-color: #FFC42B;
     border-radius: 20px;
     font-size: 16px;
+    cursor: pointer;
 }
 .box .row{
     font-size: 16px;
