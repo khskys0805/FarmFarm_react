@@ -4,6 +4,7 @@ import {IoIosClose} from "react-icons/io";
 import Button from "../../component/Button";
 import axios from "axios";
 import API from "../../config";
+import { MdOutlineSubdirectoryArrowRight } from "react-icons/md";
 
 const EnquiryAdminPage = () => {
     const [popupVisible, setPopupVisible] = useState(false);
@@ -78,12 +79,17 @@ const EnquiryAdminPage = () => {
                         <td>{item.eid}</td>
                         <td>{item.productName}</td>
                         <td>{item.username}</td>
-                        <td>{item.content}</td>
+                        <td>
+                            {item.content}
+                            {item.reply && (
+                                <div className={styles.reply}><MdOutlineSubdirectoryArrowRight />Re: {item.reply}</div>
+                            )}
+                        </td>
                         <td>
                             {item.status === "답변전" ? (
                                 <button className={styles.answerBtn} onClick={() => showPopup(item.content, item.eid)}>답변하기</button>
                             ) : (
-                                item.answerStatus
+                                <span>답변완료</span>
                             )}
                         </td>
                         <td>{new Date(item.created_at).toLocaleDateString()}</td>
