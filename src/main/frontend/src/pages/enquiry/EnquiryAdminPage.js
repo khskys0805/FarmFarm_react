@@ -13,7 +13,7 @@ const EnquiryAdminPage = () => {
     const [enquiryList, setEnquiryList] = useState([]);
     const [enquiryAnswer, setEnquiryAnswer] = useState("");
 
-    useEffect(() => {
+    const fetchEnquriyList = () => {
         axios.get(API.ENQUIRYADMIN, {
             headers: {
                 Authorization: `Bearer ${localStorage.getItem('jwt')}`,
@@ -26,6 +26,9 @@ const EnquiryAdminPage = () => {
             .catch((error) => {
                 console.error('작성한 게시물을 가져오는 중 오류 발생: ', error);
             });
+    }
+    useEffect(() => {
+        fetchEnquriyList();
     }, [])
 
     const handleInput = (e) => {
@@ -53,6 +56,8 @@ const EnquiryAdminPage = () => {
         })
             .then((res) => {
                 console.log(res.data.result);
+                setPopupVisible(false);
+                fetchEnquriyList();
             })
             .catch((error) => {
                 console.error('작성한 게시물을 가져오는 중 오류 발생: ', error);
