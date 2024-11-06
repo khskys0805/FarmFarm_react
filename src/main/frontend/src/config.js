@@ -60,7 +60,7 @@ const API = {
         return `/review/${ID}`
     },
     MYPAGE: "/mypage",
-    MYFARM:"/mypage/farm",
+    MYFARM:"/farm/my",
     MYORDER: "/mypage/orderList",
     MYAUCTION: "/mypage/auctionList",
     MYREVIEW: "/review/my",

@@ -9,42 +9,74 @@ import {FaPen} from "react-icons/fa6";
 import {FaTrashAlt} from "react-icons/fa";
 import {FiShare2} from "react-icons/fi";
 import Tabs from "../../component/Tabs";
-const FarmDetails = () => {
+const FarmDetails = ({ isMyFarm }) => {
     const { id } = useParams();
     const [farm, setFarm] = useState([]);
     const [images, setImages] = useState([]);
     const navigate = useNavigate();
 
     useEffect(() => {
-        axios.get(API.FARM(id), {
-            headers: { Authorization: `Bearer ${localStorage.getItem('jwt')}` },
-        })
-            .then((res) => {
-                console.log("전송 성공");
-                console.log(res.data.result);
-                const rslt = res.data.result;
-                setFarm(rslt);
-
-                const imageArray = [];
-                if (rslt.images && rslt.images.length > 0) {
-                    rslt.images.slice(0, 3).forEach((image, index) => {
-                        imageArray.push(
-                            <img
-                                key={`image-${index}`}
-                                src={image.fileUrl}
-                                alt={`Slide ${index + 1}`}
-                                style={{ objectFit: "cover", height: "100%" }}
-                            />
-                        );
-                    });
-                } else {
-                    imageArray.push(<div key="no-image" style={{ backgroundColor: "#94C015", height: "100%" }} />);
-                }
-                setImages(imageArray);
+        if (isMyFarm) {
+            axios.get(API.MYFARM, {
+                headers: { Authorization: `Bearer ${localStorage.getItem('jwt')}` },
             })
-            .catch((error) => {
-                console.error('작성한 게시물을 가져오는 중 오류 발생: ', error);
-            });
+                .then((res) => {
+                    console.log("전송 성공");
+                    console.log(res.data.result);
+                    const rslt = res.data.result;
+                    setFarm(rslt);
+
+                    const imageArray = [];
+                    if (rslt.images && rslt.images.length > 0) {
+                        rslt.images.slice(0, 3).forEach((image, index) => {
+                            imageArray.push(
+                                <img
+                                    key={`image-${index}`}
+                                    src={image.fileUrl}
+                                    alt={`Slide ${index + 1}`}
+                                    style={{ objectFit: "cover", height: "100%" }}
+                                />
+                            );
+                        });
+                    } else {
+                        imageArray.push(<div key="no-image" style={{ backgroundColor: "#94C015", height: "100%" }} />);
+                    }
+                    setImages(imageArray);
+                })
+                .catch((error) => {
+                    console.error('작성한 게시물을 가져오는 중 오류 발생: ', error);
+                });
+        } else {
+            axios.get(API.FARM(id), {
+                headers: { Authorization: `Bearer ${localStorage.getItem('jwt')}` },
+            })
+                .then((res) => {
+                    console.log("전송 성공");
+                    console.log(res.data.result);
+                    const rslt = res.data.result;
+                    setFarm(rslt);
+
+                    const imageArray = [];
+                    if (rslt.images && rslt.images.length > 0) {
+                        rslt.images.slice(0, 3).forEach((image, index) => {
+                            imageArray.push(
+                                <img
+                                    key={`image-${index}`}
+                                    src={image.fileUrl}
+                                    alt={`Slide ${index + 1}`}
+                                    style={{ objectFit: "cover", height: "100%" }}
+                                />
+                            );
+                        });
+                    } else {
+                        imageArray.push(<div key="no-image" style={{ backgroundColor: "#94C015", height: "100%" }} />);
+                    }
+                    setImages(imageArray);
+                })
+                .catch((error) => {
+                    console.error('작성한 게시물을 가져오는 중 오류 발생: ', error);
+                });
+        }
     }, []);
 
     const handleEdit = () => {

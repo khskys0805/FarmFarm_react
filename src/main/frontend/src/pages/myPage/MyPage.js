@@ -72,7 +72,7 @@ const MyPage = () => {
                             )}
                             <div>
                                 {user.farmName ? (
-                                    <a href="/farm/my" className={styles.profile_edit_btn}>
+                                    <a href="/myFarm" className={styles.profile_edit_btn}>
                                         농장 관리
                                     </a>
                                 ) : (
