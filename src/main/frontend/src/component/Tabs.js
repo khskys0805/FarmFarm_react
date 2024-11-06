@@ -77,18 +77,7 @@ const Tabs = ({ type, farm, product }) => {
                     console.error('작성한 게시물을 가져오는 중 오류 발생: ', error);
                 });
 
-            axios.get(API.ENQUIRY(product.pid), {
-                headers: { Authorization: `Bearer ${localStorage.getItem('jwt')}` },
-            })
-                .then((res) => {
-                    console.log("전송 성공");
-                    console.log(res.data.result.enquiryList);
-
-                    setEnquiryList(res.data.result.enquiryList);
-                })
-                .catch((error) => {
-                    console.error('작성한 게시물을 가져오는 중 오류 발생: ', error);
-                });
+            fetchEnquiry();
             axios.get(API.REVIEW(product.pid), {
                 headers: { Authorization: `Bearer ${localStorage.getItem('jwt')}` },
             })
@@ -103,6 +92,21 @@ const Tabs = ({ type, farm, product }) => {
                 });
         }
     }, [type, farm, product]);
+
+    const fetchEnquiry = () => {
+        axios.get(API.ENQUIRY(product.pid), {
+            headers: { Authorization: `Bearer ${localStorage.getItem('jwt')}` },
+        })
+            .then((res) => {
+                console.log("전송 성공");
+                console.log(res.data.result.enquiryList);
+
+                setEnquiryList(res.data.result.enquiryList);
+            })
+            .catch((error) => {
+                console.error('작성한 게시물을 가져오는 중 오류 발생: ', error);
+            });
+    }
 
     const productTab = [
         { name: '상품 설명' },
@@ -126,6 +130,10 @@ const Tabs = ({ type, farm, product }) => {
 
     const showForm = () => {
         setShowEnquiryForm(!showEnquiryForm);
+    }
+
+    const closeEnquiryForm = () => {
+        setShowEnquiryForm(false);
     }
 
     const onPopupDelivery = () => {
@@ -180,8 +188,8 @@ const Tabs = ({ type, farm, product }) => {
                         {tab === 2 && (
                             <div>
                                 <Button content={"문의 작성하기"} onClick={showForm} />
-                                {showEnquiryForm && <EnquiryForm pid={productInfo.pid}/>}
-                                {enquiryList && <Enquiry enquiries={enquiryList}/>}
+                                {showEnquiryForm && <EnquiryForm pid={productInfo.pid} closeForm={closeEnquiryForm} fetchEnquiry={fetchEnquiry}/>}
+                                {enquiryList && <Enquiry enquiries={enquiryList} fetchEnquiry={fetchEnquiry}/>}
                             </div>
                         )}
                     </>

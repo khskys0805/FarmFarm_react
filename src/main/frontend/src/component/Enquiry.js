@@ -4,7 +4,8 @@ import axios from "axios";
 import API from "../config";
 import {useState} from "react";
 import Button from "./Button";
-const Enquiry = ({enquiries}) => {
+import {MdOutlineSubdirectoryArrowRight} from "react-icons/md";
+const Enquiry = ({enquiries, fetchEnquiry}) => {
     const [editIndex, setEditIndex] = useState(null);
     const [content, setContent] = useState("");
     const handleEditClick = (index, content) => {
@@ -25,7 +26,7 @@ const Enquiry = ({enquiries}) => {
                 console.log(res.data);
                 alert(`문의 수정이 완료되었습니다.`);
                 setEditIndex(null); // 수정 모드 해제
-                // window.location.reload();
+                fetchEnquiry();
             })
             .catch((error) => {
                 console.error('작성한 게시물을 가져오는 중 오류 발생: ', error);
@@ -83,6 +84,11 @@ const Enquiry = ({enquiries}) => {
                             </span>
                         )}
                     </div>
+                    {enquiry.reply && (
+                        <div className={styles.reply}>
+                            <MdOutlineSubdirectoryArrowRight />Re: {enquiry.reply}
+                        </div>
+                    )}
                 </div>
             ))}
         </div>
