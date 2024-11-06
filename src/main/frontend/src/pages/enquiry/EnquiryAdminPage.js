@@ -8,6 +8,7 @@ import API from "../../config";
 const EnquiryAdminPage = () => {
     const [popupVisible, setPopupVisible] = useState(false);
     const [selectedContent, setSelectedContent] = useState("");
+    const [selectedEid, setSelectedEid] = useState(null); // 선택한 문의의 eid 상태 추가
     const [enquiryList, setEnquiryList] = useState([]);
     const [enquiryAnswer, setEnquiryAnswer] = useState("");
 
@@ -30,8 +31,9 @@ const EnquiryAdminPage = () => {
         const answer = e.target.value;
         setEnquiryAnswer(answer);
     }
-    const showPopup = (content) => {
+    const showPopup = (content, eid) => {
         setSelectedContent(content);
+        setSelectedEid(eid); // 선택한 문의의 eid 설정
         setPopupVisible(true);
     };
 
@@ -39,8 +41,21 @@ const EnquiryAdminPage = () => {
         setPopupVisible(false);
     };
 
-    const handleAnswer = (inquiryNumber) => {
-        // 답변하기 버튼을 눌렀을 때 동작하는 함수
+    const handleReplyEnquiry = (e, inquiryNumber) => {
+        e.preventDefault();
+        if (selectedEid === null) return;
+
+        axios.post(API.REPLYENQUIRY(selectedEid), { reply:enquiryAnswer }, {
+            headers: {
+                Authorization: `Bearer ${localStorage.getItem('jwt')}`,
+            },
+        })
+            .then((res) => {
+                console.log(res.data.result);
+            })
+            .catch((error) => {
+                console.error('작성한 게시물을 가져오는 중 오류 발생: ', error);
+            });
         console.log(`문의 ${inquiryNumber}에 대한 답변하기 버튼 클릭됨`);
     };
 
@@ -66,7 +81,7 @@ const EnquiryAdminPage = () => {
                         <td>{item.content}</td>
                         <td>
                             {item.status === "답변전" ? (
-                                <button className={styles.answerBtn} onClick={() => showPopup(item.content)}>답변하기</button>
+                                <button className={styles.answerBtn} onClick={() => showPopup(item.content, item.eid)}>답변하기</button>
                             ) : (
                                 item.answerStatus
                             )}
@@ -82,7 +97,7 @@ const EnquiryAdminPage = () => {
                     <h4>문의내용: <span>{selectedContent}</span></h4>
                     <textarea value={enquiryAnswer} onChange={(e) => handleInput(e)} />
                     <div className={styles.close_popup}><IoIosClose onClick={closePopup} size="25"/></div>
-                    <Button content={"답변하기"} padding={"10px 0"} />
+                    <Button content={"답변하기"} padding={"10px 0"} onClick={handleReplyEnquiry}/>
                 </div>
             )}
             {/* 팝업 배경 (클릭 시 팝업 닫기) */}

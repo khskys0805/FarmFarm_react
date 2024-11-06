@@ -53,6 +53,9 @@ const API = {
     REGISTERENQUIRY(ID){
         return `/enquiry/${ID}`
     },
+    REPLYENQUIRY(ID){
+        return `/enquiry/reply/${ID}`
+    },
     REVIEW(ID){
         return `/review/${ID}`
     },
