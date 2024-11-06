@@ -65,6 +65,7 @@ const API = {
     MYAUCTION: "/mypage/auctionList",
     MYREVIEW: "/review/my",
     MYENQUIRY: "/enquiry/my",
+    ENQUIRYADMIN: "/enquiry/admin",
     EDITPROFILE: "/mypage/profile",
     ISNICKNAME: "/user/me",
     CREATENICKNAME: "/user/nickname",
