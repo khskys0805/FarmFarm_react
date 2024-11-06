@@ -18,7 +18,7 @@ const EnquiryAdminPage = () => {
             },
         })
             .then((res) => {
-                console.log(res.data.result.enquiryList);
+                console.log(res.data.result);
                 setEnquiryList(res.data.result.enquiryList);
             })
             .catch((error) => {
