@@ -45,6 +45,11 @@
     color:#7c7c7c;
     margin-top: 5px;
 }
+.enquiry_list .left .reply{
+    margin-top: 10px;
+    color:#B1B1B1;
+    font-size:12px;
+}
 
 .enquiry_list .right .button{
     display: flex;

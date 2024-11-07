@@ -7,6 +7,7 @@ import img from "../../images/icon.png";
 import {FaRegStar, FaStar, FaTrashAlt} from "react-icons/fa";
 import {FaPen} from "react-icons/fa6";
 import Button from "../../component/Button";
+import {MdOutlineSubdirectoryArrowRight} from "react-icons/md";
 
 const MyEnquiryList = () => {
     const [enquiryList, setEnquiryList] = useState([]);
@@ -48,7 +49,6 @@ const MyEnquiryList = () => {
                     console.log(res.data);
                     fetchEnquiryList();
                     console.log(enquiryList);
-                    // window.location.reload();
                 })
                 .catch((error) => {
                     console.error('작성한 게시물을 가져오는 중 오류 발생: ', error);
@@ -80,23 +80,31 @@ const MyEnquiryList = () => {
                     </div>
                 ) : (
                     enquiryList.map((enquiry, index) => (
-                        <li key={index} className={styles.enquiry_list}>
-                            <div className={styles.left}>
-                                <div className={styles.img}>
-                                    <img src={enquiry.images[0].fileUrl} alt="경매 이미지" />
+                        <>
+                            <li key={index} className={styles.enquiry_list}>
+                                <div className={styles.left}>
+                                    <div className={styles.img}>
+                                        <img src={enquiry.images[0].fileUrl} alt="경매 이미지" />
+                                    </div>
+                                    <div>
+                                        <h5 className={styles.product_name}>{enquiry.productName}</h5>
+                                        <p className={styles.content}>{enquiry.content}</p>
+                                        {enquiry.reply && (
+                                            <p className={styles.reply}>
+                                                <MdOutlineSubdirectoryArrowRight />Re: {enquiry.reply}
+                                            </p>
+                                        )}
+                                    </div>
                                 </div>
-                                <div>
-                                    <h5 className={styles.product_name}>{enquiry.productName}</h5>
-                                    <p className={styles.content}>{enquiry.content}</p>
+                                <div className={styles.right}>
+                                    <div className={styles.button}>
+                                        <div><FaPen onClick={(e) => handleEditEnquiry(e, enquiry)}/></div>
+                                        <div><FaTrashAlt onClick={(e) => handleRemoveEnquiry(e, enquiry.eid)}/></div>
+                                    </div>
                                 </div>
-                            </div>
-                            <div className={styles.right}>
-                                <div className={styles.button}>
-                                    <div><FaPen onClick={(e) => handleEditEnquiry(e, enquiry)}/></div>
-                                    <div><FaTrashAlt onClick={(e) => handleRemoveEnquiry(e, enquiry.eid)}/></div>
-                                </div>
-                            </div>
-                        </li>
+                            </li>
+
+                        </>
                     ))
                 )}
             </ul>

@@ -1,5 +1,5 @@
 import styles from "./Enquiry.module.css";
-import { FaPen, FaTrash } from "react-icons/fa";
+import {FaPen, FaTrashAlt} from "react-icons/fa";
 import axios from "axios";
 import API from "../config";
 import {useState} from "react";
@@ -79,7 +79,7 @@ const Enquiry = ({enquiries, fetchEnquiry}) => {
                                     <FaPen onClick={() => handleEditClick(index, enquiry.content)} />
                                 </span>
                                 <span className={styles.trash}>
-                                    <FaTrash onClick={(e) => handleRemoveEnquiry(e, enquiry.eid)}/>
+                                    <FaTrashAlt onClick={(e) => handleRemoveEnquiry(e, enquiry.eid)}/>
                                 </span>
                             </span>
                         )}
