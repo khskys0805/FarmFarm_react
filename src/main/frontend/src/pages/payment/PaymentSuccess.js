@@ -11,7 +11,7 @@ const PaymentSuccess = () => {
             <Header title={"결제"} />
             <div className={styles.wrapper}>
                 <div className={styles.text}>
-                    <h1 className={styles.success}>결제에 성공했습니다.</h1>
+                    <h2 className={styles.success}>결제에 성공했습니다.</h2>
                     <FaCircleCheck size="30px"/>
                 </div>
                 <div className={styles.btn}>

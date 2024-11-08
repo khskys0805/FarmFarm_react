@@ -69,6 +69,7 @@ const API = {
     MYREVIEW: "/review/my",
     MYENQUIRY: "/enquiry/my",
     ENQUIRYADMIN: "/enquiry/admin",
+    SHIPPINGLIST:"/farm/shippingList",
     EDITPROFILE: "/mypage/profile",
     ISNICKNAME: "/user/me",
     CREATENICKNAME: "/user/nickname",
