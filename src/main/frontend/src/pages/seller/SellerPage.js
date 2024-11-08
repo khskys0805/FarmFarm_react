@@ -6,12 +6,14 @@ import axios from "axios";
 import API from "../../config";
 
 const SellerPage = () => {
-    const [popupVisible, setPopupVisible] = useState(false);
+    const [popupDelivery, setPopupDelivery] = useState(false);
     const [selectedAddress, setSelectedAddress] = useState({
         deliveryAddress: "",
         deliveryAddressDetail: "",
         deliveryMemo: ""
     });
+    const [popupOrderDetails, setPopupOrderDetails] = useState(false);
+    const [selectedOrderDetails, setSelectedOrderDetails] = useState(null);
     const [selectedRows, setSelectedRows] = useState([]);
     const [shippingList, setShippingList] = useState([]);
 
@@ -54,18 +56,27 @@ const SellerPage = () => {
         setShippingList(updatedData);
     }
 
-    const showPopup = (address, detail, memo) => {
+    const showDeliveryPopup = (address, detail, memo) => {
         setSelectedAddress({
             deliveryAddress: address,
             deliveryAddressDetail: detail,
             deliveryMemo: memo
         });
-        setPopupVisible(true);
+        setPopupDelivery(true);
     };
 
-    const closePopup = () => {
-        setPopupVisible(false);
+    const closeDeliveryPopup = () => {
+        setPopupDelivery(false);
     };
+
+    const showOrderDetailPopup = (orderDetails) => {
+        setSelectedOrderDetails(orderDetails);
+        setPopupOrderDetails(true);
+    }
+
+    const closeOrderDetailPopup = () => {
+        setPopupOrderDetails(false);
+    }
 
     const handleCheckboxChange = (index) => {
         const updatedRows = [...selectedRows];
@@ -103,8 +114,8 @@ const SellerPage = () => {
                     <th>상품명</th>
                     <th>구매자 이름</th>
                     <th>전화번호</th>
-                    <th>상품 수량</th>
-                    <th>금액</th>
+                    <th>상품 총 수량</th>
+                    <th>총 금액</th>
                     <th>거래 방법</th>
                     <th>결제 상태</th>
                     <th>송장번호</th>
@@ -123,7 +134,7 @@ const SellerPage = () => {
                             />
                         </td>
                         <td>{item.orderNumber}</td>
-                        <td>{item.itemName}</td>
+                        <td className={styles.itemName} onClick={() => showOrderDetailPopup(item.orderDetails)}>{item.itemName}</td>
                         <td>{item.deliveryName}</td>
                         <td>{item.deliveryPhone}</td>
                         <td>{item.totalQuantity}</td>
@@ -161,7 +172,7 @@ const SellerPage = () => {
                             )}
                         </td>
                         <td>
-                            <button onClick={() => showPopup(item.deliveryAddress, item.deliveryAddressDetail, item.deliveryMemo)}>보기</button>
+                            <button onClick={() => showDeliveryPopup(item.deliveryAddress, item.deliveryAddressDetail, item.deliveryMemo)}>보기</button>
                         </td>
                         <td>
                             {item.shippingStatus}
@@ -171,16 +182,16 @@ const SellerPage = () => {
                 </tbody>
             </table>
             {/* 팝업 */}
-            {popupVisible && (
+            {popupDelivery && (
                 <div className={styles.popup}>
                     <h4>거주지: <span>{selectedAddress.deliveryAddress}</span></h4>
                     <h4><span>{selectedAddress.deliveryAddressDetail}</span></h4>
                     <h4 style={{marginTop:"20px"}}>배송 메모: <span>{selectedAddress.deliveryMemo}</span></h4>
-                    <div className={styles.close_popup}><IoIosClose onClick={closePopup} size="25"/></div>
+                    <div className={styles.close_popup}><IoIosClose onClick={closeDeliveryPopup} size="25"/></div>
                 </div>
             )}
             {/* 팝업 배경 (클릭 시 팝업 닫기) */}
-            {popupVisible && (
+            {popupDelivery && (
                 <div
                     style={{
                         position: "fixed",
@@ -191,7 +202,47 @@ const SellerPage = () => {
                         backgroundColor: "rgba(0, 0, 0, 0.5)",
                         zIndex: 999
                     }}
-                    onClick={closePopup}
+                    onClick={closeDeliveryPopup}
+                >
+                </div>
+            )}
+
+            {popupOrderDetails && selectedOrderDetails && (
+                <div className={styles.popup2}>
+                    <h3 style={{marginBottom:"20px"}}>주문 상세 내역</h3>
+                    {selectedOrderDetails.map((detail, index) => (
+                        <table key={index} className={styles.order_table}>
+                            <thead>
+                                <th>이미지</th>
+                                <th>상품 이름</th>
+                                <th>수량</th>
+                                <th>가격</th>
+                            </thead>
+                            <tbody>
+                                <td><img src={detail.images[0].fileUrl} alt="Product" className={styles.productImage} /></td>
+                                <td>{detail.productName}</td>
+                                <td>{detail.quantity}</td>
+                                <td>{detail.price}원</td>
+                            </tbody>
+                        </table>
+                    ))}
+                    <div className={styles.close_popup}>
+                        <IoIosClose onClick={closeOrderDetailPopup} size="25" />
+                    </div>
+                </div>
+            )}
+            {popupOrderDetails && (
+                <div
+                    style={{
+                        position: "fixed",
+                        top: 0,
+                        left: 0,
+                        width: "100%",
+                        height: "100%",
+                        backgroundColor: "rgba(0, 0, 0, 0.5)",
+                        zIndex: 999
+                    }}
+                    onClick={closeOrderDetailPopup}
                 >
                 </div>
             )}
