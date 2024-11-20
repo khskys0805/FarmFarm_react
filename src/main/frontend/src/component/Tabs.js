@@ -11,6 +11,7 @@ import API from "../config";
 import SellerPage from "../pages/seller/SellerPage";
 import Enquiry from "./Enquiry";
 import AuctionList from "./AuctionList"; // Review 컴포넌트 import
+import ClipLoader from "react-spinners/ClipLoader";
 
 const Tabs = ({ type, farm, product }) => {
     const [tab, setTab] = useState(0);
@@ -21,8 +22,11 @@ const Tabs = ({ type, farm, product }) => {
     const [auctionList, setAuctionList] = useState([]);
     const [enquiryList, setEnquiryList] = useState([]);
     const [reviewList, setReviewList] = useState([]);
+    const [myFarmId, setMyFarmId] = useState(null);
+    const [loading, setLoading] = useState(true);  // 로딩 상태 추가
 
     useEffect(() => {
+        setLoading(true);  // 데이터 로딩 시작 시 true로 설정
         if (type === "farm" && farm.fid) {
             axios.get(API.FARMPRODUCTS(farm.fid), {
                 headers: { Authorization: `Bearer ${localStorage.getItem('jwt')}` },
@@ -62,6 +66,20 @@ const Tabs = ({ type, farm, product }) => {
                 .catch((error) => {
                     console.error('작성한 게시물을 가져오는 중 오류 발생: ', error);
                 });
+
+            axios.get(API.MYFARM, {
+                headers: { Authorization: `Bearer ${localStorage.getItem('jwt')}` },
+            })
+                .then((res) => {
+                    console.log("전송 성공");
+                    console.log(res.data.result);
+                    setMyFarmId(res.data.result.fid);
+                    setLoading(false);
+                })
+                .catch((error) => {
+                    console.error('작성한 게시물을 가져오는 중 오류 발생: ', error);
+                    setLoading(false);
+                });
         }
         else if (type === "product" && product.pid) {
             axios.get(API.PRODUCT(product.pid), {
@@ -93,6 +111,19 @@ const Tabs = ({ type, farm, product }) => {
         }
     }, [type, farm, product]);
 
+    if (loading) {
+        return (
+            <div style={{textAlign:"center"}}>
+                <ClipLoader
+                color="#94C015"
+                loading={loading}
+                size={50}
+                aria-label="Loading Spinner"
+                data-testid="loader" />
+            </div>
+        )
+    }
+
     const fetchEnquiry = () => {
         axios.get(API.ENQUIRY(product.pid), {
             headers: { Authorization: `Bearer ${localStorage.getItem('jwt')}` },
@@ -118,9 +149,11 @@ const Tabs = ({ type, farm, product }) => {
         { name: '일반 상품' },
         { name: '공동구매' },
         { name: '경매' },
-        { name: '배송관리'},
-        { name: '문의관리'}
     ];
+    if (myFarmId === farm.fid) {
+        farmTab.push({ name: '배송관리' });
+        farmTab.push({ name: '문의관리' });
+    }
 
     const tabs = type === 'product' ? productTab : farmTab;
 
@@ -220,10 +253,10 @@ const Tabs = ({ type, farm, product }) => {
                                 <AuctionList />
                             </>
                         )}
-                        {tab === 4 && (
+                        {tab === 4 && myFarmId === farm.fid && (
                             <Button content={"배송관리 페이지 열기"} onClick={onPopupDelivery} />
                         )}
-                        {tab === 5 && (
+                        {tab === 5 && myFarmId === farm.fid && (
                             <Button content={"문의관리 페이지 열기"} onClick={onPopupEnquiry} />
                         )}
                     </>
