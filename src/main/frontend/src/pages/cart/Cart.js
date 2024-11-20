@@ -8,6 +8,7 @@ import {Link, useNavigate} from "react-router-dom";
 import {FaTrashAlt} from "react-icons/fa";
 import Button from "../../component/Button";
 import TabBar from "../../component/TabBar";
+import noImage from "../../images/noImage.png";
 
 const Cart = () => {
     const [carts, setCarts] = useState([]);
@@ -92,7 +93,11 @@ const Cart = () => {
                             <li key={index} className={styles.cart_list}>
                                 <div className={styles.left}>
                                     <div className={styles.img}>
-                                        <img src={cart.images[0].fileUrl} alt="상품 이미지" />
+                                        {cart.images.length > 0 && cart.images[0].fileUrl ? (
+                                            <img src={cart.images[0].fileUrl} alt="상품 이미지" />
+                                        ) : (
+                                            <img src={noImage} alt="이미지 없음"/>
+                                        )}
                                     </div>
                                     <div>
                                         <p className={styles.farm_name}>{cart.farmName}</p>
