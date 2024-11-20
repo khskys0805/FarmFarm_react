@@ -8,6 +8,7 @@ import {DataContext} from "../context/DataContext";
 const ProductList = ({ numToShow, type = 'product', products }) => {
     const { productList = [], groupProductList = [] } = useContext(DataContext); // 기본값을 빈 배열로 설정
     const productData = products || (type === 'group' ? groupProductList : productList); // prop이 있으면 그걸 사용, 없으면 DataContext 사용
+    console.log(productData);
 
     return (
         <div className={productData.length === 0 ? '' : styles.item_container}>

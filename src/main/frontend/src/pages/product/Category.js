@@ -4,8 +4,10 @@ import { IoIosArrowForward } from "react-icons/io";
 import TabBar from "../../component/TabBar";
 import axios from "axios";
 import API from "../../config";
+import {useNavigate} from "react-router-dom";
 
 const Category = () => {
+    const navigate = useNavigate();
     const selectList = [
         { value: "1", name: "과일" },
         { value: "2", name: "채소" },
@@ -31,6 +33,10 @@ const Category = () => {
             })
                 .then((res) => {
                     console.log(res.data.result);
+                    navigate('/productList', {
+                        state: { productList: res.data.result.productList },
+                        search: `?type=product`, // 쿼리 파라미터 추가
+                    });
                 })
                 .catch((error) => {
                     console.error('작성한 게시물을 가져오는 중 오류 발생: ', error.response.data || error);
