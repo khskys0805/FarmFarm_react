@@ -64,6 +64,7 @@ const EditMyProfile = () => {
         })
             .then((res) => {
                 console.log(res.data.result);
+                alert("프로필이 변경되었습니다");
                 navigate(`/myPage`);
             })
             .catch((error) => {

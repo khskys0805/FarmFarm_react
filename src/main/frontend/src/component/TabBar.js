@@ -8,22 +8,29 @@ import styles from './TabBar.module.css';
 import axios from "axios";
 import API from "../config";
 
-const TabBar = ({ Authorization }) => {
+const TabBar = () => {
     const navigate = useNavigate();
     const location = useLocation();
     const [profileImage, setProfileImage] = useState("");
 
     useEffect(() => {
+        const cachedImage = localStorage.getItem('profileImage');
+        if (cachedImage) {
+            setProfileImage(cachedImage); // 캐시된 이미지 사용
+        }
+
         axios.get(API.MYPAGE, {
             headers: { Authorization: `Bearer ${localStorage.getItem('jwt')}` },
         })
             .then((res) => {
-                setProfileImage(res.data.result.profileImage);
+                const newProfileImage = res.data.result.profileImage;
+                setProfileImage(newProfileImage);
+                localStorage.setItem('profileImage', newProfileImage); // 로컬에 저장
             })
             .catch((error) => {
-                console.error('작성한 게시물을 가져오는 중 오류 발생: ', error);
+                console.error('프로필 이미지를 가져오는 중 오류 발생: ', error);
             });
-    }, [])
+    }, []);
 
     // 현재 위치에 따라 활성 탭 설정
     const [activeTab, setActiveTab] = useState(getActiveTab(location.pathname));

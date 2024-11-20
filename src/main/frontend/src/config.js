@@ -11,6 +11,9 @@ const API = {
     PRODUCTTOCART(ID){
         return `/product/cart/${ID}`
     },
+    CATEGORY(ID){
+        return `/product/category/${ID}`
+    },
     FARM(ID){
         return `/farm/${ID}`
     },
