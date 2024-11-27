@@ -5,13 +5,16 @@ import styles from "./MyPage.module.css";
 import Header from "../../component/Header";
 import TabBar from "../../component/TabBar";
 import {useNavigate} from "react-router-dom";
+import ClipLoader from "react-spinners/ClipLoader";
 
 const MyPage = () => {
     const [user, setUser] = useState([]);
     const [farm, setFarm] = useState([]);
+    const [loading, setLoading] = useState(true);  // 로딩 상태 추가
     const navigate = useNavigate();
 
     useEffect(() => {
+        setLoading(true);
         axios.get(API.MYPAGE, {
             headers: { Authorization: `Bearer ${localStorage.getItem('jwt')}` },
         })
@@ -20,11 +23,25 @@ const MyPage = () => {
                 console.log(res.data.result);
 
                 setUser(res.data.result);
+                setLoading(false);
             })
             .catch((error) => {
                 console.error('작성한 게시물을 가져오는 중 오류 발생: ', error);
             });
     }, []);
+
+    if (loading) {
+        return (
+            <div className={styles.loading}>
+                <ClipLoader
+                    color="#94C015"
+                    loading={loading}
+                    size={50}
+                    aria-label="Loading Spinner"
+                    data-testid="loader" />
+            </div>
+        )
+    }
 
     const navigateToEditProfile = () => {
         navigate(`/editProfile`, {state: {user:user}})
