@@ -103,8 +103,12 @@ const FarmDetails = ({ isMyFarm }) => {
         <div className={styles.box}>
             <SwiperComponent slides={images}/>
             <IoIosArrowDropleftCircle className={styles.arrowLeft} size="30" color="#fff" onClick={() => navigate(-1)}/>
-            <FaPen className={styles.correct} size="25" color="#fff" onClick={handleEdit}/>
-            <FaTrashAlt className={styles.delete} size="25" color="#fff" onClick={deleteFarm}/>
+            {isMyFarm && (
+                <>
+                    <FaPen className={styles.correct} size="25" color="#fff" onClick={handleEdit}/>
+                    <FaTrashAlt className={styles.delete} size="25" color="#fff" onClick={deleteFarm}/>
+                </>
+            )}
             {farm && (
                 <div className={styles.content}>
                     <div className={styles.top}>
