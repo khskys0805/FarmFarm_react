@@ -28,6 +28,7 @@ const ProductDetails = () => {
     const [groupCapacity, setGroupCapacity] = useState("");
     const [groupList, setGroupList] = useState([]);
     const [closedGroups, setClosedGroups] = useState([]); // 추가: 이미 호출된 그룹 ID를 추적
+    const [isMyProduct, setIsMyProduct] = useState(false);
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -40,6 +41,7 @@ const ProductDetails = () => {
 
                 setProduct(res.data.result);
                 setIsGroup(res.data.result.productType === 1);
+                setIsMyProduct(res.data.result.isMyProduct);
                 if (res.data.result.productType === 1) {
                     setDiscount(res.data.result.groupProductDiscount);
                     setGroupCapacity(res.data.result.groupProductQuantity);
@@ -249,8 +251,12 @@ const ProductDetails = () => {
             <div className={styles.box}>
                 <SwiperComponent slides={images}/>
                 <IoIosArrowDropleftCircle className={styles.arrowLeft} size="30" color="#fff" onClick={() => navigate(-1)}/>
-                <FaPen className={styles.correct} size="25" color="#fff" onClick={handleEditClick}/>
-                <FaTrashAlt className={styles.delete} size="25" color="#fff" onClick={handleRemoveProduct}/>
+                {isMyProduct && (
+                    <>
+                        <FaPen className={styles.correct} size="25" color="#fff" onClick={handleEditClick}/>
+                        <FaTrashAlt className={styles.delete} size="25" color="#fff" onClick={handleRemoveProduct}/>
+                    </>
+                )}
                 {product && (
                     <div className={styles.content}>
                         <div className={styles.top}>
