@@ -21,6 +21,7 @@ const Cart = () => {
     const fetchCartItems = () => {
         axios.get(API.CART, {
             headers: { Authorization: `Bearer ${localStorage.getItem('jwt')}` },
+            credentials:'include',
         })
             .then((res) => {
                 console.log("전송 성공");

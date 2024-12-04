@@ -17,6 +17,15 @@ const SellerPage = () => {
     const [selectedRows, setSelectedRows] = useState([]);
     const [shippingList, setShippingList] = useState([]);
 
+    const shippingStatusMap = {
+        READY_TO_SHIP: "배송준비",
+        IN_TRANSIT: "배송중",
+        DELIVERED: "배송완료",
+        PAYMENT_COMPLETED: "결제완료",
+        PAYMENT_PENDING: "결제대기",
+        DEFAULT: "입금확인"
+    };
+
     useEffect(() => {
         axios.get(API.SHIPPINGLIST, {
             headers: { Authorization: `Bearer ${localStorage.getItem('jwt')}` },
@@ -26,7 +35,7 @@ const SellerPage = () => {
                 const updatedShippingList = res.data.result.map(item => ({
                     ...item,
                     isEditing: false,
-                    shippingStatus: item.isDelivery === true ? "입금확인" : "X"
+                    shippingStatus: item.shippingStatus || (item.isDelivery ? "입금확인" : "X"),
                 }));
                 setShippingList(updatedShippingList);
             })
@@ -34,6 +43,46 @@ const SellerPage = () => {
                 console.error('작성한 게시물을 가져오는 중 오류 발생: ', error);
             });
     }, [])
+
+    const changeshippingstatus = (index, oid) => {
+        const currentStatus = shippingList[index]?.shippingStatus;
+        const invoiceNumber = shippingList[index]?.invoiceNumber;
+        console.log(currentStatus);
+        console.log(invoiceNumber);
+
+        let nextStatus = "";
+        if (currentStatus === "입금확인") {
+            nextStatus = "READY_TO_SHIP";  // 영어로 변환
+        } else if (currentStatus === "READY_TO_SHIP") {
+            nextStatus = "IN_TRANSIT";  // 영어로 변환
+        } else if (currentStatus === "IN_TRANSIT") {
+            nextStatus = "DELIVERED";  // 영어로 변환
+        } else {
+            console.error("유효하지 않은 상태입니다:", currentStatus);
+            return;
+        }
+
+        axios.patch(API.SHIPPINGSTATUS(oid), {
+            shippingStatus:nextStatus,
+            invoiceNumber:invoiceNumber,
+        }, {
+            headers: { Authorization: `Bearer ${localStorage.getItem('jwt')}` },
+        })
+            .then((res) => {
+                console.log(res.data.result);
+
+                const updatedShippingList = [...shippingList];
+                updatedShippingList[index] = {
+                    ...updatedShippingList[index],
+                    shippingStatus: res.data.result.shippingStatus,
+                };
+                setShippingList(updatedShippingList); // 상태 업데이트
+
+            })
+            .catch((error) => {
+                console.error('작성한 게시물을 가져오는 중 오류 발생: ', error.response.data || error);
+            });
+    }
 
     const toggleEditTrackingNumber = (index) => {
         const updatedData = [...shippingList];
@@ -50,11 +99,14 @@ const SellerPage = () => {
     const saveTrackingNumber = (index) => {
         const updatedData = [...shippingList];
         if (updatedData[index].invoiceNumber) {
-            updatedData[index].shippingStatus = "배송준비";
+            const orderId = updatedData[index].oid;
+            console.log(orderId);
+            // 송장번호 저장 후 상태 전환
+            changeshippingstatus(index, orderId);
         }
         updatedData[index].isEditing = false;
         setShippingList(updatedData);
-    }
+    };
 
     const showDeliveryPopup = (address, detail, memo) => {
         setSelectedAddress({
@@ -89,16 +141,15 @@ const SellerPage = () => {
 
     }
 
-    const handleBatchUpdate = (status) => {
-        const updatedData = shippingList.map((item, index) => {
-            if (selectedRows.includes(index) && item.invoiceNumber) {
-                return {...item, shippingStatus: status};
-            }
-            return item;
+    const handleBatchUpdate = (targetStatus) => {
+        selectedRows.forEach((index) => {
+            const orderId = shippingList[index]?.oid;
+
+            // 상태 전환 호출
+            changeshippingstatus(index, orderId, targetStatus);
         });
-        setShippingList(updatedData);
         setSelectedRows([]);
-    }
+    };
 
     return (
         <div>
@@ -175,7 +226,7 @@ const SellerPage = () => {
                             <button onClick={() => showDeliveryPopup(item.deliveryAddress, item.deliveryAddressDetail, item.deliveryMemo)}>보기</button>
                         </td>
                         <td>
-                            {item.shippingStatus}
+                            {shippingStatusMap[item.shippingStatus]}
                         </td>
                     </tr>
                 ))}

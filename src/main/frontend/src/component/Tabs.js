@@ -25,10 +25,25 @@ const Tabs = ({ type, farm, product }) => {
     const [myFarmId, setMyFarmId] = useState(null);
     const [loading, setLoading] = useState(true);  // 로딩 상태 추가
 
+    const fetchEnquiry = () => {
+        axios.get(API.ENQUIRY(product.pid), {
+            headers: { Authorization: `Bearer ${localStorage.getItem('jwt')}` },
+        })
+            .then((res) => {
+                console.log("전송 성공");
+                console.log(res.data.result.enquiryList);
+
+                setEnquiryList(res.data.result.enquiryList);
+            })
+            .catch((error) => {
+                console.error('작성한 게시물을 가져오는 중 오류 발생: ', error);
+            });
+    }
+
     useEffect(() => {
         setLoading(true);  // 데이터 로딩 시작 시 true로 설정
         if (type === "farm" && farm.fid) {
-            axios.get(API.FARMPRODUCTS(farm.fid), {
+            axios.get(API.FARMPRODUCTS(farm?.fid), {
                 headers: { Authorization: `Bearer ${localStorage.getItem('jwt')}` },
             })
                 .then((res) => {
@@ -74,15 +89,15 @@ const Tabs = ({ type, farm, product }) => {
                     console.log("전송 성공");
                     console.log(res.data.result);
                     setMyFarmId(res.data.result.fid);
-                    setLoading(false);
                 })
                 .catch((error) => {
                     console.error('작성한 게시물을 가져오는 중 오류 발생: ', error);
-                    setLoading(false);
                 });
+            setLoading(false);
         }
         else if (type === "product" && product.pid) {
-            axios.get(API.PRODUCT(product.pid), {
+            setLoading(true);
+            axios.get(API.PRODUCT(product?.pid), {
                 headers: { Authorization: `Bearer ${localStorage.getItem('jwt')}` },
             })
                 .then((res) => {
@@ -108,6 +123,7 @@ const Tabs = ({ type, farm, product }) => {
                 .catch((error) => {
                     console.error('작성한 게시물을 가져오는 중 오류 발생: ', error);
                 });
+            setLoading(false);
         }
     }, [type, farm, product]);
 
@@ -124,21 +140,6 @@ const Tabs = ({ type, farm, product }) => {
         )
     }
 
-    const fetchEnquiry = () => {
-        axios.get(API.ENQUIRY(product.pid), {
-            headers: { Authorization: `Bearer ${localStorage.getItem('jwt')}` },
-        })
-            .then((res) => {
-                console.log("전송 성공");
-                console.log(res.data.result.enquiryList);
-
-                setEnquiryList(res.data.result.enquiryList);
-            })
-            .catch((error) => {
-                console.error('작성한 게시물을 가져오는 중 오류 발생: ', error);
-            });
-    }
-
     const productTab = [
         { name: '상품 설명' },
         { name: '후기' }, // 리뷰 컴포넌트로 대체
@@ -150,7 +151,7 @@ const Tabs = ({ type, farm, product }) => {
         { name: '공동구매' },
         { name: '경매' },
     ];
-    if (myFarmId === farm.fid) {
+    if (myFarmId && myFarmId === farm.fid) {
         farmTab.push({ name: '배송관리' });
         farmTab.push({ name: '문의관리' });
     }

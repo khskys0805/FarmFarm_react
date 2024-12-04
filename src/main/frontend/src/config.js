@@ -73,6 +73,9 @@ const API = {
     MYENQUIRY: "/enquiry/my",
     ENQUIRYADMIN: "/enquiry/admin",
     SHIPPINGLIST:"/farm/shippingList",
+    SHIPPINGSTATUS(ID){
+        return `/farm/shippingList/${ID}`
+    },
     EDITPROFILE: "/mypage/profile",
     ISNICKNAME: "/user/me",
     CREATENICKNAME: "/user/nickname",
