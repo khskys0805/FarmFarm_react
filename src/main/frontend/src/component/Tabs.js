@@ -22,7 +22,7 @@ const Tabs = ({ type, farm, product }) => {
     const [auctionList, setAuctionList] = useState([]);
     const [enquiryList, setEnquiryList] = useState([]);
     const [reviewList, setReviewList] = useState([]);
-    const [myFarmId, setMyFarmId] = useState(null);
+    const [isMyFarm, setIsMyFarm] = useState(false);
     const [loading, setLoading] = useState(true);  // 로딩 상태 추가
 
     const fetchEnquiry = () => {
@@ -82,13 +82,13 @@ const Tabs = ({ type, farm, product }) => {
                     console.error('작성한 게시물을 가져오는 중 오류 발생: ', error);
                 });
 
-            axios.get(API.MYFARM, {
+            axios.get(API.FARM(farm.fid), {
                 headers: { Authorization: `Bearer ${localStorage.getItem('jwt')}` },
             })
                 .then((res) => {
                     console.log("전송 성공");
                     console.log(res.data.result);
-                    setMyFarmId(res.data.result.fid);
+                    setIsMyFarm(res.data.result.isMyFarm);
                 })
                 .catch((error) => {
                     console.error('작성한 게시물을 가져오는 중 오류 발생: ', error);
@@ -151,7 +151,7 @@ const Tabs = ({ type, farm, product }) => {
         { name: '공동구매' },
         { name: '경매' },
     ];
-    if (myFarmId && myFarmId === farm.fid) {
+    if (isMyFarm) {
         farmTab.push({ name: '배송관리' });
         farmTab.push({ name: '문의관리' });
     }
@@ -254,10 +254,10 @@ const Tabs = ({ type, farm, product }) => {
                                 <AuctionList />
                             </>
                         )}
-                        {tab === 4 && myFarmId === farm.fid && (
+                        {tab === 4 && isMyFarm && (
                             <Button content={"배송관리 페이지 열기"} onClick={onPopupDelivery} />
                         )}
-                        {tab === 5 && myFarmId === farm.fid && (
+                        {tab === 5 && isMyFarm && (
                             <Button content={"문의관리 페이지 열기"} onClick={onPopupEnquiry} />
                         )}
                     </>

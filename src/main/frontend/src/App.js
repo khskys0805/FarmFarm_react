@@ -53,7 +53,7 @@ function App() {
                         <Route path="/auctionDetail/:id" element={<AuctionDetail />} />
                         <Route path="/farmDetail/:id" element={<FarmDetails />} />
                         <Route path="/myPage" element={<MyPage />} />
-                        <Route path="/myFarm" element={<FarmDetails isMyFarm={true}/>} />
+                        <Route path="/myFarm" element={<FarmDetails myFarm={true}/>} />
                         <Route path="/search" element={<SearchProduct />} />
                         <Route path="/registerFarm" element={<RegisterFarm />} />
                         <Route path="/editFarm/:id" element={<RegisterFarm />} />

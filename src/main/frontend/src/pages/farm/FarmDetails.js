@@ -9,14 +9,15 @@ import {FaPen} from "react-icons/fa6";
 import {FaTrashAlt} from "react-icons/fa";
 import {FiShare2} from "react-icons/fi";
 import Tabs from "../../component/Tabs";
-const FarmDetails = ({ isMyFarm }) => {
+const FarmDetails = ({ myFarm }) => {
     const { id } = useParams();
     const [farm, setFarm] = useState([]);
     const [images, setImages] = useState([]);
+    const [isMyFarm, setIsMyFarm] = useState(false);
     const navigate = useNavigate();
 
     useEffect(() => {
-        if (isMyFarm) {
+        if (myFarm) {
             axios.get(API.MYFARM, {
                 headers: { Authorization: `Bearer ${localStorage.getItem('jwt')}` },
             })
@@ -55,6 +56,7 @@ const FarmDetails = ({ isMyFarm }) => {
                     console.log(res.data.result);
                     const rslt = res.data.result;
                     setFarm(rslt);
+                    setIsMyFarm(res.data.result.isMyFarm);
 
                     const imageArray = [];
                     if (rslt.images && rslt.images.length > 0) {
