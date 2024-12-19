@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { BeatLoader } from "react-spinners";
+import API from "../../config";
 
 const Token = () => {
     const navigate = useNavigate();
@@ -34,6 +35,20 @@ const Token = () => {
                     // 토큰을 localStorage에 저장
                     localStorage.setItem('jwt', access_token);
                     localStorage.setItem('refreshToken', refresh_token);
+
+                    // access_token을 API로 보내기
+                    axios.post(API.TOKEN, { access_token })
+                        .then(res => {
+                            console.log(res.data);
+                            if (res.data.nickname) {
+                                navigate("/home");
+                            } else {
+                                navigate("/nickname");
+                            }
+                        })
+                        .catch(error => {
+                            console.error('Error sending token:', error);
+                        });
 
                     // 필요한 리디렉션 처리
                     // 예: navigate("/home");

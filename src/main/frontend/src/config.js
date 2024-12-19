@@ -83,6 +83,7 @@ const API = {
     LOGINTOKEN(CODE) {
         return `/user/login/oauth_kakao?code=${CODE}`;
     },
+    TOKEN: "/user/login/oauth_kakao",
 };
 
 export default API;
