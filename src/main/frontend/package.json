@@ -1,5 +1,5 @@
 {
-  "proxy": "http://localhost:9000",
+  "proxy": "http://52.79.161.101:9000",
   "name": "frontend",
   "version": "0.1.0",
   "private": true,

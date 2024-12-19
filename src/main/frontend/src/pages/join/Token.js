@@ -1,38 +1,58 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import API from "../../config";
 import { BeatLoader } from "react-spinners";
 
 const Token = () => {
     const navigate = useNavigate();
     const [loading, setLoading] = useState(true);
     const code = new URL(window.location.href).searchParams.get('code');
+    const REST_API_KEY = process.env.REACT_APP_APP_KEY;
+    const REDIRECT_URI = process.env.REACT_APP_REDIRECT_URI;
 
     useEffect(() => {
         const fetchData = async () => {
             try {
                 if (code) {
-                    // 첫 번째 요청: 토큰 받기
-                    const tokenResponse = await axios.get(API.LOGINTOKEN(code));
-                    const { accessToken, refreshToken, nickname } = tokenResponse.data.result;
+                    const formData = new URLSearchParams();
+                    formData.append('grant_type', 'authorization_code');
+                    formData.append('client_id', REST_API_KEY);
+                    formData.append('redirect_uri', REDIRECT_URI);
+                    formData.append('code', code); // 인가 코드
+
+                    const tokenResponse = await axios.post('https://kauth.kakao.com/oauth/token', formData, {
+                        headers: {
+                            'Content-Type': 'application/x-www-form-urlencoded',
+                        }
+                    });
+
+                    console.log(tokenResponse.data); // 서버에서 반환된 토큰 데이터
+
+                    const { access_token, refresh_token } = tokenResponse.data;
+                    console.log("access_token " + access_token);
 
                     // 토큰을 localStorage에 저장
-                    localStorage.setItem('jwt', accessToken);
-                    localStorage.setItem('refreshToken', refreshToken);
+                    localStorage.setItem('jwt', access_token);
+                    localStorage.setItem('refreshToken', refresh_token);
 
-                    if (nickname) {
-                        navigate("/home");
-                    } else {
-                        navigate("/nickname");
-                    }
+                    // 필요한 리디렉션 처리
+                    // 예: navigate("/home");
                 }
             } catch (error) {
-                console.error('There was an error!', error);
+                console.error('Error occurred:', error);
+                if (error.response) {
+                    // 서버에서 반환된 오류 메시지 출력
+                    console.error('Error response:', error.response);
+                    console.error('Error status:', error.response.status);
+                    console.error('Error data:', error.response.data);
+                } else {
+                    console.error('Error details:', error);
+                }
             } finally {
                 setLoading(false);
             }
         };
+
 
         fetchData();
     }, [code, navigate]);
