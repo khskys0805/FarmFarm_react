@@ -32,14 +32,13 @@ const Token = () => {
                     const { access_token, refresh_token } = tokenResponse.data;
                     console.log("access_token " + access_token);
 
-                    // 토큰을 localStorage에 저장
-                    localStorage.setItem('jwt', access_token);
-                    localStorage.setItem('refreshToken', refresh_token);
-
                     // access_token을 API로 보내기
                     axios.post(API.TOKEN, { accessToken:access_token })
                         .then(res => {
                             console.log(res.data);
+                            // 토큰을 localStorage에 저장
+                            localStorage.setItem('jwt', res.data.result.accessToken);
+                            localStorage.setItem('refreshToken', res.data.result.refreshToken);
                             if (res.data.nickname) {
                                 navigate("/home");
                             } else {
