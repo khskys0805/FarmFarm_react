@@ -37,7 +37,7 @@ const Token = () => {
                     localStorage.setItem('refreshToken', refresh_token);
 
                     // access_token을 API로 보내기
-                    axios.post(API.TOKEN, { access_token })
+                    axios.post(API.TOKEN, { accessToken:access_token })
                         .then(res => {
                             console.log(res.data);
                             if (res.data.nickname) {
