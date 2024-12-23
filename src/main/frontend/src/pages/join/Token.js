@@ -39,7 +39,7 @@ const Token = () => {
                             // 토큰을 localStorage에 저장
                             localStorage.setItem('jwt', res.data.result.accessToken);
                             localStorage.setItem('refreshToken', res.data.result.refreshToken);
-                            if (res.data.nickname) {
+                            if (res.data.result.nickname) {
                                 navigate("/home");
                             } else {
                                 navigate("/nickname");
