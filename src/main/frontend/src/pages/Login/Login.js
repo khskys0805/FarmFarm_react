@@ -1,7 +1,7 @@
 import React from 'react';
 import styles from './Login.module.css';
 import logo from '../../images/logo/farmfarm_logo.png';
-import img from '../../images/kakao_login_medium_wide.png';
+import img from '../../images/kakao_login_large_wide.png';
 
 const Login = () => {
     const REDIRECT_URI = process.env.REACT_APP_REDIRECT_URI;
