@@ -6,6 +6,7 @@ import Header from "../../component/Header";
 import TabBar from "../../component/TabBar";
 import {useNavigate} from "react-router-dom";
 import ClipLoader from "react-spinners/ClipLoader";
+import no_farm_image from "../../images/no_farm_Image.png";
 
 const MyPage = () => {
     const [user, setUser] = useState([]);
@@ -16,19 +17,18 @@ const MyPage = () => {
     useEffect(() => {
         setLoading(true);
         axios.get(API.MYPAGE, {
-            headers: { Authorization: `Bearer ${localStorage.getItem('jwt')}` },
-        })
+                headers: { Authorization: `Bearer ${localStorage.getItem('jwt')}` },
+            })
             .then((res) => {
-                console.log("전송 성공");
                 console.log(res.data.result);
-
                 setUser(res.data.result);
-                setLoading(false);
             })
             .catch((error) => {
-                console.error('작성한 게시물을 가져오는 중 오류 발생: ', error);
-            });
+                console.error('에러 발생: ', error.response.data || error);
+            })
+            .finally(() => setLoading(false));
     }, []);
+
 
     if (loading) {
         return (
@@ -82,7 +82,7 @@ const MyPage = () => {
                             ) : (
                                 <div className={styles.my_profile_inner}>
                                     <div className={styles.image_box}>
-                                        <img src={farm.image} alt=""/>
+                                        <img src={no_farm_image} alt=""/>
                                     </div>
                                     <span>농장이 아직 없어요</span>
                                 </div>

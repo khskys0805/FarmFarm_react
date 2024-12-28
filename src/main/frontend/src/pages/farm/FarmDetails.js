@@ -26,6 +26,7 @@ const FarmDetails = ({ myFarm }) => {
                     console.log(res.data.result);
                     const rslt = res.data.result;
                     setFarm(rslt);
+                    setIsMyFarm(true);
 
                     const imageArray = [];
                     if (rslt.images && rslt.images.length > 0) {

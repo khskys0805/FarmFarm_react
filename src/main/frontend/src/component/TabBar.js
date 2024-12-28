@@ -23,9 +23,14 @@ const TabBar = () => {
             headers: { Authorization: `Bearer ${localStorage.getItem('jwt')}` },
         })
             .then((res) => {
-                const newProfileImage = res.data.result.profileImage;
-                setProfileImage(newProfileImage);
-                localStorage.setItem('profileImage', newProfileImage); // 로컬에 저장
+                const isSuccess = res.data.isSuccess;
+                if (isSuccess) {
+                    const newProfileImage = res.data.result.profileImage;
+                    setProfileImage(newProfileImage);
+                    localStorage.setItem('profileImage', newProfileImage); // 로컬에 저장
+                } else {
+
+                }
             })
             .catch((error) => {
                 console.error('프로필 이미지를 가져오는 중 오류 발생: ', error);
