@@ -16,7 +16,7 @@ const MyPage = () => {
 
     useEffect(() => {
         setLoading(true);
-        axios.get(API.MYPAGE, {
+        axios.get(API.EVENT(), {
                 headers: { Authorization: `Bearer ${localStorage.getItem('jwt')}` },
             })
             .then((res) => {

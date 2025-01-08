@@ -84,6 +84,10 @@ const API = {
         return `/user/login/oauth_kakao?code=${CODE}`;
     },
     TOKEN: "/user/login/oauth_kakao",
+    EVENTLIST: "/events/list",
+    EVENT(ID) {
+        return `/events/${ID}`;
+    }
 };
 
 export default API;

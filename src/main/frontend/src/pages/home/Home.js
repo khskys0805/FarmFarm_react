@@ -9,17 +9,44 @@ import logo from "../../images/logo/farmfarm_logo2.png";
 import ProductList from "../../component/ProductList";
 import FarmList from "../../component/FarmList";
 import AuctionList from "../../component/AuctionList";
-import {Link} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 import {useContext, useEffect, useState} from "react";
 import {DataContext} from "../../context/DataContext";
+import axios from "axios";
+import API from "../../config";
 
 const Home = () => {
     const { productList = [], farmList = [], groupProductList = [] } = useContext(DataContext);
-    const slides = [
-        <img src={banner1} alt="Slide 1" style={{ width: "100%" }}/>,
-        <img src={banner2} alt="Slide 2" style={{ width: "100%" }}/>,
-        <img src={banner3} alt="Slide 3" style={{ width: "100%" }}/>,
-    ];
+    const [eventSlides, setEventSlides] = useState([]);
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        axios.get(API.EVENTLIST, {
+            headers: { Authorization: `Bearer ${localStorage.getItem('jwt')}` },
+        })
+            .then((res) => {
+                console.log(res.data.result);
+                const slides = res.data.result.map(event => (
+                    <img
+                        src={event.image_url}
+                        alt={event.title}
+                        style={{ width: "100%" , cursor:"pointer"}}
+                        key={event.evId}
+                        onClick={() => navigate(`/event/${event.evId}`)} // 클릭 시 상세 페이지로 이동
+                    />
+                ));
+                setEventSlides(slides);
+            })
+            .catch((error) => {
+                console.error('에러 발생: ', error.response.data || error);
+            })
+    }, []);
+
+    // const slides = [
+    //     <img src={banner1} alt="Slide 1" style={{ width: "100%" }}/>,
+    //     <img src={banner2} alt="Slide 2" style={{ width: "100%" }}/>,
+    //     <img src={banner3} alt="Slide 3" style={{ width: "100%" }}/>,
+    // ];
 
     const numProductsToShow = 4; // 보여줄 상품 개수를 지정
     const numFarmsToShow = 5; // 보여줄 농장 개수를 지정
@@ -28,7 +55,7 @@ const Home = () => {
     return (
         <div className={styles.box}>
             <img className={styles.logo} src={logo} alt="logo"/>
-            <SwiperComponent slides={slides} useContainerStyle={false}/>
+            <SwiperComponent slides={eventSlides} useContainerStyle={false}/>
             <div className={styles.content}>
                 <div className={styles.group}>
                     <div className={styles.link}>

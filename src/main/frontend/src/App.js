@@ -30,6 +30,7 @@ import AuctionDetail from "./pages/product/AuctionDetail";
 import AllAuction from "./pages/product/AllAuction";
 import SellerPage from "./pages/seller/SellerPage";
 import EnquiryAdminPage from "./pages/enquiry/EnquiryAdminPage";
+import EventDetail from "./pages/event/EventDetail";
 
 function App() {
     return (
@@ -70,6 +71,7 @@ function App() {
                         <Route path="/paymentFail" element={<PaymentFail />} />
                         <Route path="/deliveryAdmin" element={<SellerPage />} />
                         <Route path="/enquiryAdmin" element={<EnquiryAdminPage />} />
+                        <Route path="/event/:id" element={<EventDetail />} />
                     </Routes>
                 </div>
             </DataProvider>
