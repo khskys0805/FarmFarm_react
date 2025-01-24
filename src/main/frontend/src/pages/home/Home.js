@@ -16,7 +16,7 @@ import axios from "axios";
 import API from "../../config";
 
 const Home = () => {
-    const { productList = [], farmList = [], groupProductList = [] } = useContext(DataContext);
+    const { productList = [], farmList = [], groupProductList = [], setSortValue } = useContext(DataContext);
     const [eventSlides, setEventSlides] = useState([]);
     const navigate = useNavigate();
 

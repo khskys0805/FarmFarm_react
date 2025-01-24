@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, {useContext, useState} from 'react';
 import styles from './AllFarm.module.css';
 import FarmList from '../../component/FarmList';
 import Header from '../../component/Header';
@@ -6,37 +6,34 @@ import SearchBar from '../../component/SearchBar';
 import Sort from '../../component/Sort';
 import Location from '../../component/Location';
 import { useLocation } from 'react-router-dom';
+import {DataContext} from "../../context/DataContext";
 
 const AllFarm = () => {
-    const location = useLocation();
-    let farms = location.state?.farmList || []; // `state`가 없으면 빈 배열
+    const { farmList, setSortValue } = useContext(DataContext);
     const [searchText, setSearchText] = useState('');
-    console.log("Location state:", location.state);
-    console.log("Farms:", farms);
 
     const handleInputChange = (e) => {
         setSearchText(e.target.value);
     };
 
-    // farms가 배열이 아닌 경우에 대한 예외 처리
-    if (!Array.isArray(farms)) {
-        farms = [];
-    }
+    const handleSortChange = (newSortValue) => {
+        setSortValue(newSortValue); // Sort에서 선택된 값을 DataContext에 업데이트
+    };
 
     const filterMonster = searchText
-        ? farms.filter((item) => item.name.toLowerCase().includes(searchText.toLowerCase()))
-        : farms;
+        ? farmList.filter((item) => item.name.toLowerCase().includes(searchText.toLowerCase()))
+        : farmList;
 
     return (
         <div className={styles.box}>
             <Header title="농장 전체 보기" go={`/home`} />
-            <Location farms={farms} type={1} />
+            <Location farms={farmList} type={1} />
             <SearchBar searchText={searchText} onChange={handleInputChange} />
             <div className={styles.text_box}>
                 <div>
                     <h5>총 <span>{filterMonster.length}</span>개</h5>
                 </div>
-                <Sort />
+                <Sort onSortChange={handleSortChange}/>
             </div>
             <div className={styles.search_result}>
                 {filterMonster.length > 0 ? (

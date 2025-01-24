@@ -9,6 +9,7 @@ export const DataProvider = ({ children }) => {
     const [farmList, setFarmList] = useState([]);
     const [groupProductList, setGroupProductList] = useState([]);
     const [auctionList, setAuctionList] = useState([]);
+    const [sortValue, setSortValue] = useState('rating');
     const [loading, setLoading] = useState(true);
 
     const fetchProductList = async () => {
@@ -27,7 +28,9 @@ export const DataProvider = ({ children }) => {
 
     const fetchFarmList = async () => {
         try {
+            console.log(sortValue);
             const res = await axios.get(API.ALLFARM, {
+                params: { sort: sortValue },
                 headers: { Authorization: `Bearer ${localStorage.getItem('jwt')}` },
             });
             setFarmList(res.data.result.farmList);
@@ -73,12 +76,16 @@ export const DataProvider = ({ children }) => {
         setLoading(false);
     }, []);
 
+    useEffect(() => {
+        fetchFarmList();
+    }, [sortValue]); // sortValue가 변경될 때마다 실행
+
     if (loading) {
         return <div>Loading...</div>;
     }
 
     return (
-        <DataContext.Provider value={{ productList, farmList, groupProductList, auctionList, fetchProductList, fetchFarmList, fetchGroupProductList, fetchAuctionList }}>
+        <DataContext.Provider value={{ productList, farmList, groupProductList, auctionList, fetchProductList, fetchFarmList, setSortValue,  fetchGroupProductList, fetchAuctionList }}>
             {children}
         </DataContext.Provider>
     );

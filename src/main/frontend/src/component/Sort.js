@@ -3,6 +3,7 @@ import styles from "./Sort.module.css";
 const Sort = ({ onSortChange }) => {
     const handleChange = (e) => {
         onSortChange(e.target.value);
+        console.log(e.target.value);
     };
     return (
         <div className={styles.sort} onChange={handleChange}>
