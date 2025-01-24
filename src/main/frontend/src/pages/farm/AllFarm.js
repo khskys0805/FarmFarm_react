@@ -9,8 +9,10 @@ import { useLocation } from 'react-router-dom';
 
 const AllFarm = () => {
     const location = useLocation();
-    let farms = location.state ? location.state.farms : []; // farms를 배열로 초기화
+    let farms = location.state?.farmList || []; // `state`가 없으면 빈 배열
     const [searchText, setSearchText] = useState('');
+    console.log("Location state:", location.state);
+    console.log("Farms:", farms);
 
     const handleInputChange = (e) => {
         setSearchText(e.target.value);
@@ -21,7 +23,9 @@ const AllFarm = () => {
         farms = [];
     }
 
-    const filterMonster = farms.filter((item) => item.name.toLowerCase().includes(searchText.toLowerCase()));
+    const filterMonster = searchText
+        ? farms.filter((item) => item.name.toLowerCase().includes(searchText.toLowerCase()))
+        : farms;
 
     return (
         <div className={styles.box}>

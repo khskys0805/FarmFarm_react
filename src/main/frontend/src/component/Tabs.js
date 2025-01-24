@@ -238,19 +238,25 @@ const Tabs = ({ type, farm, product }) => {
                         )}
                         {tab === 1 && productList && (
                             <>
-                                <div className={styles.btn_wrapper}><a href="/registerProduct" className={styles.product_add_button}>판매 상품 등록</a></div>
+                                {isMyFarm && (
+                                    <div className={styles.btn_wrapper}><a href="/registerProduct" className={styles.product_add_button}>판매 상품 등록</a></div>
+                                )}
                                 <ProductList products={productList}/>
                             </>
                         )}
                         {tab === 2 && groupProductList && (
                             <>
-                                <div className={styles.btn_wrapper}><a href="/registerProduct" className={styles.product_add_button}>판매 상품 등록</a></div>
+                                {isMyFarm && (
+                                    <div className={styles.btn_wrapper}><a href="/registerProduct" className={styles.product_add_button}>판매 상품 등록</a></div>
+                                )}
                                 <ProductList products={groupProductList} type={"group"}/>
                             </>
                         )}
                         {tab === 3 && auctionList && (
                             <>
-                                <div className={styles.btn_wrapper}><a href="/registerProduct" className={styles.product_add_button}>판매 상품 등록</a></div>
+                                {isMyFarm && (
+                                    <div className={styles.btn_wrapper}><a href="/registerProduct" className={styles.product_add_button}>판매 상품 등록</a></div>
+                                )}
                                 <AuctionList />
                             </>
                         )}

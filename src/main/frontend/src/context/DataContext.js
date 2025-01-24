@@ -31,6 +31,7 @@ export const DataProvider = ({ children }) => {
                 headers: { Authorization: `Bearer ${localStorage.getItem('jwt')}` },
             });
             setFarmList(res.data.result.farmList);
+            console.log(res.data.result.farmList);
         } catch (error) {
             console.error('Error fetching farms: ', error);
         }

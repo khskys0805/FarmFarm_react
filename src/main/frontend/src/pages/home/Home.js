@@ -42,12 +42,6 @@ const Home = () => {
             })
     }, []);
 
-    // const slides = [
-    //     <img src={banner1} alt="Slide 1" style={{ width: "100%" }}/>,
-    //     <img src={banner2} alt="Slide 2" style={{ width: "100%" }}/>,
-    //     <img src={banner3} alt="Slide 3" style={{ width: "100%" }}/>,
-    // ];
-
     const numProductsToShow = 4; // 보여줄 상품 개수를 지정
     const numFarmsToShow = 5; // 보여줄 농장 개수를 지정
     const numAuctionToShow = 1;
@@ -69,7 +63,7 @@ const Home = () => {
                 <div className={styles.group}>
                     <div className={styles.link}>
                         <h2>이 농장 어때요?</h2>
-                        <Link to="/allFarm">
+                        <Link to="/allFarm" state={{ farmList }}>
                             <IoIosArrowDroprightCircle size="30" color="#94C015FF" style={{cursor:"pointer"}}/>
                         </Link>
                     </div>
