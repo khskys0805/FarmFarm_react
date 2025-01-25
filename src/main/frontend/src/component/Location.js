@@ -4,6 +4,7 @@ const { kakao } = window;
 
 const Location = ({ farms, type }) => {
     const navigate = useNavigate();
+    console.log(farms);
     useEffect(() => {
         var mapContainer = document.getElementById('map'); // 지도를 표시할 div
         var mapOption = {
@@ -15,10 +16,10 @@ const Location = ({ farms, type }) => {
         var geocoder = new kakao.maps.services.Geocoder();
         console.log(farms);
 
-
         // farmList를 이용해 필요한 작업 수행
         if (type === 1) {
             farms.forEach(farm => {
+                console.log(farm.locationFull); // 값 확인
                 geocoder.addressSearch(farm.locationFull, function(result, status) {
                     if (status === kakao.maps.services.Status.OK) {
                         console.log('Address search successful:', result);

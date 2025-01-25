@@ -30,7 +30,7 @@ const RegisterProduct = () => {
         name: "",
         open_status: 0,
         price: "",
-        productCategory: "1",
+        productCategory: "0",
         quantity: "",
         rating: "",
         sales: "",
@@ -260,9 +260,9 @@ const RegisterProduct = () => {
                     <h3>상품 유형</h3>
                     <p>상품 유형을 선택해주세요.</p>
                     <div>
-                        <input type={"radio"} name={"productType"} value={"0"} onChange={(e) => handleRadioChange(e, "productType")} checked={productData.productType === "0"} disabled={isEditMode}/><span>일반 상품</span>
-                        <input type={"radio"} name={"productType"} value={"1"} onChange={(e) => handleRadioChange(e, "productType")} checked={productData.productType === "1"} disabled={isEditMode}/><span>공동 구매</span>
-                        <input type={"radio"} name={"productType"} value={"2"} onChange={(e) => handleRadioChange(e, "productType")} checked={productData.productType === "2"} disabled={isEditMode}/><span>경매 상품</span>
+                        <input type={"radio"} name={"productType"} value={"0"} onChange={(e) => handleRadioChange(e, "productType")} checked={productData.productType === 0} disabled={isEditMode}/><span>일반 상품</span>
+                        <input type={"radio"} name={"productType"} value={"1"} onChange={(e) => handleRadioChange(e, "productType")} checked={productData.productType === 1} disabled={isEditMode}/><span>공동 구매</span>
+                        <input type={"radio"} name={"productType"} value={"2"} onChange={(e) => handleRadioChange(e, "productType")} checked={productData.productType === 2} disabled={isEditMode}/><span>경매 상품</span>
                         {isEditMode && (
                             <input
                                 type="hidden"

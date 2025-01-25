@@ -73,7 +73,7 @@ const Cart = () => {
                 navigate(`/shippingAddress`, { state: { isDirect:res.data.result.isDirect } });
             })
             .catch((error) => {
-                console.error('작성한 게시물을 가져오는 중 오류 발생: ', error);
+                console.error('작성한 게시물을 가져오는 중 오류 발생: ', error.response.data || error);
             });
     }
     return (

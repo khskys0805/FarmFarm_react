@@ -30,7 +30,7 @@
     z-index: 2;
     top:20px;
     cursor: pointer;
-    text-shadow: 0 0 5px #4b4b4b;
+    filter: drop-shadow(0 0 5px #d9d9d9);
 }
 .arrowLeft{
     left:20px;

@@ -15,6 +15,7 @@ export const DataProvider = ({ children }) => {
     const fetchProductList = async () => {
         try {
             const res = await axios.get(API.ALLPRODUCT, {
+                params: { sort: sortValue },
                 headers: { Authorization: `Bearer ${localStorage.getItem('jwt')}` },
             });
             console.log(res.data.result.productList);
@@ -28,7 +29,6 @@ export const DataProvider = ({ children }) => {
 
     const fetchFarmList = async () => {
         try {
-            console.log(sortValue);
             const res = await axios.get(API.ALLFARM, {
                 params: { sort: sortValue },
                 headers: { Authorization: `Bearer ${localStorage.getItem('jwt')}` },
@@ -78,6 +78,7 @@ export const DataProvider = ({ children }) => {
 
     useEffect(() => {
         fetchFarmList();
+        fetchProductList();
     }, [sortValue]); // sortValue가 변경될 때마다 실행
 
     if (loading) {

@@ -7,7 +7,7 @@ import { useContext } from "react";
 import { DataContext } from "../../context/DataContext";
 
 const AllProduct = ({ type }) => {
-    const { productList, groupProductList } = useContext(DataContext);
+    const { productList, groupProductList, setSortValue } = useContext(DataContext);
 
     // 현재 URL에서 쿼리 파라미터를 추출
     const location = useLocation();
@@ -18,6 +18,10 @@ const AllProduct = ({ type }) => {
     const products = location.state?.productList || (queryType === "group" ? groupProductList : productList) || [];
     console.log(products);
 
+    const handleSortChange = (newSortValue) => {
+        setSortValue(newSortValue); // Sort에서 선택된 값을 DataContext에 업데이트
+    };
+
     return (
         <div className={styles.container}>
             <Header title={queryType === "group" ? "공동구매 상품 보기" : "상품 전체 보기"} go={`/home`} />
@@ -25,7 +29,7 @@ const AllProduct = ({ type }) => {
                 <div>
                     <h5>총 <span>{products.length}</span>개</h5>
                 </div>
-                <Sort />
+                <Sort onSortChange={handleSortChange} type={"product"}/>
             </div>
             <ProductList numToShow={products.length} type={queryType} products={products}/>
         </div>

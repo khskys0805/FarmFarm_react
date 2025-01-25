@@ -105,7 +105,7 @@ const FarmDetails = ({ myFarm }) => {
     return (
         <div className={styles.box}>
             <SwiperComponent slides={images}/>
-            <IoIosArrowDropleftCircle className={styles.arrowLeft} size="30" color="#fff" onClick={() => navigate(-1)}/>
+            <IoIosArrowDropleftCircle className={styles.arrowLeft} size="30" color="#fff" onClick={() => navigate(-1)} style={{textShadow:"0 0 5px #4b4b4b;"}}/>
             {isMyFarm && (
                 <>
                     <FaPen className={styles.correct} size="25" color="#fff" onClick={handleEdit}/>

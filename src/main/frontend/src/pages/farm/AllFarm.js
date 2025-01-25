@@ -5,7 +5,6 @@ import Header from '../../component/Header';
 import SearchBar from '../../component/SearchBar';
 import Sort from '../../component/Sort';
 import Location from '../../component/Location';
-import { useLocation } from 'react-router-dom';
 import {DataContext} from "../../context/DataContext";
 
 const AllFarm = () => {
@@ -33,7 +32,7 @@ const AllFarm = () => {
                 <div>
                     <h5>총 <span>{filterMonster.length}</span>개</h5>
                 </div>
-                <Sort onSortChange={handleSortChange}/>
+                <Sort onSortChange={handleSortChange} sort={"farm"}/>
             </div>
             <div className={styles.search_result}>
                 {filterMonster.length > 0 ? (
