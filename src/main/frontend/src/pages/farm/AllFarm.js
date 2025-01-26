@@ -9,6 +9,7 @@ import {DataContext} from "../../context/DataContext";
 
 const AllFarm = () => {
     const { farmList, setSortValue } = useContext(DataContext);
+    console.log(farmList);
     const [searchText, setSearchText] = useState('');
 
     const handleInputChange = (e) => {

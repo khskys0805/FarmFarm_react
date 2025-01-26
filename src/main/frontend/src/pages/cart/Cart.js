@@ -33,19 +33,38 @@ const Cart = () => {
             });
     };
 
-    const handleQuantityChange = (event) => {
+    const decreaseValue = (index) => {
+        setCarts(prevCarts =>
+            prevCarts.map((cart, i) =>
+                i === index
+                    ? { ...cart, quantity: Math.max(cart.quantity - 1, 0) }
+                    : cart
+            )
+        );
+    };
+
+    const increaseValue = (index) => {
+        setCarts(prevCarts =>
+            prevCarts.map((cart, i) =>
+                i === index
+                    ? { ...cart, quantity: Math.min(cart.quantity + 1, 100) }
+                    : cart
+            )
+        );
+    };
+
+    const handleQuantityChange = (event, index) => {
         const newQuantity = parseInt(event.target.value);
         if (!isNaN(newQuantity)) {
-            setQuantity(Math.min(Math.max(newQuantity, 0), 100));
+            setCarts(prevCarts =>
+                prevCarts.map((cart, i) =>
+                    i === index
+                        ? { ...cart, quantity: Math.min(Math.max(newQuantity, 0), 100) }
+                        : cart
+                )
+            );
         }
-    }
-    const decreaseValue = () => {
-        setQuantity(prevQuantity => Math.max(prevQuantity - 1, 0));
-    }
-
-    const increaseValue = () => {
-        setQuantity(prevQuantity => Math.min(prevQuantity + 1, 100));
-    }
+    };
 
     const handleRemoveItem = (product) => {
         console.log(product.pid);
@@ -82,8 +101,8 @@ const Cart = () => {
             <ul>
                 {carts.length === 0 ? (
                     <div className={styles.no_list}>
-                        <p>아직 장바구니에 담긴 상품이 없습니다!<br/>
-                            상품을 구매해보세요!!</p>
+                        <p>장바구니에 담긴 상품이 없습니다.<br />
+                            상품을 추가해보세요!</p>
                         <Link to="/productList">
                             <div>판매 상품 보러 가기</div>
                         </Link>
@@ -97,7 +116,7 @@ const Cart = () => {
                                         {cart.images.length > 0 && cart.images[0].fileUrl ? (
                                             <img src={cart.images[0].fileUrl} alt="상품 이미지" />
                                         ) : (
-                                            <img src={noImage} alt="이미지 없음"/>
+                                            <img src={noImage} alt="이미지 없음" />
                                         )}
                                     </div>
                                     <div>
@@ -111,16 +130,26 @@ const Cart = () => {
                                     <h4 className={styles.remove} onClick={() => handleRemoveItem(cart)}><FaTrashAlt /></h4>
                                     <h4 className={styles.quantity}>
                                         <div className={styles.stepper}>
-                                            <div className={styles.stepper_button_minus} onClick={decreaseValue}></div>
+                                            <div
+                                                className={styles.stepper_button_minus}
+                                                onClick={() => decreaseValue(index)}
+                                            ></div>
                                             <div className={styles.stepper_input_wrap}>
-                                                <input type="number" value={cart.quantity} onChange={handleQuantityChange} readOnly/>
+                                                <input
+                                                    type="number"
+                                                    value={cart.quantity}
+                                                    onChange={(e) => handleQuantityChange(e, index)}
+                                                />
                                             </div>
-                                            <div className={styles.stepper_button_plus} onClick={increaseValue}></div>
+                                            <div
+                                                className={styles.stepper_button_plus}
+                                                onClick={() => increaseValue(index)}
+                                            ></div>
                                         </div>
                                     </h4>
                                 </div>
                             </li>
-                            <Button content={"주문하기"} onClick={handleOrderItem}/>
+                            <Button content={"주문하기"} onClick={handleOrderItem} />
                         </>
                     ))
                 )}

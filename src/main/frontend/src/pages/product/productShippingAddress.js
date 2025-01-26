@@ -16,7 +16,7 @@ const ProductShippingAddress = () => {
         isDelivery: true, // 기본으로 '배송'
         deliveryMemo: "",
         deliveryAddress:"",
-        delieveryAddressDetail:"",
+        deliveryAddressDetail:"",
         quantity:"",
         price:""
     });
@@ -71,7 +71,7 @@ const ProductShippingAddress = () => {
         setShippingAddress({
             ...shippingAddress,
             deliveryAddress: data.locationFull,
-            delieveryAddressDetail: data.locationDetail,
+            deliveryAddressDetail: data.locationDetail,
         });
     };
 
@@ -250,7 +250,7 @@ const ProductShippingAddress = () => {
                                 <PopupPostCode onComplete={handleComplete} />
                             </div>
                             <InputBox type={"text"} name={"deliveryAddress"} value={shippingAddress.deliveryAddress} placeholder={"전체 주소"} readOnly={true} />
-                            <InputBox type={"text"} name={"deliveryAddressDetail"} value={shippingAddress.delieveryAddressDetail} placeholder={"상세 주소"} onChange={handleInputChange} />
+                            <InputBox type={"text"} name={"deliveryAddressDetail"} value={shippingAddress.deliveryAddressDetail} placeholder={"상세 주소"} onChange={handleInputChange} />
                         </div>
                     </>
                 )}

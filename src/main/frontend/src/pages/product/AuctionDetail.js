@@ -110,6 +110,7 @@ const AuctionDetail = () => {
                         </div>
                         <FiShare2 size="30" style={{cursor:"pointer"}}/>
                     </div>
+                    <p style={{textAlign:"right"}}>수량: {product.quantity}</p>
                     <div className={styles.middle}>
                         <h2>경매시작가: {formatNumber(product.price)}원</h2>
                         <h3>{timeLeft.days}일 {timeLeft.hours}:{timeLeft.minutes}:{timeLeft.seconds}</h3>
