@@ -4,12 +4,11 @@ import InputBox from "../../component/InputBox";
 import { useCallback, useEffect, useState } from "react";
 import PopupPostCode from "../../component/PopupPostCode";
 import Button from "../../component/Button";
-import { useLocation, useNavigate } from "react-router-dom";
-import axios from "axios";
+import { useLocation } from "react-router-dom";
 import API from "../../config";
+import api from "../../api/api";
 
 const ProductShippingAddress = () => {
-    const navigate = useNavigate();
     const [shippingAddress, setShippingAddress] = useState({
         deliveryName: "",
         deliveryPhone: "",
@@ -78,14 +77,14 @@ const ProductShippingAddress = () => {
     const handleOrderAndPayment = (e) => {
         e.preventDefault();
         console.log(window.location.origin + '/payment-callback');
-        axios.post(API.ORDER, shippingAddress, {
+        api.post(API.ORDER, shippingAddress, {
             headers: { Authorization: `Bearer ${localStorage.getItem('jwt')}`}
         })
             .then((res) => {
                 console.log("Order 전송 성공");
                 console.log(res.data.result);
 
-                return axios.get(API.PAYMENT(res.data.result.oid), {
+                return api.get(API.PAYMENT(res.data.result.oid), {
                     headers: { Authorization: `Bearer ${localStorage.getItem('jwt')}` },
                     params: {
                         callback_url: window.location.origin + '/payment-callback' // 콜백 URL 수정
@@ -110,7 +109,7 @@ const ProductShippingAddress = () => {
         e.preventDefault();
         console.log(shippingAddress);
         // 1. order/product/pid API 요청
-        axios.post(API.ATTENDAUCTION(pid), shippingAddress, {
+        api.post(API.ATTENDAUCTION(pid), shippingAddress, {
             headers: { Authorization: `Bearer ${localStorage.getItem('jwt')}` },
         })
             .then((res) => {
@@ -118,7 +117,7 @@ const ProductShippingAddress = () => {
                 console.log(res.data.result);
 
                 // 2. order API 호출 (위 주문의 oid 사용)
-                return axios.post(API.ORDER, shippingAddress, {
+                return api.post(API.ORDER, shippingAddress, {
                     headers: { Authorization: `Bearer ${localStorage.getItem('jwt')}` }
                 });
             })
@@ -128,7 +127,7 @@ const ProductShippingAddress = () => {
                 const oid = orderRes.data.result.oid; // 주문 성공 후 oid 받아옴
 
                 // 3. 결제 요청 (oid로 결제 API 호출)
-                return axios.get(API.PAYMENT(oid), {
+                return api.get(API.PAYMENT(oid), {
                     headers: { Authorization: `Bearer ${localStorage.getItem('jwt')}` },
                     params: {
                         callback_url: window.location.origin + '/payment-callback'

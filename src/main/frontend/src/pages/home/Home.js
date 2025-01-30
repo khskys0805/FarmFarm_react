@@ -12,8 +12,8 @@ import AuctionList from "../../component/AuctionList";
 import {Link, useNavigate} from "react-router-dom";
 import {useContext, useEffect, useState} from "react";
 import {DataContext} from "../../context/DataContext";
-import axios from "axios";
 import API from "../../config";
+import api from "../../api/api";
 
 const Home = () => {
     const { productList = [], farmList = [], groupProductList = [], setSortValue } = useContext(DataContext);
@@ -21,7 +21,7 @@ const Home = () => {
     const navigate = useNavigate();
 
     useEffect(() => {
-        axios.get(API.EVENTLIST, {
+        api.get(API.EVENTLIST, {
             headers: { Authorization: `Bearer ${localStorage.getItem('jwt')}` },
         })
             .then((res) => {

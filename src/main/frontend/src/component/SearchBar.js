@@ -1,5 +1,5 @@
 import styles from "./SearchBar.module.css";
-import React, {useState} from "react";
+import React from "react";
 import InputBox from "./InputBox";
 import {HiMiniMagnifyingGlass} from "react-icons/hi2";
 const SearchBar = ({searchText, onChange}) => {

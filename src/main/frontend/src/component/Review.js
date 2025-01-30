@@ -2,9 +2,9 @@ import styles from "./Review.module.css";
 import React, {useState} from 'react';
 import {FaRegStar, FaStar, FaTrashAlt} from "react-icons/fa";
 import {FaPen} from "react-icons/fa6";
-import axios from "axios";
 import API from "../config";
 import Button from "./Button";
+import api from "../api/api";
 
 const Review = ({ review, type, fetchReviewList }) => {
     const [isModalOpen, setIsModalOpen] = useState(false);
@@ -41,7 +41,7 @@ const Review = ({ review, type, fetchReviewList }) => {
     const handleUpdateReview = () => {
         const updatedReviewData = { ...reviewData, rId: review.rid }; // rId 추가
         console.log(updatedReviewData);
-        axios.patch(API.REVIEW(review.rid), updatedReviewData, {
+        api.patch(API.REVIEW(review.rid), updatedReviewData, {
             headers: { Authorization: `Bearer ${localStorage.getItem('jwt')}` },
         })
             .then((res) => {
@@ -57,7 +57,7 @@ const Review = ({ review, type, fetchReviewList }) => {
     const handleRemoveReview = (e, rid) => {
         e.preventDefault();
         if (window.confirm("리뷰를 삭제하시겠습니까?")){
-            axios.delete(API.REVIEW(rid), {
+            api.delete(API.REVIEW(rid), {
                 headers: { Authorization: `Bearer ${localStorage.getItem('jwt')}` },
             })
                 .then((res) => {

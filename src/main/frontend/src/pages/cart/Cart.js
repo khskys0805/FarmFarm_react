@@ -1,7 +1,6 @@
 import styles from "./Cart.module.css";
 import Header from "../../component/Header";
 import React, {useEffect, useState} from "react";
-import axios from "axios";
 import API from "../../config";
 import img from "../../images/logo/farmfarm_logo.png";
 import {Link, useNavigate} from "react-router-dom";
@@ -9,6 +8,7 @@ import {FaTrashAlt} from "react-icons/fa";
 import Button from "../../component/Button";
 import TabBar from "../../component/TabBar";
 import noImage from "../../images/noImage.png";
+import api from "../../api/api";
 
 const Cart = () => {
     const [carts, setCarts] = useState([]);
@@ -19,7 +19,7 @@ const Cart = () => {
     }, []);
 
     const fetchCartItems = () => {
-        axios.get(API.CART, {
+        api.get(API.CART, {
             headers: { Authorization: `Bearer ${localStorage.getItem('jwt')}` },
             credentials:'include',
         })
@@ -69,7 +69,7 @@ const Cart = () => {
     const handleRemoveItem = (product) => {
         console.log(product.pid);
         if (window.confirm("장바구니에서 상품을 삭제하시겠습니까?")) {
-            axios.delete(API.CARTREMOVE(product.pid), {
+            api.delete(API.CARTREMOVE(product.pid), {
                 headers: { Authorization: `Bearer ${localStorage.getItem('jwt')}` },
             })
                 .then((res) => {
@@ -83,7 +83,7 @@ const Cart = () => {
     }
 
     const handleOrderItem = () => {
-        axios.get(API.ORDERCART, {
+        api.get(API.ORDERCART, {
             headers: { Authorization: `Bearer ${localStorage.getItem('jwt')}` },
         })
             .then((res) => {

@@ -24,4 +24,4 @@ COPY . .
 EXPOSE 3000
 
 # 디버깅을 위해 명령어를 바꿉니다.
-CMD ["sh", "-c", "npm start && tail -f /dev/null"]
+CMD ["npm", "start"]

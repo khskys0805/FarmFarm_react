@@ -2,8 +2,8 @@ import styles from "./SellerPage.module.css";
 import {useEffect, useState} from "react";
 import { IoIosClose } from "react-icons/io";
 import Button from "../../component/Button";
-import axios from "axios";
 import API from "../../config";
+import api from "../../api/api";
 
 const SellerPage = () => {
     const [popupDelivery, setPopupDelivery] = useState(false);
@@ -27,7 +27,7 @@ const SellerPage = () => {
     };
 
     useEffect(() => {
-        axios.get(API.SHIPPINGLIST, {
+        api.get(API.SHIPPINGLIST, {
             headers: { Authorization: `Bearer ${localStorage.getItem('jwt')}` },
         })
             .then((res) => {
@@ -62,7 +62,7 @@ const SellerPage = () => {
             return;
         }
 
-        axios.patch(API.SHIPPINGSTATUS(oid), {
+        api.patch(API.SHIPPINGSTATUS(oid), {
             shippingStatus:nextStatus,
             invoiceNumber:invoiceNumber,
         }, {

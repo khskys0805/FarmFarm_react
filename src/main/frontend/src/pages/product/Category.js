@@ -2,9 +2,9 @@ import styles from "./Category.module.css";
 import Header from "../../component/Header";
 import { IoIosArrowForward } from "react-icons/io";
 import TabBar from "../../component/TabBar";
-import axios from "axios";
 import API from "../../config";
 import {useNavigate} from "react-router-dom";
+import api from "../../api/api";
 
 const Category = () => {
     const navigate = useNavigate();
@@ -28,7 +28,7 @@ const Category = () => {
     const handleShowCategoryProduct = (cid) => {
         const categoryName = getCategoryName(parseInt(cid)); // 카테고리 이름 가져오기
         if (categoryName) {
-            axios.get(API.CATEGORY(categoryName), {
+            api.get(API.CATEGORY(categoryName), {
                 headers: { Authorization: `Bearer ${localStorage.getItem('jwt')}` },
             })
                 .then((res) => {

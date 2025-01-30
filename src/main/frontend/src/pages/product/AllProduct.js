@@ -15,7 +15,8 @@ const AllProduct = ({ type }) => {
     const queryType = params.get('type') || 'product'; // 기본값을 'product'로 설정
 
     // 카테고리에서 넘겨받은 상품 목록이 있다면 그것을 사용, 없으면 기본 context 데이터 사용
-    const products = location.state?.productList || (queryType === "group" ? groupProductList : productList) || [];
+    const products = location.state?.productList ||
+        (queryType === "group" ? groupProductList : productList) || [];
     console.log(products);
 
     const handleSortChange = (newSortValue) => {

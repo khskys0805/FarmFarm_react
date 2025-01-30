@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
+import api from "../../api/api";
+import API from '../../config';
 import { BeatLoader } from "react-spinners";
-import API from "../../config";
+import axios from "axios";
 
 const Token = () => {
     const navigate = useNavigate();
@@ -33,7 +34,7 @@ const Token = () => {
                     console.log("access_token " + access_token);
 
                     // access_token을 API로 보내기
-                    axios.post(API.TOKEN, { accessToken:access_token })
+                    api.post(API.TOKEN, { accessToken: access_token })
                         .then(res => {
                             console.log(res.data);
                             // 토큰을 localStorage에 저장
@@ -48,25 +49,13 @@ const Token = () => {
                         .catch(error => {
                             console.error('Error sending token:', error);
                         });
-
-                    // 필요한 리디렉션 처리
-                    // 예: navigate("/home");
                 }
             } catch (error) {
                 console.error('Error occurred:', error);
-                if (error.response) {
-                    // 서버에서 반환된 오류 메시지 출력
-                    console.error('Error response:', error.response);
-                    console.error('Error status:', error.response.status);
-                    console.error('Error data:', error.response.data);
-                } else {
-                    console.error('Error details:', error);
-                }
             } finally {
                 setLoading(false);
             }
         };
-
 
         fetchData();
     }, [code, navigate]);

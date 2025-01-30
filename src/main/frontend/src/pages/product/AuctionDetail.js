@@ -1,5 +1,4 @@
 import {useEffect, useState} from "react";
-import axios from "axios";
 import API from "../../config";
 import {useNavigate, useParams} from "react-router-dom";
 import styles from "./AuctionDetail.module.css";
@@ -7,6 +6,7 @@ import SwiperComponent from "../../component/SwiperComponent";
 import {FiShare2} from "react-icons/fi";
 import Button from "../../component/Button";
 import {IoIosArrowDropleftCircle} from "react-icons/io";
+import api from "../../api/api";
 
 const AuctionDetail = () => {
     const { id } = useParams();
@@ -23,7 +23,7 @@ const AuctionDetail = () => {
     };
 
     useEffect(() => {
-        axios.get(API.PRODUCT(id), {
+        api.get(API.PRODUCT(id), {
             headers: { Authorization: `Bearer ${localStorage.getItem('jwt')}` },
         })
             .then((res) => {

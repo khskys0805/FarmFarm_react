@@ -3,9 +3,9 @@ import logo from "../../images/logo/farmfarm_logo.png"
 import InputBox from "../../component/InputBox";
 import {useState} from "react";
 import Button from "../../component/Button";
-import axios from "axios";
 import API from "../../config";
 import {useNavigate} from "react-router-dom";
+import api from "../../api/api";
 const CreateNickname = () => {
     const navigate = useNavigate();
     const [nickname, setNickname] = useState("");
@@ -13,7 +13,7 @@ const CreateNickname = () => {
         setNickname(e.target.value);
     }
     const handleSubmitNickname = () => {
-        axios.post(API.CREATENICKNAME,
+        api.post(API.CREATENICKNAME,
             { nickname: nickname },{
             headers: { Authorization: `Bearer ${localStorage.getItem('jwt')}` },
         })

@@ -1,13 +1,13 @@
 import styles from "./MyEnquiryList.module.css";
 import Header from "../../component/Header";
 import {useEffect, useState} from "react";
-import axios from "axios";
 import API from "../../config";
 import img from "../../images/icon.png";
 import {FaRegStar, FaStar, FaTrashAlt} from "react-icons/fa";
 import {FaPen} from "react-icons/fa6";
 import Button from "../../component/Button";
 import {MdOutlineSubdirectoryArrowRight} from "react-icons/md";
+import api from "../../api/api";
 
 const MyEnquiryList = () => {
     const [enquiryList, setEnquiryList] = useState([]);
@@ -19,7 +19,7 @@ const MyEnquiryList = () => {
     }, []);
 
     const fetchEnquiryList = () => {
-        axios.get(API.MYENQUIRY, {
+        api.get(API.MYENQUIRY, {
             headers: { Authorization: `Bearer ${localStorage.getItem('jwt')}` },
         })
             .then((res) => {
@@ -41,7 +41,7 @@ const MyEnquiryList = () => {
     const handleRemoveEnquiry = (e, eid) => {
         e.preventDefault();
         if (window.confirm("문의를 삭제하시겠습니까?")){
-            axios.delete(API.ENQUIRY(eid), {
+            api.delete(API.ENQUIRY(eid), {
                 headers: { Authorization: `Bearer ${localStorage.getItem('jwt')}` },
             })
                 .then((res) => {
@@ -57,7 +57,7 @@ const MyEnquiryList = () => {
     }
 
     const handleUpdateEnquiry = () => {
-        axios.patch(API.ENQUIRY(currentEnquiry.eid), { content: currentEnquiry.content }, {
+        api.patch(API.ENQUIRY(currentEnquiry.eid), { content: currentEnquiry.content }, {
             headers: { Authorization: `Bearer ${localStorage.getItem('jwt')}` },
         })
             .then((res) => {

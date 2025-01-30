@@ -4,10 +4,10 @@ import InputBox from "../../component/InputBox";
 import Button from "../../component/Button";
 import TabBar from "../../component/TabBar";
 import {useCallback, useEffect, useState} from "react";
-import axios from "axios";
 import API from "../../config";
 import {useNavigate, useParams} from "react-router-dom";
 import { FaCircleXmark } from "react-icons/fa6";
+import api from "../../api/api";
 
 const RegisterProduct = () => {
     const { id } = useParams();
@@ -52,7 +52,7 @@ const RegisterProduct = () => {
     useEffect(() => {
         if (id) {
             setIsEditMode(true); // 추가: 수정 모드 활성화
-            axios.get(API.PRODUCT(id), {
+            api.get(API.PRODUCT(id), {
                 headers: { Authorization: `Bearer ${localStorage.getItem('jwt')}` },
             })
                 .then((res) => {
@@ -78,7 +78,7 @@ const RegisterProduct = () => {
         formData.append("multipartFiles", file);
 
         try {
-            const response = await axios.post("/s3/file", formData, {
+            const response = await api.post("/s3/file", formData, {
                 headers: {
                     Authorization: `Bearer ${localStorage.getItem('jwt')}`,
                 },
@@ -216,7 +216,7 @@ const RegisterProduct = () => {
         console.log(formData);
 
         if (isEditMode) {
-            axios.patch(API.PRODUCT(formData.pid), formData, {
+            api.patch(API.PRODUCT(formData.pid), formData, {
                 headers: { Authorization: `Bearer ${localStorage.getItem('jwt')}` },
             })
                 .then((res) => {
@@ -233,7 +233,7 @@ const RegisterProduct = () => {
                 });
         }
         else {
-            axios.post(API.REGISTERPRODUCT, formData, {
+            api.post(API.REGISTERPRODUCT, formData, {
                 headers: { Authorization: `Bearer ${localStorage.getItem('jwt')}` },
             })
                 .then((res) => {

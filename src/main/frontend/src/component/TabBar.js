@@ -5,8 +5,8 @@ import { SlMenu } from "react-icons/sl";
 import { HiMiniMagnifyingGlass } from "react-icons/hi2";
 import { FaShoppingCart } from "react-icons/fa";
 import styles from './TabBar.module.css';
-import axios from "axios";
 import API from "../config";
+import api from "../api/api";
 
 const TabBar = () => {
     const navigate = useNavigate();
@@ -19,7 +19,7 @@ const TabBar = () => {
             setProfileImage(cachedImage); // 캐시된 이미지 사용
         }
 
-        axios.get(API.MYPAGE, {
+        api.get(API.MYPAGE, {
             headers: { Authorization: `Bearer ${localStorage.getItem('jwt')}` },
         })
             .then((res) => {

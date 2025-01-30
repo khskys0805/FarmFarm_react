@@ -1,7 +1,6 @@
 // ProductDetails.js
 import { useContext, useEffect, useState } from "react";
 import { DataContext } from "../../context/DataContext";
-import axios from "axios";
 import API from "../../config";
 import { useNavigate, useParams } from "react-router-dom";
 import { FiShare2 } from "react-icons/fi";
@@ -12,6 +11,7 @@ import Tabs from "../../component/Tabs";
 import Button from "../../component/Button";
 import SwiperComponent from "../../component/SwiperComponent";
 import styles from "./ProductDetails.module.css";
+import api from "../../api/api";
 
 const ProductDetails = () => {
     const { id } = useParams();
@@ -32,7 +32,7 @@ const ProductDetails = () => {
     const navigate = useNavigate();
 
     useEffect(() => {
-        axios.get(API.PRODUCT(id), {
+        api.get(API.PRODUCT(id), {
             headers: { Authorization: `Bearer ${localStorage.getItem('jwt')}` },
         })
             .then((res) => {
@@ -60,7 +60,7 @@ const ProductDetails = () => {
 
     useEffect(() => {
         if (isGroup) {
-            axios.get(API.GROUPLIST(id), {
+            api.get(API.GROUPLIST(id), {
                 headers: { Authorization: `Bearer ${localStorage.getItem('jwt')}` },
             })
                 .then((res) => {
@@ -129,7 +129,7 @@ const ProductDetails = () => {
     };
 
     const closeGroup = (gId) => {
-        axios.delete(API.CLOSEGROUP(gId), {
+        api.delete(API.CLOSEGROUP(gId), {
             headers: { Authorization: `Bearer ${localStorage.getItem('jwt')}` },
         })
             .then((res) => {
@@ -177,7 +177,7 @@ const ProductDetails = () => {
 
     const handleRemoveProduct = () => {
         if (window.confirm("상품을 삭제하시겠습니까?")) {
-            axios.delete(API.PRODUCT(product.pid), {
+            api.delete(API.PRODUCT(product.pid), {
                 headers: { Authorization: `Bearer ${localStorage.getItem('jwt')}` },
             })
                 .then((res) => {
@@ -194,7 +194,7 @@ const ProductDetails = () => {
 
     const handleAddToCart = () => {
         console.log("quantity" + quantity);
-        axios.post(API.PRODUCTTOCART(product.pid), { quantity: quantity }, {
+        api.post(API.PRODUCTTOCART(product.pid), { quantity: quantity }, {
             headers: { Authorization: `Bearer ${localStorage.getItem('jwt')}` },
         })
             .then((res) => {
@@ -210,7 +210,7 @@ const ProductDetails = () => {
 
     const handleCreateGroup = (e) => {
         e.preventDefault();
-        axios.get(API.CREATEGROUP(product.pid), {
+        api.get(API.CREATEGROUP(product.pid), {
             headers: { Authorization: `Bearer ${localStorage.getItem('jwt')}` },
         })
             .then((res) => {
@@ -227,7 +227,7 @@ const ProductDetails = () => {
 
     const handleAttendGroup = (gid, e) => {
         e.preventDefault();
-        axios.get(API.ATTENDGROUP(gid), {
+        api.get(API.ATTENDGROUP(gid), {
             headers: { Authorization: `Bearer ${localStorage.getItem('jwt')}` },
         })
             .then((res) => {

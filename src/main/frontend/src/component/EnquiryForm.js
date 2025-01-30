@@ -1,9 +1,9 @@
 import styles from "./EnquiryForm.module.css";
 import Button from "./Button";
-import axios from "axios";
 import API from "../config";
 import {useState} from "react";
 import {useNavigate} from "react-router-dom";
+import api from "../api/api";
 const EnquiryForm = ({pid, closeForm, fetchEnquiry}) => {
     const [content, setContent] = useState("");
     const navigate = useNavigate();
@@ -12,7 +12,7 @@ const EnquiryForm = ({pid, closeForm, fetchEnquiry}) => {
     }
     const handleRegisterEnquiry = (e) => {
         e.preventDefault();
-        axios.post(API.REGISTERENQUIRY(pid), {content}, {
+        api.post(API.REGISTERENQUIRY(pid), {content}, {
             headers: { Authorization: `Bearer ${localStorage.getItem('jwt')}` },
         })
             .then((res) => {

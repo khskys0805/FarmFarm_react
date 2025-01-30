@@ -1,6 +1,6 @@
 import Header from "../../component/Header";
 import styles from "./SearchProduct.module.css";
-import React, {useContext, useEffect, useState} from "react";
+import React, {useContext, useState} from "react";
 import TabBar from "../../component/TabBar";
 import ProductList from "../../component/ProductList";
 import SearchBar from "../../component/SearchBar";

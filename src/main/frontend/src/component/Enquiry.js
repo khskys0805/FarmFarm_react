@@ -1,10 +1,10 @@
 import styles from "./Enquiry.module.css";
 import {FaPen, FaTrashAlt} from "react-icons/fa";
-import axios from "axios";
 import API from "../config";
 import {useState} from "react";
 import Button from "./Button";
 import {MdOutlineSubdirectoryArrowRight} from "react-icons/md";
+import api from "../api/api";
 const Enquiry = ({enquiries, fetchEnquiry}) => {
     const [editIndex, setEditIndex] = useState(null);
     const [content, setContent] = useState("");
@@ -18,7 +18,7 @@ const Enquiry = ({enquiries, fetchEnquiry}) => {
     }
     const handleUpdateEnquiry = (e, eid) => {
         e.preventDefault();
-        axios.patch(API.ENQUIRY(eid), {content}, {
+        api.patch(API.ENQUIRY(eid), {content}, {
             headers: { Authorization: `Bearer ${localStorage.getItem('jwt')}` },
         })
             .then((res) => {
@@ -36,7 +36,7 @@ const Enquiry = ({enquiries, fetchEnquiry}) => {
     const handleRemoveEnquiry = (e, eid) => {
         e.preventDefault();
         if (window.confirm("문의를 삭제하시겠습니까?")) {
-            axios.delete(API.ENQUIRY(eid), {
+            api.delete(API.ENQUIRY(eid), {
                 headers: { Authorization: `Bearer ${localStorage.getItem('jwt')}` },
             })
                 .then((res) => {

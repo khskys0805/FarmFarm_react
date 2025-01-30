@@ -6,12 +6,11 @@ import Button from "./Button";
 import EnquiryForm from "./EnquiryForm";
 import ProductList from "./ProductList";
 import Location from "./Location";
-import axios from "axios";
 import API from "../config";
-import SellerPage from "../pages/seller/SellerPage";
 import Enquiry from "./Enquiry";
 import AuctionList from "./AuctionList"; // Review 컴포넌트 import
 import ClipLoader from "react-spinners/ClipLoader";
+import api from "../api/api";
 
 const Tabs = ({ type, farm, product }) => {
     const [tab, setTab] = useState(0);
@@ -26,7 +25,7 @@ const Tabs = ({ type, farm, product }) => {
     const [loading, setLoading] = useState(true);  // 로딩 상태 추가
 
     const fetchEnquiry = () => {
-        axios.get(API.ENQUIRY(product.pid), {
+        api.get(API.ENQUIRY(product.pid), {
             headers: { Authorization: `Bearer ${localStorage.getItem('jwt')}` },
         })
             .then((res) => {
@@ -43,7 +42,7 @@ const Tabs = ({ type, farm, product }) => {
     useEffect(() => {
         setLoading(true);  // 데이터 로딩 시작 시 true로 설정
         if (type === "farm" && farm.fid) {
-            axios.get(API.FARMPRODUCTS(farm?.fid), {
+            api.get(API.FARMPRODUCTS(farm?.fid), {
                 headers: { Authorization: `Bearer ${localStorage.getItem('jwt')}` },
             })
                 .then((res) => {
@@ -56,7 +55,7 @@ const Tabs = ({ type, farm, product }) => {
                     console.error('작성한 게시물을 가져오는 중 오류 발생: ', error);
                 });
 
-            axios.get(API.FARMGROUPPRODUCTS(farm.fid), {
+            api.get(API.FARMGROUPPRODUCTS(farm.fid), {
                 headers: { Authorization: `Bearer ${localStorage.getItem('jwt')}` },
             })
                 .then((res) => {
@@ -69,7 +68,7 @@ const Tabs = ({ type, farm, product }) => {
                     console.error('작성한 게시물을 가져오는 중 오류 발생: ', error);
                 });
 
-            axios.get(API.FARMAUCTIONPRODUCTS(farm.fid), {
+            api.get(API.FARMAUCTIONPRODUCTS(farm.fid), {
                 headers: { Authorization: `Bearer ${localStorage.getItem('jwt')}` },
             })
                 .then((res) => {
@@ -82,7 +81,7 @@ const Tabs = ({ type, farm, product }) => {
                     console.error('작성한 게시물을 가져오는 중 오류 발생: ', error);
                 });
 
-            axios.get(API.FARM(farm.fid), {
+            api.get(API.FARM(farm.fid), {
                 headers: { Authorization: `Bearer ${localStorage.getItem('jwt')}` },
             })
                 .then((res) => {
@@ -97,7 +96,7 @@ const Tabs = ({ type, farm, product }) => {
         }
         else if (type === "product" && product.pid) {
             setLoading(true);
-            axios.get(API.PRODUCT(product?.pid), {
+            api.get(API.PRODUCT(product?.pid), {
                 headers: { Authorization: `Bearer ${localStorage.getItem('jwt')}` },
             })
                 .then((res) => {
@@ -111,7 +110,7 @@ const Tabs = ({ type, farm, product }) => {
                 });
 
             fetchEnquiry();
-            axios.get(API.REVIEW(product.pid), {
+            api.get(API.REVIEW(product.pid), {
                 headers: { Authorization: `Bearer ${localStorage.getItem('jwt')}` },
             })
                 .then((res) => {

@@ -3,9 +3,9 @@ import Header from "../../component/Header";
 import { FaRegStar, FaStar } from "react-icons/fa";
 import Button from "../../component/Button";
 import {useState} from "react";
-import axios from "axios";
 import API from "../../config";
 import {useLocation, useNavigate} from "react-router-dom";
+import api from "../../api/api";
 const WriteReview = () => {
     const [reviewData, setReviewData] = useState({
         farmStar:3,
@@ -39,7 +39,7 @@ const WriteReview = () => {
     }
 
     const handleWriteReview = () => {
-        axios.post(API.WRITEREVIEW(odId), reviewData, {
+        api.post(API.WRITEREVIEW(odId), reviewData, {
             headers: { Authorization: `Bearer ${localStorage.getItem('jwt')}` },
         })
             .then((res) => {

@@ -1,17 +1,17 @@
 import styles from "./MyOrderList.module.css";
 import Header from "../../component/Header";
 import {useEffect, useState} from "react";
-import axios from "axios";
 import API from "../../config";
 import {useNavigate} from "react-router-dom";
 import Button from "../../component/Button";
+import api from "../../api/api";
 
 const MyOrderList = () => {
     const [orderList, setOrderList] = useState([]);
     const navigate = useNavigate();
 
     useEffect(() => {
-        axios.get(API.MYORDER, {
+        api.get(API.MYORDER, {
             headers: { Authorization: `Bearer ${localStorage.getItem('jwt')}` },
         })
             .then((res) => {
@@ -46,6 +46,10 @@ const MyOrderList = () => {
                 };
         }
     };
+
+    const handleOrderCancel = (id) => {
+
+    }
 
     const handleOrderProduct = () => {
         navigate(`/productList`);

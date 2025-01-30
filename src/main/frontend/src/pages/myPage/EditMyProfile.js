@@ -5,8 +5,8 @@ import InputBox from "../../component/InputBox";
 import {useEffect, useState} from "react";
 import Button from "../../component/Button";
 import {useLocation, useNavigate} from "react-router-dom";
-import axios from "axios";
 import API from "../../config";
+import api from "../../api/api";
 const EditMyProfile = () => {
     const [nickName, setNickName] = useState("");
     const [profileImage, setProfileImage] = useState(null); // 초기 아이콘 설정
@@ -42,7 +42,7 @@ const EditMyProfile = () => {
         formData.append("multipartFiles", file);
 
         try {
-            const response = await axios.post("/s3/file", formData, {
+            const response = await api.post("/s3/file", formData, {
                 headers: {
                     Authorization: `Bearer ${localStorage.getItem('jwt')}`,
                 },
@@ -59,7 +59,7 @@ const EditMyProfile = () => {
         e.preventDefault();
         console.log(profileImage);
         console.log(nickName);
-        axios.post(API.EDITPROFILE, {nickname:nickName, image:profileImage}, {
+        api.post(API.EDITPROFILE, {nickname:nickName, image:profileImage}, {
             headers: { Authorization: `Bearer ${localStorage.getItem('jwt')}` },
         })
             .then((res) => {

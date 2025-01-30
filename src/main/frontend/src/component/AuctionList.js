@@ -1,6 +1,4 @@
 import {useContext, useEffect, useState} from "react";
-import axios from "axios";
-import API from "../config";
 import styles from "./AuctionList.module.css";
 import {DataContext} from "../context/DataContext";
 import {useNavigate} from "react-router-dom";

@@ -1,18 +1,18 @@
 import styles from "./MyParticipateAuction.module.css";
 import Header from "../../component/Header";
 import {useEffect, useState} from "react";
-import axios from "axios";
 import API from "../../config";
 import img from "../../images/logo/farmfarm_logo.png";
 import Button from "../../component/Button";
 import {useNavigate} from "react-router-dom";
+import api from "../../api/api";
 
 const MyOrderList = () => {
     const [auctionList, setAuctionList] = useState([]);
     const navigate = useNavigate();
 
     useEffect(() => {
-        axios.get(API.MYAUCTION, {
+        api.get(API.MYAUCTION, {
             headers: { Authorization: `Bearer ${localStorage.getItem('jwt')}` },
         })
             .then((res) => {

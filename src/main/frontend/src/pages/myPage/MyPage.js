@@ -1,5 +1,4 @@
 import {useEffect, useState} from "react";
-import axios from "axios";
 import API from "../../config";
 import styles from "./MyPage.module.css";
 import Header from "../../component/Header";
@@ -7,6 +6,7 @@ import TabBar from "../../component/TabBar";
 import {useNavigate} from "react-router-dom";
 import ClipLoader from "react-spinners/ClipLoader";
 import no_farm_image from "../../images/no_farm_Image.png";
+import api from "../../api/api";
 
 const MyPage = () => {
     const [user, setUser] = useState([]);
@@ -16,7 +16,7 @@ const MyPage = () => {
 
     useEffect(() => {
         setLoading(true);
-        axios.get(API.MYPAGE, {
+        api.get(API.MYPAGE, {
                 headers: { Authorization: `Bearer ${localStorage.getItem('jwt')}` },
             })
             .then((res) => {

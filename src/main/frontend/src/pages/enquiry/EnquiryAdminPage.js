@@ -2,9 +2,9 @@ import styles from "./EnquiryAdminPage.module.css";
 import {useEffect, useState} from "react";
 import {IoIosClose} from "react-icons/io";
 import Button from "../../component/Button";
-import axios from "axios";
 import API from "../../config";
 import { MdOutlineSubdirectoryArrowRight } from "react-icons/md";
+import api from "../../api/api";
 
 const EnquiryAdminPage = () => {
     const [popupVisible, setPopupVisible] = useState(false);
@@ -14,7 +14,7 @@ const EnquiryAdminPage = () => {
     const [enquiryAnswer, setEnquiryAnswer] = useState("");
 
     const fetchEnquriyList = () => {
-        axios.get(API.ENQUIRYADMIN, {
+        api.get(API.ENQUIRYADMIN, {
             headers: {
                 Authorization: `Bearer ${localStorage.getItem('jwt')}`,
             },
@@ -49,7 +49,7 @@ const EnquiryAdminPage = () => {
         e.preventDefault();
         if (selectedEid === null) return;
 
-        axios.post(API.REPLYENQUIRY(selectedEid), { reply:enquiryAnswer }, {
+        api.post(API.REPLYENQUIRY(selectedEid), { reply:enquiryAnswer }, {
             headers: {
                 Authorization: `Bearer ${localStorage.getItem('jwt')}`,
             },

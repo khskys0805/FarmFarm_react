@@ -1,15 +1,15 @@
 import styles from "./MyReviewList.module.css";
 import Header from "../../component/Header";
 import {useCallback, useEffect, useState} from "react";
-import axios from "axios";
 import API from "../../config";
 import Review from "../../component/Review";
+import api from "../../api/api";
 
 const MyReviewList = () => {
     const [reviewList, setReviewList] = useState([]);
 
     const fetchReviewList = useCallback(() => {
-        axios.get(API.MYREVIEW, {
+        api.get(API.MYREVIEW, {
             headers: { Authorization: `Bearer ${localStorage.getItem('jwt')}` },
         })
             .then((res) => {

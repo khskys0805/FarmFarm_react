@@ -1,9 +1,9 @@
 import styles from "../event/EventDetail.module.css";
 import Header from "../../component/Header";
 import { useEffect, useState } from "react";
-import axios from "axios";
 import API from "../../config";
 import { useParams } from "react-router-dom";
+import api from "../../api/api";
 
 const EventDetail = () => {
     const [eventDetail, setEventDetail] = useState(null);
@@ -20,8 +20,7 @@ const EventDetail = () => {
     };
 
     useEffect(() => {
-        axios
-            .get(API.EVENT(id), {
+        api.get(API.EVENT(id), {
                 headers: { Authorization: `Bearer ${localStorage.getItem("jwt")}` },
             })
             .then((res) => {
