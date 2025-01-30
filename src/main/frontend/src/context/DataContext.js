@@ -5,11 +5,13 @@ import api from "../api/api";
 export const DataContext = createContext();
 
 export const DataProvider = ({ children }) => {
+    const defaultSortValue = 'rating'; // 기본 값
+    const [sortValue, setSortValue] = useState(defaultSortValue); // 상태에서만 관리
+
     const [productList, setProductList] = useState([]);
     const [farmList, setFarmList] = useState([]);
     const [groupProductList, setGroupProductList] = useState([]);
     const [auctionList, setAuctionList] = useState([]);
-    const [sortValue, setSortValue] = useState('rating');
     const [loading, setLoading] = useState(true);
 
     const fetchProductList = async () => {
@@ -81,6 +83,11 @@ export const DataProvider = ({ children }) => {
         fetchFarmList();
         fetchProductList();
     }, [sortValue]); // sortValue가 변경될 때마다 실행
+
+    useEffect(() => {
+        // 페이지 이동 시 sortValue를 기본값으로 설정
+        setSortValue(defaultSortValue);
+    }, []); // 빈 배열을 넣어서 페이지가 처음 로드될 때만 실행
 
     if (loading) {
         return <div>Loading...</div>;
