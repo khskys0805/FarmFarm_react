@@ -4,7 +4,6 @@ import api from "../../api/api";
 import API from '../../config';
 import { BeatLoader } from "react-spinners";
 import axios from "axios";
-
 const Token = () => {
     const navigate = useNavigate();
     const [loading, setLoading] = useState(true);
@@ -34,7 +33,7 @@ const Token = () => {
                     console.log("access_token " + access_token);
 
                     // access_token을 API로 보내기
-                    api.post(API.TOKEN, { accessToken: access_token })
+                    api.post(API.TOKEN, { accessToken:access_token })
                         .then(res => {
                             console.log(res.data);
                             // 토큰을 localStorage에 저장

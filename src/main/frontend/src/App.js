@@ -14,7 +14,7 @@ import FarmDetails from './pages/farm/FarmDetails';
 import RegisterProduct from './pages/product/RegisterProduct';
 import SearchProduct from './pages/search/SearchProduct';
 import RegisterFarm from './pages/farm/RegisterFarm';
-import ProductShippingAddress from './pages/product/ProductShippingAddress';
+import ProductShippingAddress from "./pages/product/productShippingAddress";
 import MyOrderList from './pages/myPage/MyOrderList';
 import MyReviewList from './pages/myPage/MyReviewList';
 import MyEnquiryList from './pages/myPage/MyEnquiryList';
