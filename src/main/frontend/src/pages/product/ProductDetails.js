@@ -13,6 +13,7 @@ import SwiperComponent from "../../component/SwiperComponent";
 import styles from "./ProductDetails.module.css";
 import api from "../../api/api";
 import ShareButton from "../../component/ShareButton";
+import {toast} from "react-hot-toast";
 
 const ProductDetails = () => {
     const { id } = useParams();
@@ -215,7 +216,7 @@ const ProductDetails = () => {
             .then((res) => {
                 console.log("전송 성공");
                 console.log(res.data);
-                alert(`${quantity}개의 상품이 장바구니에 담겼습니다.`);
+                toast.success(`${quantity}개의 상품이 장바구니에 담겼습니다.`);
                 navigate(`/cart`);
             })
             .catch((error) => {

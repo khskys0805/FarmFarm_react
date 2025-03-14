@@ -4,6 +4,7 @@ import API from "../config";
 import {useState} from "react";
 import {useNavigate} from "react-router-dom";
 import api from "../api/api";
+import {toast} from "react-hot-toast";
 const EnquiryForm = ({pid, closeForm, fetchEnquiry}) => {
     const [content, setContent] = useState("");
     const navigate = useNavigate();
@@ -18,7 +19,7 @@ const EnquiryForm = ({pid, closeForm, fetchEnquiry}) => {
             .then((res) => {
                 console.log("전송 성공");
                 console.log(res.data);
-                alert(`문의 작성이 완료되었습니다.`);
+                toast.success("문의 작성이 완료되었습니다.");
                 closeForm();
                 fetchEnquiry();
                 navigate(`/productDetail/${pid}`);

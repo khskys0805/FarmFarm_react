@@ -7,6 +7,8 @@ import Button from "../../component/Button";
 import {useLocation, useNavigate} from "react-router-dom";
 import API from "../../config";
 import api from "../../api/api";
+import {toast} from "react-hot-toast";
+
 const EditMyProfile = () => {
     const [nickName, setNickName] = useState("");
     const [profileImage, setProfileImage] = useState(null); // 초기 아이콘 설정
@@ -64,7 +66,7 @@ const EditMyProfile = () => {
         })
             .then((res) => {
                 console.log(res.data.result);
-                alert("프로필이 변경되었습니다");
+                toast.success("프로필이 변경되었습니다.");
                 navigate(`/myPage`);
             })
             .catch((error) => {

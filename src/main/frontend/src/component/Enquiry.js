@@ -5,6 +5,7 @@ import {useState} from "react";
 import Button from "./Button";
 import {MdOutlineSubdirectoryArrowRight} from "react-icons/md";
 import api from "../api/api";
+import {toast} from "react-hot-toast";
 const Enquiry = ({enquiries, fetchEnquiry}) => {
     const [editIndex, setEditIndex] = useState(null);
     const [content, setContent] = useState("");
@@ -24,7 +25,7 @@ const Enquiry = ({enquiries, fetchEnquiry}) => {
             .then((res) => {
                 console.log("전송 성공");
                 console.log(res.data);
-                alert(`문의 수정이 완료되었습니다.`);
+                toast.success("문의 수정이 완료되었습니다.");
                 setEditIndex(null); // 수정 모드 해제
                 fetchEnquiry();
             })
@@ -42,7 +43,7 @@ const Enquiry = ({enquiries, fetchEnquiry}) => {
                 .then((res) => {
                     console.log("전송 성공");
                     console.log(res.data);
-                    alert(`문의가 삭제되었습니다.`);
+                    toast.success("문의가 삭제되었습니다.");
                     // window.location.reload();
                 })
                 .catch((error) => {

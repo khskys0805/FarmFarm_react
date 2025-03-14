@@ -19,6 +19,9 @@
     object-fit: cover;
     border-radius: 50%;
 }
+.type2 .user_img img{
+    margin-left: 10px;
+}
 .review_box .review_content{
     width:50%;
 }
@@ -37,7 +40,6 @@
     margin-bottom: 5px;
 }
 .review_box .right{
-    width: 30%;
     margin-right: 10px;
 }
 .review_box .right .button{
@@ -98,4 +100,13 @@
 }
 .modal_content .buttons button:nth-of-type(1){
     margin-right: 5px;
+}
+
+@media (min-width: 500px) {
+    .review_box .user_img{
+        width:60px;
+        height:60px;
+        margin-right: -20px;
+        margin-left: 10px;
+    }
 }

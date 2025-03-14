@@ -8,6 +8,7 @@ import API from "../../config";
 import {useNavigate, useParams} from "react-router-dom";
 import { FaCircleXmark } from "react-icons/fa6";
 import api from "../../api/api";
+import {toast} from "react-hot-toast";
 
 const RegisterProduct = () => {
     const { id } = useParams();
@@ -95,7 +96,7 @@ const RegisterProduct = () => {
         const files = Array.from(event.target.files);
 
         if (files.length + imageSrcs.length > 10) {
-            alert("사진은 최대 10개까지 선택할 수 있습니다.");
+            toast.error("사진은 최대 10개까지 선택할 수 있습니다.");
             return;
         }
 
@@ -187,13 +188,13 @@ const RegisterProduct = () => {
 
             // Check for empty strings
             if (typeof value === 'string' && value.trim() === "") {
-                alert(`${fieldNames[field]}을(를) 입력해주세요.`);
+                toast.error(`${fieldNames[field]}을(를) 입력해주세요.`);
                 return false;
             }
 
             // Check for non-string types (e.g., number, boolean)
             if (value === null || value === undefined || value === '') {
-                alert(`${fieldNames[field]}을(를) 입력해주세요.`);
+                toast.error(`${fieldNames[field]}을(를) 입력해주세요.`);
                 return false;
             }
         }

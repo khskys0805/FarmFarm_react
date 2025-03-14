@@ -9,6 +9,7 @@ import API from "../../config";
 import PopupPostCode from "../../component/PopupPostCode";
 import {FaCircleXmark} from "react-icons/fa6";
 import api from "../../api/api";
+import {toast} from "react-hot-toast";
 
 const RegisterFarm = () => {
     const { id } = useParams();
@@ -83,7 +84,7 @@ const RegisterFarm = () => {
         const files = Array.from(event.target.files);
 
         if (files.length + imageSrcs.length > 3) {
-            alert("사진은 최대 3개까지 선택할 수 있습니다.");
+            toast.error("사진은 최대 3개까지 선택할 수 있습니다.");
             return;
         }
 
@@ -155,7 +156,7 @@ const RegisterFarm = () => {
 
         for (const field of requiredFields) {
             if (!farmData[field]) {
-                alert(`${fieldNames[field]}을(를) 입력해주세요.`);
+                toast.error(`${fieldNames[field]}을(를) 입력해주세요.`);
                 return false;
             }
         }
@@ -185,7 +186,7 @@ const RegisterFarm = () => {
                     navigate(`/farmDetail/${formData.fid}`);
                 })
                 .catch((error) => {
-                    alert("농장 수정에 실패했습니다.");
+                    toast.error("농장 수정에 실패했습니다.");
                     console.error(error);
                 });
         }
@@ -198,7 +199,7 @@ const RegisterFarm = () => {
                     navigate(`/farmDetail/${res.data.result.fid}`);
                 })
                 .catch((error) => {
-                    alert("농장 개설에 실패했습니다.");
+                    toast.error("농장 개설에 실패했습니다.");
                     console.error(error);
                 });
         }

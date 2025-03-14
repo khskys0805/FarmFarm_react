@@ -29,7 +29,7 @@ const MyReviewList = () => {
     return (
         <div className={styles.box}>
             <Header title={"상품 후기 내역"} go={`/myPage`}/>
-            <ul>
+            <ul className={styles.review_list}>
                 {reviewList.length === 0 ? (
                     <div className={styles.no_list}>
                         <p>작성한 리뷰가 없습니다.</p>
