@@ -67,7 +67,7 @@ const MyOrderList = () => {
                     <div className={styles.no_list}>
                         <p>아직 주문 내역이 없습니다!<br />
                             상품을 구매해보세요!!</p>
-                        <Button content={"판매 상품 보러가기"} onClick={handleOrderProduct} />
+                        <Button content={"판매 상품 보러가기"} width={"90%"} margin={"0 auto"} onClick={handleOrderProduct} />
                     </div>
                 ) : (
                     orderList.map((order, index) => {

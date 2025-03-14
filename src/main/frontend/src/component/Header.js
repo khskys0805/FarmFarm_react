@@ -8,7 +8,7 @@ const Header = ({title, go}) => {
     }
     return (
         <div className={styles.box}>
-            <IoIosArrowDropleftCircle size="30" color="#94C015FF" onClick={onClickArrow} style={{cursor:"pointer", position:"absolute"}}/>
+            <IoIosArrowDropleftCircle size="30" color="#94C015FF" onClick={onClickArrow} style={{cursor:"pointer", position:"absolute", left:"10px"}}/>
             <span className={styles.title}>{title}</span>
         </div>
     )

@@ -2,7 +2,7 @@ import React from 'react';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { DataProvider } from './context/DataContext';
 import Login from './pages/login/Login';
-import CreateNickname from './pages/login/CreateNickname';
+import CreateNickname from "./pages/login/CreateNickname";
 import Token from './pages/join/Token';
 import TabBar from './component/TabBar';
 import Home from './pages/home/Home';
@@ -14,7 +14,7 @@ import FarmDetails from './pages/farm/FarmDetails';
 import RegisterProduct from './pages/product/RegisterProduct';
 import SearchProduct from './pages/search/SearchProduct';
 import RegisterFarm from './pages/farm/RegisterFarm';
-import ProductShippingAddress from "./pages/product/productShippingAddress";
+import ProductShippingAddress from "./pages/product/ProductShippingAddress";
 import MyOrderList from './pages/myPage/MyOrderList';
 import MyReviewList from './pages/myPage/MyReviewList';
 import MyEnquiryList from './pages/myPage/MyEnquiryList';
@@ -31,12 +31,14 @@ import AllAuction from "./pages/product/AllAuction";
 import SellerPage from "./pages/seller/SellerPage";
 import EnquiryAdminPage from "./pages/enquiry/EnquiryAdminPage";
 import EventDetail from "./pages/event/EventDetail";
+import {Toaster} from "react-hot-toast";
 
 function App() {
     return (
         <BrowserRouter>
             <DataProvider>
                 <div className="App">
+                    <Toaster />
                     <Routes>
                         <Route path="/" element={<Navigate replace to="/auth" />} />
                         <Route path="/auth" element={<Login />} />

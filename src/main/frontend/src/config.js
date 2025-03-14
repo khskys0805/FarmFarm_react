@@ -1,92 +1,94 @@
+const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
+
 const API = {
-    PRODUCT(ID){
-        return `/product/${ID}`
+    PRODUCT(ID) {
+        return `${API_BASE_URL}/product/${ID}`;
     },
-    REGISTERPRODUCT: "/product",
-    ALLPRODUCT: "/product/list",
-    ALLGROUPPRODUCT: "/product/group/list",
-    GROUPLIST(ID){
-        return `/product/${ID}/groupList`
+    REGISTERPRODUCT: `${API_BASE_URL}/product`,
+    ALLPRODUCT: `${API_BASE_URL}/product/list`,
+    ALLGROUPPRODUCT: `${API_BASE_URL}/product/group/list`,
+    GROUPLIST(ID) {
+        return `${API_BASE_URL}/product/${ID}/groupList`;
     },
-    PRODUCTTOCART(ID){
-        return `/product/cart/${ID}`
+    PRODUCTTOCART(ID) {
+        return `${API_BASE_URL}/product/cart/${ID}`;
     },
-    CATEGORY(ID){
-        return `/product/category/${ID}`
+    CATEGORY(ID) {
+        return `${API_BASE_URL}/product/category/${ID}`;
     },
-    FARM(ID){
-        return `/farm/${ID}`
+    FARM(ID) {
+        return `${API_BASE_URL}/farm/${ID}`;
     },
-    FARMPRODUCTS(ID){
-        return `/farm/${ID}/product`
+    FARMPRODUCTS(ID) {
+        return `${API_BASE_URL}/farm/${ID}/product`;
     },
-    FARMGROUPPRODUCTS(ID){
-        return `/farm/${ID}/groupProduct`
+    FARMGROUPPRODUCTS(ID) {
+        return `${API_BASE_URL}/farm/${ID}/groupProduct`;
     },
-    FARMAUCTIONPRODUCTS(ID){
-        return `/farm/${ID}/auctionProduct`
+    FARMAUCTIONPRODUCTS(ID) {
+        return `${API_BASE_URL}/farm/${ID}/auctionProduct`;
     },
-    REGISTERFARM: "/farm",
-    ALLFARM: "/farm/list",
-    ALLAUCTION: "/product/auction/list",
-    ATTENDAUCTION(ID){
-        return `/order/product/${ID}`
+    REGISTERFARM: `${API_BASE_URL}/farm`,
+    ALLFARM: `${API_BASE_URL}/farm/list`,
+    ALLAUCTION: `${API_BASE_URL}/product/auction/list`,
+    ATTENDAUCTION(ID) {
+        return `${API_BASE_URL}/order/product/${ID}`;
     },
-    CART: "/product/cart",
-    CARTREMOVE(ID){
-        return `/product/cart/delete/${ID}`
+    CART: `${API_BASE_URL}/product/cart`,
+    CARTREMOVE(ID) {
+        return `${API_BASE_URL}/product/cart/delete/${ID}`;
     },
-    ORDERCART: "/order/cart",
-    CREATEGROUP(ID){
-        return `/order/createGroup/${ID}`
+    ORDERCART: `${API_BASE_URL}/order/cart`,
+    CREATEGROUP(ID) {
+        return `${API_BASE_URL}/order/createGroup/${ID}`;
     },
-    ATTENDGROUP(ID){
-        return `/order/attendGroup/${ID}`
+    ATTENDGROUP(ID) {
+        return `${API_BASE_URL}/order/attendGroup/${ID}`;
     },
-    CLOSEGROUP(ID){
-        return `/order/group/${ID}`
+    CLOSEGROUP(ID) {
+        return `${API_BASE_URL}/order/group/${ID}`;
     },
-    ORDER: "/order",
-    PAYMENT(ID){
-        return `/pay/order/${ID}`
+    ORDER: `${API_BASE_URL}/order`,
+    PAYMENT(ID) {
+        return `${API_BASE_URL}/pay/order/${ID}`;
     },
-    ENQUIRY(ID){
-        return `/enquiry/${ID}`
+    ENQUIRY(ID) {
+        return `${API_BASE_URL}/enquiry/${ID}`;
     },
-    REGISTERENQUIRY(ID){
-        return `/enquiry/${ID}`
+    REGISTERENQUIRY(ID) {
+        return `${API_BASE_URL}/enquiry/${ID}`;
     },
-    REPLYENQUIRY(ID){
-        return `/enquiry/reply/${ID}`
+    REPLYENQUIRY(ID) {
+        return `${API_BASE_URL}/enquiry/reply/${ID}`;
     },
-    REVIEW(ID){
-        return `/review/${ID}`
+    REVIEW(ID) {
+        return `${API_BASE_URL}/review/${ID}`;
     },
-    WRITEREVIEW(ID){
-        return `/review/${ID}`
+    WRITEREVIEW(ID) {
+        return `${API_BASE_URL}/review/${ID}`;
     },
-    MYPAGE: "/mypage",
-    MYFARM:"/farm/my",
-    MYORDER: "/mypage/orderList",
-    MYAUCTION: "/mypage/auctionList",
-    MYREVIEW: "/review/my",
-    MYENQUIRY: "/enquiry/my",
-    ENQUIRYADMIN: "/enquiry/admin",
-    SHIPPINGLIST:"/farm/shippingList",
-    SHIPPINGSTATUS(ID){
-        return `/farm/shippingList/${ID}`
+    MYPAGE: `${API_BASE_URL}/mypage`,
+    MYFARM: `${API_BASE_URL}/farm/my`,
+    MYORDER: `${API_BASE_URL}/mypage/orderList`,
+    MYAUCTION: `${API_BASE_URL}/mypage/auctionList`,
+    MYREVIEW: `${API_BASE_URL}/review/my`,
+    MYENQUIRY: `${API_BASE_URL}/enquiry/my`,
+    ENQUIRYADMIN: `${API_BASE_URL}/enquiry/admin`,
+    SHIPPINGLIST: `${API_BASE_URL}/farm/shippingList`,
+    SHIPPINGSTATUS(ID) {
+        return `${API_BASE_URL}/farm/shippingList/${ID}`;
     },
-    EDITPROFILE: "/mypage/profile",
-    ISNICKNAME: "/user/me",
-    CREATENICKNAME: "/user/nickname",
-    LOGIN: "/user/login/getKakaoAuthUrl",
+    EDITPROFILE: `${API_BASE_URL}/mypage/profile`,
+    ISNICKNAME: `${API_BASE_URL}/user/me`,
+    CREATENICKNAME: `${API_BASE_URL}/user/nickname`,
+    LOGIN: `${API_BASE_URL}/user/login/getKakaoAuthUrl`,
     LOGINTOKEN(CODE) {
-        return `/user/login/oauth_kakao?code=${CODE}`;
+        return `${API_BASE_URL}/user/login/oauth_kakao?code=${CODE}`;
     },
-    TOKEN: "/user/login/oauth_kakao",
-    EVENTLIST: "/events/list",
+    TOKEN: `${API_BASE_URL}/user/login/oauth_kakao`,
+    EVENTLIST: `${API_BASE_URL}/events/list`,
     EVENT(ID) {
-        return `/events/${ID}`;
+        return `${API_BASE_URL}/events/${ID}`;
     }
 };
 

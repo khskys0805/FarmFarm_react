@@ -1,6 +1,6 @@
 import styles from "./Button.module.css";
 
-const Button = ({ content, color = '#94C015', width, onClick, padding }) => {
+const Button = ({ content, color = '#94C015', width, onClick, padding, margin }) => {
     // content가 배열인지 여부를 확인
     const isArrayContent = Array.isArray(content);
 
@@ -8,7 +8,7 @@ const Button = ({ content, color = '#94C015', width, onClick, padding }) => {
     const paddingValue = padding || (isArrayContent ? '10px 0' : '20px 0');
 
     return (
-        <button className={styles.button} onClick={onClick} style={{ background: color, width: width || '100%', padding: paddingValue }}>
+        <button className={styles.button} onClick={onClick} style={{ background: color, width: width || '100%', padding: paddingValue, margin: margin || undefined }}>
             {/* content가 배열이면 각 요소를 순회하면서 출력 */}
             {isArrayContent ? (
                 content.map((item, index) => (

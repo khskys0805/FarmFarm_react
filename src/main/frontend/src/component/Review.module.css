@@ -11,7 +11,7 @@
 .review_box .user_img{
     width:40px;
     height:40px;
-    margin-right:10px;
+    margin-right: 10px;
 }
 .review_box .user_img img{
     width:100%;
@@ -19,14 +19,11 @@
     object-fit: cover;
     border-radius: 50%;
 }
-.type2 .user_img img{
-    margin-left:15px;
-}
 .review_box .review_content{
-    width:290px;
+    width:50%;
 }
 .type2 .review_content{
-    width:300px;
+    width: 48%;
     margin-left: -10px;
 }
 .review_box .review_content p{
@@ -39,7 +36,10 @@
     flex-grow: 1;
     margin-bottom: 5px;
 }
-
+.review_box .right{
+    width: 30%;
+    margin-right: 10px;
+}
 .review_box .right .button{
     display: flex;
     float: right;

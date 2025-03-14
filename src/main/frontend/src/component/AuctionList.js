@@ -64,7 +64,7 @@ const AuctionList = ({ numToShow }) => {
                                     <h3 className={styles.title}>{item.name}</h3>
                                     <h4 className={styles.price}>경매 시작가 {item.price}원</h4>
                                 </div>
-                                <div>
+                                <div style={{width:"30%"}}>
                                     {timeLeftArray[index] && (
                                         <h3>
                                             {timeLeftArray[index].days}일 {timeLeftArray[index].hours}:{timeLeftArray[index].minutes}:{timeLeftArray[index].seconds}

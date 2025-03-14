@@ -82,13 +82,13 @@ const WriteReview = () => {
                     </ul>
                 </div>
                 <div>
-                    <p><b>상품에 대한 의견을 남겨주세요</b></p>
+                    <p style={{marginLeft:"10px"}}><b>상품에 대한 의견을 남겨주세요</b></p>
                     <div className={styles.input_wrap}>
                         <textarea placeholder="이곳에 의견을 남겨주세요" name="comment" value={reviewData.comment} onChange={(e) => handleSetValue(e)}/>
                     </div>
                 </div>
             </form>
-            <Button content={"리뷰 등록"} width={"inherit"} onClick={() => handleWriteReview()}/>
+            <Button content={"리뷰 등록"} width={"94%"} margin={"0 auto"} onClick={() => handleWriteReview()}/>
         </div>
     )
 }

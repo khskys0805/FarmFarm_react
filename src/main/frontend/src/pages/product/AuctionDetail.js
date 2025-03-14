@@ -7,6 +7,7 @@ import {FiShare2} from "react-icons/fi";
 import Button from "../../component/Button";
 import {IoIosArrowDropleftCircle} from "react-icons/io";
 import api from "../../api/api";
+import ShareButton from "../../component/ShareButton";
 
 const AuctionDetail = () => {
     const { id } = useParams();
@@ -108,7 +109,7 @@ const AuctionDetail = () => {
                             <h3 className={styles.farmName}>{product.farm && product.farm.name}</h3>
                             <h2 className={styles.productName}>{product.name}</h2>
                         </div>
-                        <FiShare2 size="30" style={{cursor:"pointer"}}/>
+                        <ShareButton />
                     </div>
                     <p style={{textAlign:"right"}}>수량: {product.quantity}</p>
                     <div className={styles.middle}>
@@ -119,7 +120,7 @@ const AuctionDetail = () => {
                         <h4>{product.detail}</h4>
                     </div>
                     <div className={styles.buttonWrap}>
-                        <Button content={"경매 참여하기"} onClick={handleParticipateAuction}/>
+                        <Button content={"경매 참여하기"} width={"90%"} margin={"0 auto"} onClick={handleParticipateAuction}/>
                     </div>
                 </div>
             )}

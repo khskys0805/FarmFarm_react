@@ -60,7 +60,7 @@ const MyOrderList = () => {
                     <div className={styles.no_list}>
                         <p>아직 경매 참여 내역이 없습니다!<br/>
                             경매를 참여해보세요!!</p>
-                        <Button content={"경매 상품 보러가기"} onClick={handleShowAuction} />
+                        <Button content={"경매 상품 보러가기"} width={"90%"} margin={"0 auto"} onClick={handleShowAuction} />
                     </div>
                 ) : (
                     auctionList.map((auction, index) => (

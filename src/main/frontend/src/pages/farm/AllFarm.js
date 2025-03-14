@@ -33,7 +33,7 @@ const AllFarm = () => {
                 <div>
                     <h5>총 <span>{filterMonster.length}</span>개</h5>
                 </div>
-                <Sort onSortChange={handleSortChange} sort={"farm"}/>
+                <Sort onSortChange={handleSortChange} type={"farm"}/>
             </div>
             <div className={styles.search_result}>
                 {filterMonster.length > 0 ? (

@@ -9,7 +9,7 @@
 .box .logo{
     width:150px;
     height: auto;
-    margin-bottom: 20px;
+    margin:0 0 20px 15px;
 }
 
 .swiper-container {
@@ -25,7 +25,7 @@
 }
 
 .content .group{
-    margin-bottom: 50px;
+    margin:0 10px 50px;
 }
 .content .group .link{
     display: flex;

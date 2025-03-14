@@ -1,5 +1,5 @@
 // ProductDetails.js
-import { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { DataContext } from "../../context/DataContext";
 import API from "../../config";
 import { useNavigate, useParams } from "react-router-dom";
@@ -12,6 +12,7 @@ import Button from "../../component/Button";
 import SwiperComponent from "../../component/SwiperComponent";
 import styles from "./ProductDetails.module.css";
 import api from "../../api/api";
+import ShareButton from "../../component/ShareButton";
 
 const ProductDetails = () => {
     const { id } = useParams();
@@ -30,6 +31,20 @@ const ProductDetails = () => {
     const [closedGroups, setClosedGroups] = useState([]); // 추가: 이미 호출된 그룹 ID를 추적
     const [isMyProduct, setIsMyProduct] = useState(false);
     const navigate = useNavigate();
+
+    const renderStarRating = (productStar) => {
+        const starCount = Math.floor(productStar || 0);
+        const starArray = [];
+
+        for (let i = 0; i < 5; i++) {
+            if (i < starCount) {
+                starArray.push(<FaStar size="18" color="#FFC42B" key={i} />);
+            } else {
+                starArray.push(<FaStar size="18" color="#B1B1B1" key={i} />);
+            }
+        }
+        return starArray;
+    }
 
     useEffect(() => {
         api.get(API.PRODUCT(id), {
@@ -264,7 +279,7 @@ const ProductDetails = () => {
                                 <h3 className={styles.farmName}>{product.farm && product.farm.name}</h3>
                                 <h2 className={styles.productName}>{product.name}</h2>
                             </div>
-                            <FiShare2 size="30" style={{cursor:"pointer"}}/>
+                            <ShareButton />
                         </div>
                         <div className={styles.middle}>
                             {isGroup ? (
@@ -286,7 +301,7 @@ const ProductDetails = () => {
                         </div>
                         <div className={styles.bottom}>
                             <div className={styles.review}>
-                                <FaStar size="18" color="#FFC42B"/>
+                                <div className={styles.star}>{renderStarRating(product.productStar)}</div>
                             </div>
                         </div>
                         <Tabs type="product" product={product}/>
@@ -294,9 +309,9 @@ const ProductDetails = () => {
                 )}
                 <div className={styles.under_bar}>
                     {isGroup ? (
-                        <Button content={"공동구매 참여하기"} color={"#FFC42B"} onClick={handleGroupProduct}/>
+                        <Button content={"공동구매 참여하기"} color={"#FFC42B"} width={"90%"} margin={"0 auto"} onClick={handleGroupProduct}/>
                     ) : (
-                        <Button content={["주문하기", `${formatNumber(product.price)}원`]} onClick={handleAddToCart}/>
+                        <Button content={["주문하기", `${formatNumber(product.price)}원`]} width={"90%"} margin={"0 auto"} onClick={handleAddToCart}/>
                     )}
                 </div>
             </div>
@@ -312,7 +327,7 @@ const ProductDetails = () => {
                         </div>
                         <div>
                             <div className={styles.group_open_btn}>
-                                <Button content={"공구 개설"} width={"70px"} className="open" padding={"10px"} onClick={(e) => handleCreateGroup(e)}/>
+                                <Button content={"공구 개설"} width={"70px"} padding={"10px"} onClick={(e) => handleCreateGroup(e)}/>
                             </div>
                         </div>
                         {groupList.length > 0 ? (

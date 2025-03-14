@@ -1,5 +1,6 @@
 .tab{
-    width:500px;
+    width:100%;
+    max-width:500px;
     position: fixed;
     bottom: 0;
     background: #fff;
@@ -9,7 +10,7 @@
 .bar{
     width:100%;
     display: flex;
-    justify-content: space-between;
+    justify-content: space-around;
 }
 button{
     all:unset;

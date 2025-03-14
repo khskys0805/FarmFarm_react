@@ -85,7 +85,8 @@ const Location = ({ farms, type }) => {
     }, [farms, type]);
 
     const mapStyle = {
-        width: type === 1 ? "500px" : "440px",
+        width: "100%",
+        maxWidth: type === 1 ? "500px" : "440px",
         height: "250px"
     };
 

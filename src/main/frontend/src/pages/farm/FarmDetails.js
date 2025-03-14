@@ -9,6 +9,7 @@ import {FaTrashAlt} from "react-icons/fa";
 import {FiShare2} from "react-icons/fi";
 import Tabs from "../../component/Tabs";
 import api from "../../api/api";
+import ShareButton from "../../component/ShareButton";
 const FarmDetails = ({ myFarm }) => {
     const { id } = useParams();
     const [farm, setFarm] = useState([]);
@@ -119,7 +120,7 @@ const FarmDetails = ({ myFarm }) => {
                             <h3 className={styles.address}>{farm.locationCity} {farm.locationGu}</h3>
                             <h2 className={styles.productName}>{farm.name}</h2>
                         </div>
-                        <FiShare2 size="30" style={{cursor:"pointer"}}/>
+                        <ShareButton />
                     </div>
                     <Tabs type="farm" farm={farm}/>
                 </div>

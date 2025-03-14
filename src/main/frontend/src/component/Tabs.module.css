@@ -37,3 +37,10 @@
 .not_exist{
     text-align: center;
 }
+
+@media (max-width: 430px) {
+    .tab_title li {
+        font-size: 14px;
+        margin-right: 10px;
+    }
+}
