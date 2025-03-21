@@ -21,7 +21,7 @@ const Cart = () => {
     const fetchCartItems = () => {
         api.get(API.CART, {
             headers: { Authorization: `Bearer ${localStorage.getItem('jwt')}` },
-            credentials:'include',
+            withCredentials: true
         })
             .then((res) => {
                 console.log("전송 성공");
@@ -71,6 +71,7 @@ const Cart = () => {
         if (window.confirm("장바구니에서 상품을 삭제하시겠습니까?")) {
             api.delete(API.CARTREMOVE(product.pid), {
                 headers: { Authorization: `Bearer ${localStorage.getItem('jwt')}` },
+                withCredentials: true
             })
                 .then((res) => {
                     console.log("상품 삭제 성공");
@@ -85,6 +86,7 @@ const Cart = () => {
     const handleOrderItem = () => {
         api.get(API.ORDERCART, {
             headers: { Authorization: `Bearer ${localStorage.getItem('jwt')}` },
+            withCredentials: true
         })
             .then((res) => {
                 console.log("전송 성공");

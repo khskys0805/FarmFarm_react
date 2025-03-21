@@ -48,6 +48,7 @@ const EditMyProfile = () => {
                 headers: {
                     Authorization: `Bearer ${localStorage.getItem('jwt')}`,
                 },
+                withCredentials: true
             });
             console.log("File upload response:", response.data.result[0].fileUrl);
             return response.data.result[0].fileUrl;
@@ -63,6 +64,7 @@ const EditMyProfile = () => {
         console.log(nickName);
         api.post(API.EDITPROFILE, {nickname:nickName, image:profileImage}, {
             headers: { Authorization: `Bearer ${localStorage.getItem('jwt')}` },
+            withCredentials: true
         })
             .then((res) => {
                 console.log(res.data.result);

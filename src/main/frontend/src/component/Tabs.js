@@ -27,6 +27,7 @@ const Tabs = ({ type, farm, product }) => {
     const fetchEnquiry = () => {
         api.get(API.ENQUIRY(product.pid), {
             headers: { Authorization: `Bearer ${localStorage.getItem('jwt')}` },
+            withCredentials: true
         })
             .then((res) => {
                 console.log("전송 성공");
@@ -44,6 +45,7 @@ const Tabs = ({ type, farm, product }) => {
         if (type === "farm" && farm.fid) {
             api.get(API.FARMPRODUCTS(farm?.fid), {
                 headers: { Authorization: `Bearer ${localStorage.getItem('jwt')}` },
+                withCredentials: true
             })
                 .then((res) => {
                     console.log("전송 성공");
@@ -57,6 +59,7 @@ const Tabs = ({ type, farm, product }) => {
 
             api.get(API.FARMGROUPPRODUCTS(farm.fid), {
                 headers: { Authorization: `Bearer ${localStorage.getItem('jwt')}` },
+                withCredentials: true
             })
                 .then((res) => {
                     console.log("전송 성공");
@@ -70,6 +73,7 @@ const Tabs = ({ type, farm, product }) => {
 
             api.get(API.FARMAUCTIONPRODUCTS(farm.fid), {
                 headers: { Authorization: `Bearer ${localStorage.getItem('jwt')}` },
+                withCredentials: true
             })
                 .then((res) => {
                     console.log("전송 성공");
@@ -83,6 +87,7 @@ const Tabs = ({ type, farm, product }) => {
 
             api.get(API.FARM(farm.fid), {
                 headers: { Authorization: `Bearer ${localStorage.getItem('jwt')}` },
+                withCredentials: true
             })
                 .then((res) => {
                     console.log("전송 성공");
@@ -98,6 +103,7 @@ const Tabs = ({ type, farm, product }) => {
             setLoading(true);
             api.get(API.PRODUCT(product?.pid), {
                 headers: { Authorization: `Bearer ${localStorage.getItem('jwt')}` },
+                withCredentials: true
             })
                 .then((res) => {
                     console.log("전송 성공");
@@ -112,6 +118,7 @@ const Tabs = ({ type, farm, product }) => {
             fetchEnquiry();
             api.get(API.REVIEW(product.pid), {
                 headers: { Authorization: `Bearer ${localStorage.getItem('jwt')}` },
+                withCredentials: true
             })
                 .then((res) => {
                     console.log("전송 성공");

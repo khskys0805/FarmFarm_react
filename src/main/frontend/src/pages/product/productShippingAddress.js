@@ -79,6 +79,7 @@ const ProductShippingAddress = () => {
         console.log(window.location.origin + '/payment-callback');
         api.post(API.ORDER, shippingAddress, {
             headers: { Authorization: `Bearer ${localStorage.getItem('jwt')}`}
+            withCredentials: true
         })
             .then((res) => {
                 console.log("Order 전송 성공");
@@ -86,6 +87,7 @@ const ProductShippingAddress = () => {
 
                 return api.get(API.PAYMENT(res.data.result.oid), {
                     headers: { Authorization: `Bearer ${localStorage.getItem('jwt')}` },
+                    withCredentials: true,
                     params: {
                         callback_url: window.location.origin + '/payment-callback' // 콜백 URL 수정
                     }
@@ -111,6 +113,7 @@ const ProductShippingAddress = () => {
         // 1. order/product/pid API 요청
         api.post(API.ATTENDAUCTION(pid), shippingAddress, {
             headers: { Authorization: `Bearer ${localStorage.getItem('jwt')}` },
+            withCredentials: true
         })
             .then((res) => {
                 console.log("경매 참여 성공");

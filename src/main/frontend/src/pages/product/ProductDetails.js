@@ -50,6 +50,7 @@ const ProductDetails = () => {
     useEffect(() => {
         api.get(API.PRODUCT(id), {
             headers: { Authorization: `Bearer ${localStorage.getItem('jwt')}` },
+            withCredentials: true
         })
             .then((res) => {
                 console.log("전송 성공");
@@ -78,6 +79,7 @@ const ProductDetails = () => {
         if (isGroup) {
             api.get(API.GROUPLIST(id), {
                 headers: { Authorization: `Bearer ${localStorage.getItem('jwt')}` },
+                withCredentials: true
             })
                 .then((res) => {
                     console.log("그룹 목록 전송 성공");
@@ -147,6 +149,7 @@ const ProductDetails = () => {
     const closeGroup = (gId) => {
         api.delete(API.CLOSEGROUP(gId), {
             headers: { Authorization: `Bearer ${localStorage.getItem('jwt')}` },
+            withCredentials: true
         })
             .then((res) => {
                 console.log("그룹 종료 및 환불 성공", res.data);
@@ -195,6 +198,7 @@ const ProductDetails = () => {
         if (window.confirm("상품을 삭제하시겠습니까?")) {
             api.delete(API.PRODUCT(product.pid), {
                 headers: { Authorization: `Bearer ${localStorage.getItem('jwt')}` },
+                withCredentials: true
             })
                 .then((res) => {
                     console.log("전송 성공");
@@ -211,7 +215,10 @@ const ProductDetails = () => {
     const handleAddToCart = () => {
         console.log("quantity" + quantity);
         api.post(API.PRODUCTTOCART(product.pid), { quantity: quantity }, {
-            headers: { Authorization: `Bearer ${localStorage.getItem('jwt')}` },
+            headers: {
+                Authorization: `Bearer ${localStorage.getItem('jwt')}`,
+                withCredentials: true
+            },
         })
             .then((res) => {
                 console.log("전송 성공");
@@ -228,6 +235,7 @@ const ProductDetails = () => {
         e.preventDefault();
         api.get(API.CREATEGROUP(product.pid), {
             headers: { Authorization: `Bearer ${localStorage.getItem('jwt')}` },
+            withCredentials: true
         })
             .then((res) => {
                 console.log("전송 성공");
@@ -245,6 +253,7 @@ const ProductDetails = () => {
         e.preventDefault();
         api.get(API.ATTENDGROUP(gid), {
             headers: { Authorization: `Bearer ${localStorage.getItem('jwt')}` },
+            withCredentials: true
         })
             .then((res) => {
                 console.log("전송 성공");

@@ -21,6 +21,7 @@ const FarmDetails = ({ myFarm }) => {
         if (myFarm) {
             api.get(API.MYFARM, {
                 headers: { Authorization: `Bearer ${localStorage.getItem('jwt')}` },
+                withCredentials: true
             })
                 .then((res) => {
                     console.log("전송 성공");
@@ -52,6 +53,7 @@ const FarmDetails = ({ myFarm }) => {
         } else {
             api.get(API.FARM(id), {
                 headers: { Authorization: `Bearer ${localStorage.getItem('jwt')}` },
+                withCredentials: true
             })
                 .then((res) => {
                     console.log("전송 성공");
@@ -91,6 +93,7 @@ const FarmDetails = ({ myFarm }) => {
         if (window.confirm("농장을 삭제하시겠습니까?")) {
             api.delete(API.FARM(id), {
                 headers: { Authorization: `Bearer ${localStorage.getItem('jwt')}` },
+                withCredentials: true
             })
                 .then((res) => {
                     console.log("전송 성공");

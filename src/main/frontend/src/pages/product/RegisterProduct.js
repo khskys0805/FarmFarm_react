@@ -55,6 +55,7 @@ const RegisterProduct = () => {
             setIsEditMode(true); // 추가: 수정 모드 활성화
             api.get(API.PRODUCT(id), {
                 headers: { Authorization: `Bearer ${localStorage.getItem('jwt')}` },
+                withCredentials: true
             })
                 .then((res) => {
                     const product = res.data.result;
@@ -83,6 +84,7 @@ const RegisterProduct = () => {
                 headers: {
                     Authorization: `Bearer ${localStorage.getItem('jwt')}`,
                 },
+                withCredentials: true
             });
             console.log("File upload response:", response.data);
             return response.data;
@@ -219,6 +221,7 @@ const RegisterProduct = () => {
         if (isEditMode) {
             api.patch(API.PRODUCT(formData.pid), formData, {
                 headers: { Authorization: `Bearer ${localStorage.getItem('jwt')}` },
+                withCredentials: true
             })
                 .then((res) => {
                     console.log("전송 성공");
@@ -236,6 +239,7 @@ const RegisterProduct = () => {
         else {
             api.post(API.REGISTERPRODUCT, formData, {
                 headers: { Authorization: `Bearer ${localStorage.getItem('jwt')}` },
+                withCredentials: true
             })
                 .then((res) => {
                     console.log("전송 성공");

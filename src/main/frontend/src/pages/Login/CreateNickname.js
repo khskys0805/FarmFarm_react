@@ -16,6 +16,7 @@ const CreateNickname = () => {
         api.post(API.CREATENICKNAME,
             { nickname: nickname },{
             headers: { Authorization: `Bearer ${localStorage.getItem('jwt')}` },
+                withCredentials: true
         })
             .then((res) => {
                 console.log(res);

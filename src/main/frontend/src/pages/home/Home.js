@@ -20,6 +20,7 @@ const Home = () => {
     useEffect(() => {
         api.get(API.EVENTLIST, {
             headers: { Authorization: `Bearer ${localStorage.getItem('jwt')}` },
+            withCredentials: true
         })
             .then((res) => {
                 console.log(res.data.result);

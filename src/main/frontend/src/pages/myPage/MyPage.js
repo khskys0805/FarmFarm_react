@@ -18,6 +18,7 @@ const MyPage = () => {
         setLoading(true);
         api.get(API.MYPAGE, {
                 headers: { Authorization: `Bearer ${localStorage.getItem('jwt')}` },
+                withCredentials: true
             })
             .then((res) => {
                 console.log(res.data.result);

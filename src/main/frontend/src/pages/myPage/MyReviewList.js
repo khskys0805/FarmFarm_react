@@ -11,6 +11,7 @@ const MyReviewList = () => {
     const fetchReviewList = useCallback(() => {
         api.get(API.MYREVIEW, {
             headers: { Authorization: `Bearer ${localStorage.getItem('jwt')}` },
+            withCredentials: true
         })
             .then((res) => {
                 console.log("전송 성공");

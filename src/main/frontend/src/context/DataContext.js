@@ -19,6 +19,7 @@ export const DataProvider = ({ children }) => {
             const res = await api.get(API.ALLPRODUCT, {
                 params: { sort: sortValue },
                 headers: { Authorization: `Bearer ${localStorage.getItem('jwt')}` },
+                withCredentials: true
             });
             console.log(res.data.result.productList);
 
@@ -35,6 +36,7 @@ export const DataProvider = ({ children }) => {
             const res = await api.get(API.ALLFARM, {
                 params: { sort: sortValue },
                 headers: { Authorization: `Bearer ${localStorage.getItem('jwt')}` },
+                withCredentials: true
             });
             setFarmList(res.data.result.farmList);
             console.log(res.data.result.farmList);
@@ -47,6 +49,7 @@ export const DataProvider = ({ children }) => {
         try {
             const res = await api.get(API.ALLGROUPPRODUCT, {
                 headers: { Authorization: `Bearer ${localStorage.getItem('jwt')}` },
+                withCredentials: true
             });
             setGroupProductList(res.data.result.productList);
         } catch (error) {
@@ -58,6 +61,7 @@ export const DataProvider = ({ children }) => {
         try {
             const res = await api.get(API.ALLAUCTION, {
                 headers: { Authorization: `Bearer ${localStorage.getItem('jwt')}` },
+                withCredentials: true
             });
             setAuctionList(res.data.result.productList);
             console.log(res.data.result.productList);

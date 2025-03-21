@@ -21,6 +21,7 @@ const TabBar = () => {
 
         api.get(API.MYPAGE, {
             headers: { Authorization: `Bearer ${localStorage.getItem('jwt')}` },
+            withCredentials: true
         })
             .then((res) => {
                 const isSuccess = res.data.isSuccess;

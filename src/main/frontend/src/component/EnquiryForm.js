@@ -15,6 +15,7 @@ const EnquiryForm = ({pid, closeForm, fetchEnquiry}) => {
         e.preventDefault();
         api.post(API.REGISTERENQUIRY(pid), {content}, {
             headers: { Authorization: `Bearer ${localStorage.getItem('jwt')}` },
+            withCredentials: true
         })
             .then((res) => {
                 console.log("전송 성공");

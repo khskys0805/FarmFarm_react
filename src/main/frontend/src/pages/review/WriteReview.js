@@ -41,6 +41,7 @@ const WriteReview = () => {
     const handleWriteReview = () => {
         api.post(API.WRITEREVIEW(odId), reviewData, {
             headers: { Authorization: `Bearer ${localStorage.getItem('jwt')}` },
+            withCredentials: true
         })
             .then((res) => {
                 console.log("전송 성공");

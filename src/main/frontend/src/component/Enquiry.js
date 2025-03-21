@@ -21,6 +21,7 @@ const Enquiry = ({enquiries, fetchEnquiry}) => {
         e.preventDefault();
         api.patch(API.ENQUIRY(eid), {content}, {
             headers: { Authorization: `Bearer ${localStorage.getItem('jwt')}` },
+            withCredentials: true
         })
             .then((res) => {
                 console.log("전송 성공");
@@ -39,6 +40,7 @@ const Enquiry = ({enquiries, fetchEnquiry}) => {
         if (window.confirm("문의를 삭제하시겠습니까?")) {
             api.delete(API.ENQUIRY(eid), {
                 headers: { Authorization: `Bearer ${localStorage.getItem('jwt')}` },
+                withCredentials: true
             })
                 .then((res) => {
                     console.log("전송 성공");

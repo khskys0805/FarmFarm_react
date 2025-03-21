@@ -43,6 +43,7 @@ const Review = ({ review, type, fetchReviewList }) => {
         console.log(updatedReviewData);
         api.patch(API.REVIEW(review.rid), updatedReviewData, {
             headers: { Authorization: `Bearer ${localStorage.getItem('jwt')}` },
+            withCredentials: true
         })
             .then((res) => {
                 console.log("수정 성공");
@@ -59,6 +60,7 @@ const Review = ({ review, type, fetchReviewList }) => {
         if (window.confirm("리뷰를 삭제하시겠습니까?")){
             api.delete(API.REVIEW(rid), {
                 headers: { Authorization: `Bearer ${localStorage.getItem('jwt')}` },
+                withCredentials: true
             })
                 .then((res) => {
                     console.log("전송 성공");

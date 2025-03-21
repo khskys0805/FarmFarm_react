@@ -21,6 +21,7 @@ const MyEnquiryList = () => {
     const fetchEnquiryList = () => {
         api.get(API.MYENQUIRY, {
             headers: { Authorization: `Bearer ${localStorage.getItem('jwt')}` },
+            withCredentials: true
         })
             .then((res) => {
                 console.log("전송 성공");

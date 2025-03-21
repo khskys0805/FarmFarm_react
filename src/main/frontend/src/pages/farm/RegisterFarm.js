@@ -35,6 +35,7 @@ const RegisterFarm = () => {
             setIsEditMode(true); // 추가: 수정 모드 활성화
             api.get(API.FARM(id), {
                 headers: { Authorization: `Bearer ${localStorage.getItem('jwt')}` },
+                withCredentials: true
             })
                 .then((res) => {
                     const farm = res.data.result;
@@ -71,6 +72,7 @@ const RegisterFarm = () => {
                 headers: {
                     Authorization: `Bearer ${localStorage.getItem('jwt')}`,
                 },
+                withCredentials: true
             });
             console.log("File upload response:", response.data);
             return response.data;
@@ -180,6 +182,7 @@ const RegisterFarm = () => {
         if (isEditMode) {
             api.patch(API.FARM(formData.fid), formData, {
                 headers: { Authorization: `Bearer ${localStorage.getItem('jwt')}` },
+                withCredentials: true
             })
                 .then((res) => {
                     console.log(res.data);
@@ -193,6 +196,7 @@ const RegisterFarm = () => {
         else {
             api.post(API.REGISTERFARM, farmData, {
                 headers: { Authorization: `Bearer ${localStorage.getItem('jwt')}` },
+                withCredentials: true
             })
                 .then((res) => {
                     console.log(res.data);
