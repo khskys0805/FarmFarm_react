@@ -78,7 +78,7 @@ const ProductShippingAddress = () => {
         e.preventDefault();
         console.log(window.location.origin + '/payment-callback');
         api.post(API.ORDER, shippingAddress, {
-            headers: { Authorization: `Bearer ${localStorage.getItem('jwt')}`}
+            headers: { Authorization: `Bearer ${localStorage.getItem('jwt')}`},
             withCredentials: true
         })
             .then((res) => {
