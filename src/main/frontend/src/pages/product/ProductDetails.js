@@ -217,8 +217,8 @@ const ProductDetails = () => {
         api.post(API.PRODUCTTOCART(product.pid), { quantity: quantity }, {
             headers: {
                 Authorization: `Bearer ${localStorage.getItem('jwt')}`,
-                withCredentials: true
             },
+            withCredentials: true
         })
             .then((res) => {
                 console.log("전송 성공");
