@@ -4,7 +4,7 @@ import { DataProvider } from './context/DataContext';
 import Login from "./src/pages/login/Login"
 import CreateNickname from "./src/pages/login/CreateNickname";
 import Token from './src/pages/join/Token';
-import TabBar from './src/component/TabBar';
+import TabBar from './component/TabBar';
 import Home from './src/pages/home/Home';
 import AllProduct from './src/pages/product/AllProduct';
 import AllFarm from './src/pages/farm/AllFarm';
