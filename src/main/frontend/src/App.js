@@ -1,6 +1,6 @@
 import React from 'react';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
-import { DataProvider } from './src/context/DataContext';
+import { DataProvider } from './context/DataContext';
 import Login from "./src/pages/login/Login"
 import CreateNickname from "./src/pages/login/CreateNickname";
 import Token from './src/pages/join/Token';
