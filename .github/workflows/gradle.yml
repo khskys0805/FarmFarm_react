@@ -21,6 +21,12 @@ jobs:
       - name: Check Node v           # Node v 확인
         run: node -v
 
+      - name: Check src/main/frontend path
+        run: |
+          ls -l src
+          ls -l src/main
+          ls -l src/main/frontend
+
       - name: Install dependencies   # 의존 파일 설치
         run: |
           cd src/main/frontend       # 상대 경로 수정
