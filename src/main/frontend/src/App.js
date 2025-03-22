@@ -1,7 +1,7 @@
 import React from 'react';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { DataProvider } from './context/DataContext';
-import Login from './pages/login/Login';
+import Login from "./pages/login/Login";
 import CreateNickname from "./pages/login/CreateNickname";
 import Token from './pages/join/Token';
 import TabBar from './component/TabBar';
