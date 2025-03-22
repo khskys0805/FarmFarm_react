@@ -1,37 +1,37 @@
 import React from 'react';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
-import { DataProvider } from './context/DataContext';
-import Login from "/src/pages/login/Login";  // 수정된 경로
-import CreateNickname from "/src/pages/login/CreateNickname";
-import Token from './pages/join/Token';
-import TabBar from './component/TabBar';
-import Home from './pages/home/Home';
-import AllProduct from './pages/product/AllProduct';
-import AllFarm from './pages/farm/AllFarm';
-import ProductDetails from './pages/product/ProductDetails';
-import MyPage from './pages/myPage/MyPage';
-import FarmDetails from './pages/farm/FarmDetails';
-import RegisterProduct from './pages/product/RegisterProduct';
-import SearchProduct from './pages/search/SearchProduct';
-import RegisterFarm from './pages/farm/RegisterFarm';
-import ProductShippingAddress from "./pages/product/ProductShippingAddress";
-import MyOrderList from './pages/myPage/MyOrderList';
-import MyReviewList from './pages/myPage/MyReviewList';
-import MyEnquiryList from './pages/myPage/MyEnquiryList';
-import MyParticipateAuction from './pages/myPage/MyParticipateAuction';
-import WriteReview from './pages/review/WriteReview';
-import EditMyProfile from './pages/myPage/EditMyProfile';
-import Cart from './pages/cart/Cart';
-import PaymentCallback from "./pages/payment/PaymentCallback";
-import PaymentSuccess from "./pages/payment/PaymentSuccess";
-import PaymentFail from "./pages/payment/PaymentFail";
-import Category from "./pages/product/Category";
-import AuctionDetail from "./pages/product/AuctionDetail";
-import AllAuction from "./pages/product/AllAuction";
-import SellerPage from "./pages/seller/SellerPage";
-import EnquiryAdminPage from "./pages/enquiry/EnquiryAdminPage";
-import EventDetail from "./pages/event/EventDetail";
-import {Toaster} from "react-hot-toast";
+import { DataProvider } from '/src/context/DataContext';  // 절대 경로로 수정
+import Login from '/src/pages/login/Login';  // 절대 경로로 수정
+import CreateNickname from '/src/pages/login/CreateNickname';  // 절대 경로로 수정
+import Token from '/src/pages/join/Token';  // 절대 경로로 수정
+import TabBar from '/src/component/TabBar';  // 절대 경로로 수정
+import Home from '/src/pages/home/Home';  // 절대 경로로 수정
+import AllProduct from '/src/pages/product/AllProduct';  // 절대 경로로 수정
+import AllFarm from '/src/pages/farm/AllFarm';  // 절대 경로로 수정
+import ProductDetails from '/src/pages/product/ProductDetails';  // 절대 경로로 수정
+import MyPage from '/src/pages/myPage/MyPage';  // 절대 경로로 수정
+import FarmDetails from '/src/pages/farm/FarmDetails';  // 절대 경로로 수정
+import RegisterProduct from '/src/pages/product/RegisterProduct';  // 절대 경로로 수정
+import SearchProduct from '/src/pages/search/SearchProduct';  // 절대 경로로 수정
+import RegisterFarm from '/src/pages/farm/RegisterFarm';  // 절대 경로로 수정
+import ProductShippingAddress from '/src/pages/product/ProductShippingAddress';  // 절대 경로로 수정
+import MyOrderList from '/src/pages/myPage/MyOrderList';  // 절대 경로로 수정
+import MyReviewList from '/src/pages/myPage/MyReviewList';  // 절대 경로로 수정
+import MyEnquiryList from '/src/pages/myPage/MyEnquiryList';  // 절대 경로로 수정
+import MyParticipateAuction from '/src/pages/myPage/MyParticipateAuction';  // 절대 경로로 수정
+import WriteReview from '/src/pages/review/WriteReview';  // 절대 경로로 수정
+import EditMyProfile from '/src/pages/myPage/EditMyProfile';  // 절대 경로로 수정
+import Cart from '/src/pages/cart/Cart';  // 절대 경로로 수정
+import PaymentCallback from '/src/pages/payment/PaymentCallback';  // 절대 경로로 수정
+import PaymentSuccess from '/src/pages/payment/PaymentSuccess';  // 절대 경로로 수정
+import PaymentFail from '/src/pages/payment/PaymentFail';  // 절대 경로로 수정
+import Category from '/src/pages/product/Category';  // 절대 경로로 수정
+import AuctionDetail from '/src/pages/product/AuctionDetail';  // 절대 경로로 수정
+import AllAuction from '/src/pages/product/AllAuction';  // 절대 경로로 수정
+import SellerPage from '/src/pages/seller/SellerPage';  // 절대 경로로 수정
+import EnquiryAdminPage from '/src/pages/enquiry/EnquiryAdminPage';  // 절대 경로로 수정
+import EventDetail from '/src/pages/event/EventDetail';  // 절대 경로로 수정
+import { Toaster } from 'react-hot-toast';  // 절대 경로로 수정
 
 function App() {
     return (
