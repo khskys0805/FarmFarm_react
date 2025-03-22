@@ -14,17 +14,21 @@ jobs:
       - name: Checkout source code.  # Repo checkout
         uses: actions/checkout@v3
 
+      - name: List directory structure (Debugging step)   # 디렉토리 구조 확인
+        run: |
+          ls -R
+
       - name: Check Node v           # Node v 확인
         run: node -v
 
       - name: Install dependencies   # 의존 파일 설치
         run: |
-          cd FarmFarm_react/FarmFarm_react/src/main/frontend
+          cd src/main/frontend       # 상대 경로 수정
           npm install
 
       - name: Build React App        # React Build
         run: |
-          cd FarmFarm_react/FarmFarm_react/src/main/frontend
+          cd src/main/frontend       # 상대 경로 수정
           npm run build
 
       - name: Install AWS CLI        # AWS CLI 설치
@@ -43,7 +47,7 @@ jobs:
       # ✅ Docker 이미지 빌드 (캐싱 방지 위해 `--no-cache` 옵션 추가)
       - name: Build Docker Image (Frontend)
         run: |
-          cd FarmFarm_react/FarmFarm_react/src/main/frontend
+          cd src/main/frontend        # 상대 경로 수정
           docker build --no-cache -t farmfarm1234/farmfarm-react-image .
 
       # ✅ Docker Hub 로그인
