@@ -29,12 +29,12 @@ jobs:
 
       - name: Install dependencies   # 의존 파일 설치
         run: |
-          cd src/main/frontend       # 상대 경로 수정
+          cd src/frontend       # 상대 경로 수정
           npm install
 
       - name: Build React App        # React Build
         run: |
-          cd src/main/frontend       # 상대 경로 수정
+          cd src/frontend       # 상대 경로 수정
           ls -l
           npm run build
 
