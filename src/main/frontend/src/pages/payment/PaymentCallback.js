@@ -6,6 +6,7 @@ const PaymentCallback = () => {
     const location = useLocation();
     const queryParams = new URLSearchParams(location.search);
     const status = queryParams.get("status");
+    console.log(status);
 
     useEffect(() => {
         if (status === "success") {
