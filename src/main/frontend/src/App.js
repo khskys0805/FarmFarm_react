@@ -1,7 +1,7 @@
 import React from 'react';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { DataProvider } from './context/DataContext';
-import Login from "./pages/login/Login";  // 수정된 경로
+import Login from "/src/pages/login/Login";  // 수정된 경로
 import CreateNickname from "./pages/login/CreateNickname";
 import Token from './pages/join/Token';
 import TabBar from './component/TabBar';
