@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "baseUrl": "frontend/src",
+    "baseUrl": "src",
     "paths": {
       "pages/*": ["src/pages/*"],
       "components/*": ["src/components/*"],
