@@ -1,6 +1,6 @@
 import React from 'react';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
-import { DataProvider } from 'context/DataContext';  // 절대 경로
+import { DataProvider } from './context/DataContext';  // 절대 경로
 import Login from "pages/login/Login";  // 절대 경로
 import CreateNickname from "pages/login/CreateNickname";  // 절대 경로
 import Token from 'pages/join/Token';  // 절대 경로
