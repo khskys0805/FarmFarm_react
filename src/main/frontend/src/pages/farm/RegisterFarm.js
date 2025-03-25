@@ -209,7 +209,7 @@ const RegisterFarm = () => {
                     console.error(error);
                 });
         }
-    }, [farmData, navigate, addImages, deleteImages, isEditMode]); // useCallback 의존성 추가
+    }, [farmData, navigate, addImages, deleteImages, isEditMode, fieldNames]); // useCallback 의존성 추가
 
     return (
         <div className={styles.box}>

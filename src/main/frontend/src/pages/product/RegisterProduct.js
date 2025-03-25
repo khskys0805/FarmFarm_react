@@ -256,7 +256,7 @@ const RegisterProduct = () => {
                     console.error('상품 등록 중 오류 발생: ', error.response?.data);
                 });
         }
-    }, [productData, navigate, addImages, deleteImages, isEditMode]);
+    }, [productData, navigate, addImages, deleteImages, isEditMode, fieldNames]);
 
     return (
         <div className={styles.box}>
