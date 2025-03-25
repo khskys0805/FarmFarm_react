@@ -89,9 +89,5 @@ jobs:
             sudo docker pull farmfarm1234/farmfarm-react-image
 
             echo "⚙️ Running new Frontend Docker container..."
-            sudo docker run -d -p 3000:3000 \
-                -e NODE_OPTIONS="--max-old-space-size=4096" \
-                --name farmfarm-react-image \
-                farmfarm1234/farmfarm-react-image
-
+            sudo docker run -d -p 3000:3000 -e NODE_OPTIONS="--max-old-space-size=4096" farmfarm1234/farmfarm-react-image
             echo "✅ Frontend Deployment Completed!"
