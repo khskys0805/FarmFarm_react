@@ -141,17 +141,17 @@ const RegisterFarm = () => {
         });
     }
 
-    const fieldNames = {
-        name: "농장 이름",
-        locationFull: "농장 전체 주소",
-        locationDetail: "농장 상세 주소",
-        detail: "농장 설명",
-        auction: "경매 진행 여부"
-    };
-
     const handleSubmitForm = useCallback(e => {
         e.preventDefault();
         console.log(farmData);
+
+        const fieldNames = {
+            name: "농장 이름",
+            locationFull: "농장 전체 주소",
+            locationDetail: "농장 상세 주소",
+            detail: "농장 설명",
+            auction: "경매 진행 여부"
+        };
 
         // validateForm을 handleSubmitForm 안으로 이동
         const validateForm = () => {
@@ -209,7 +209,7 @@ const RegisterFarm = () => {
                     console.error(error);
                 });
         }
-    }, [farmData, navigate, addImages, deleteImages, isEditMode, fieldNames]); // useCallback 의존성 추가
+    }, [farmData, navigate, addImages, deleteImages, isEditMode]); // useCallback 의존성 추가
 
     return (
         <div className={styles.box}>

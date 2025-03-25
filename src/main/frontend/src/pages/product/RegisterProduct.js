@@ -173,19 +173,19 @@ const RegisterProduct = () => {
         });
     };
 
-    const fieldNames = {
-        productType: "상품 유형",
-        name: "상품 이름",
-        quantity: "상품 수량",
-        detail: "상품 설명",
-        price: "상품 가격",
-        shippingMethod: "거래 방법"
-    };
-
     const handleSubmitForm = useCallback(e => {
         e.preventDefault();
         console.log(productData);
 
+        const fieldNames = {
+            productType: "상품 유형",
+            name: "상품 이름",
+            quantity: "상품 수량",
+            detail: "상품 설명",
+            price: "상품 가격",
+            shippingMethod: "거래 방법"
+        };
+        
         const validateForm = () => {
             const requiredFields = ['productType', 'name', 'quantity', 'detail', 'price', 'shippingMethod'];
 
@@ -256,7 +256,7 @@ const RegisterProduct = () => {
                     console.error('상품 등록 중 오류 발생: ', error.response?.data);
                 });
         }
-    }, [productData, navigate, addImages, deleteImages, isEditMode, fieldNames]);
+    }, [productData, navigate, addImages, deleteImages, isEditMode]);
 
     return (
         <div className={styles.box}>
