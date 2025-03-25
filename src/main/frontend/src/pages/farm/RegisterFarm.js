@@ -149,25 +149,27 @@ const RegisterFarm = () => {
         auction: "경매 진행 여부"
     };
 
-    const validateForm = () => {
-        const requiredFields = ['name', 'locationFull', 'locationDetail', 'detail'];
-
-        if (!isEditMode) {
-            requiredFields.push('auction');
-        }
-
-        for (const field of requiredFields) {
-            if (!farmData[field]) {
-                toast.error(`${fieldNames[field]}을(를) 입력해주세요.`);
-                return false;
-            }
-        }
-        return true;
-    };
-
     const handleSubmitForm = useCallback(e => {
         e.preventDefault();
         console.log(farmData);
+
+        // validateForm을 handleSubmitForm 안으로 이동
+        const validateForm = () => {
+            const requiredFields = ['name', 'locationFull', 'locationDetail', 'detail'];
+
+            if (!isEditMode) {
+                requiredFields.push('auction');
+            }
+
+            for (const field of requiredFields) {
+                if (!farmData[field]) {
+                    toast.error(`${fieldNames[field]}을(를) 입력해주세요.`);
+                    return false;
+                }
+            }
+            return true;
+        };
+
         if (!validateForm()) {
             return;
         }
@@ -207,7 +209,7 @@ const RegisterFarm = () => {
                     console.error(error);
                 });
         }
-    }, [farmData, navigate, addImages, deleteImages, isEditMode, validateForm]);
+    }, [farmData, navigate, addImages, deleteImages, isEditMode]); // useCallback 의존성 추가
 
     return (
         <div className={styles.box}>

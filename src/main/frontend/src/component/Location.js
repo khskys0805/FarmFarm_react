@@ -69,7 +69,7 @@ const Location = ({ farms, type }) => {
                 }
             });
         }
-    }, [farms, type]);
+    }, [farms, type, navigate]);
 
     const mapStyle = {
         width: "100%",

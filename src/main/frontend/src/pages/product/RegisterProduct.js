@@ -182,31 +182,32 @@ const RegisterProduct = () => {
         shippingMethod: "거래 방법"
     };
 
-    const validateForm = () => {
-        const requiredFields = ['productType', 'name', 'quantity', 'detail', 'price', 'shippingMethod'];
-
-        for (const field of requiredFields) {
-            const value = productData[field];
-
-            // Check for empty strings
-            if (typeof value === 'string' && value.trim() === "") {
-                toast.error(`${fieldNames[field]}을(를) 입력해주세요.`);
-                return false;
-            }
-
-            // Check for non-string types (e.g., number, boolean)
-            if (value === null || value === undefined || value === '') {
-                toast.error(`${fieldNames[field]}을(를) 입력해주세요.`);
-                return false;
-            }
-        }
-
-        return true;
-    };
-
     const handleSubmitForm = useCallback(e => {
         e.preventDefault();
         console.log(productData);
+
+        const validateForm = () => {
+            const requiredFields = ['productType', 'name', 'quantity', 'detail', 'price', 'shippingMethod'];
+
+            for (const field of requiredFields) {
+                const value = productData[field];
+
+                // Check for empty strings
+                if (typeof value === 'string' && value.trim() === "") {
+                    toast.error(`${fieldNames[field]}을(를) 입력해주세요.`);
+                    return false;
+                }
+
+                // Check for non-string types (e.g., number, boolean)
+                if (value === null || value === undefined || value === '') {
+                    toast.error(`${fieldNames[field]}을(를) 입력해주세요.`);
+                    return false;
+                }
+            }
+
+            return true;
+        };
+
         if (!validateForm()) {
             return;
         }
@@ -255,7 +256,7 @@ const RegisterProduct = () => {
                     console.error('상품 등록 중 오류 발생: ', error.response?.data);
                 });
         }
-    }, [productData, navigate, addImages, deleteImages, isEditMode, validateForm]);
+    }, [productData, navigate, addImages, deleteImages, isEditMode]);
 
     return (
         <div className={styles.box}>
