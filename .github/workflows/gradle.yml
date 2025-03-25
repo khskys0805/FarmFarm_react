@@ -98,5 +98,9 @@ jobs:
             sudo docker pull farmfarm1234/farmfarm-react-image
 
             echo "⚙️ Running new Frontend Docker container..."
-            sudo docker run -d -p 3000:3000 -e NODE_OPTIONS="--max-old-space-size=4096" -e HOST=0.0.0.0 farmfarm1234/farmfarm-react-image
-            echo "✅ Frontend Deployment Completed!"
+            sudo docker run -d -p 3000:3000 \
+            -e NODE_OPTIONS="--max-old-space-size=4096" \
+            -e HOST=0.0.0.0 \
+            -e WDS_SOCKET_HOST=farm-farm.store \
+            farmfarm1234/farmfarm-react-imageecho "
+            ✅ Frontend Deployment Completed!"
