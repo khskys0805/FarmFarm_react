@@ -1,10 +1,10 @@
 {
   "compilerOptions": {
-    "baseUrl": "src",
+    "baseUrl": "src/main/frontend/src",
     "paths": {
-      "pages/*": ["src/pages/*"],
-      "components/*": ["src/components/*"],
-      "context/*": ["src/context/*"]
+      "pages/*": ["pages/*"],
+      "components/*": ["components/*"],
+      "context/*": ["context/*"]
     }
   },
   "include": ["src/**/*.js", "src/**/*.jsx"]
