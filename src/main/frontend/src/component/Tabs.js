@@ -1,6 +1,6 @@
 // Tabs.js
 import styles from "./Tabs.module.css";
-import { useEffect, useState } from "react";
+import {useCallback, useEffect, useState} from "react";
 import Review from "./Review";
 import Button from "./Button";
 import EnquiryForm from "./EnquiryForm";
