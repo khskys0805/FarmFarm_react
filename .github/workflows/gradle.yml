@@ -104,3 +104,12 @@ jobs:
               -e WDS_SOCKET_HOST=farm-farm.store \
               farmfarm1234/farmfarm-react-image
             echo " ✅ Frontend Deployment Completed!"
+
+      # ✅ 배포 완료 후 AWS 보안 그룹에서 GitHub IP 제거
+      - name: Remove GitHub IP from AWS Security Group
+        run: |
+          aws ec2 revoke-security-group-ingress \
+            --group-id ${{ secrets.AWS_SG_ID }} \
+            --protocol tcp \
+            --port 22 \
+            --cidr ${{ steps.ip.outputs.ipv4 }}/32
