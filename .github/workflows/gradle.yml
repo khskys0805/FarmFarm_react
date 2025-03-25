@@ -55,8 +55,8 @@ jobs:
           timeout: 60s
           script: |
             echo "🔄 Stopping and Removing existing Frontend Docker container..."
-            sudo docker stop farmfarm-react-image || true
-            sudo docker rm farmfarm-react-image || true
+            sudo docker stop farmfarm1234/farmfarm-react-image || true
+            sudo docker rm farmfarm1234/farmfarm-react-image || true
 
             echo "🗑️ Removing old Frontend Docker images..."
             sudo docker rmi farmfarm1234/farmfarm-react-image || true
