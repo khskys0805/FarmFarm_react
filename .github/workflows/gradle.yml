@@ -55,11 +55,20 @@ jobs:
           timeout: 60s
           script: |
             echo "🔄 Stopping and Removing existing Frontend Docker container..."
-            sudo docker stop farmfarm1234/farmfarm-react-image || true
-            sudo docker rm farmfarm1234/farmfarm-react-image || true
+            
+            # 기존 컨테이너 ID를 자동으로 찾아서 중지 및 삭제
+            CONTAINER_ID=$(sudo docker ps -a -q --filter "ancestor=farmfarm1234/farmfarm-react-image")
+            if [ ! -z "$CONTAINER_ID" ]; then
+                sudo docker stop $CONTAINER_ID
+                sudo docker rm $CONTAINER_ID
+            fi
 
             echo "🗑️ Removing old Frontend Docker images..."
-            sudo docker rmi farmfarm1234/farmfarm-react-image || true
+            # 이미지 ID로 기존 이미지를 삭제
+            IMAGE_ID=$(sudo docker images -q farmfarm1234/farmfarm-react-image)
+            if [ ! -z "$IMAGE_ID" ]; then
+                sudo docker rmi $IMAGE_ID
+            fi
 
       # ✅ 새로운 Docker 이미지 빌드
       - name: Build Docker Image (Frontend)
