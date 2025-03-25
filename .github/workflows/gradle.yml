@@ -21,18 +21,6 @@ jobs:
       - name: Check Node v           # Node v 확인
         run: node -v
 
-      - name: Check src/main/frontend path
-        run: |
-          ls -l src
-          ls -l src/main
-          ls -l src/main/frontend
-
-      - name: Check if Login file exists
-        run: |
-          ls -l src/main/frontend/src
-          ls -l src/main/frontend/src/pages
-          ls -l src/main/frontend/src/pages/login
-
       - name: Install dependencies   # 의존 파일 설치
         run: |
           cd src/main/frontend       # 상대 경로 수정
@@ -55,7 +43,7 @@ jobs:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         run: |
-          aws s3 cp --recursive --region ap-northeast-2 build s3://farmfarm-bucket
+          aws s3 cp --recursive --region ap-northeast-2 src/main/frontend/build s3://farmfarm-bucket
 
       # ✅ Docker 이미지 빌드 (캐싱 방지 위해 `--no-cache` 옵션 추가)
       - name: Build Docker Image (Frontend)

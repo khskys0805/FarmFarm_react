@@ -185,7 +185,7 @@ const RegisterProduct = () => {
             price: "상품 가격",
             shippingMethod: "거래 방법"
         };
-        
+
         const validateForm = () => {
             const requiredFields = ['productType', 'name', 'quantity', 'detail', 'price', 'shippingMethod'];
 
