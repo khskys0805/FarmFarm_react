@@ -11,7 +11,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout source code.  # Repo checkout
+      - name: Checkout source code  # 코드 가져오기
         uses: actions/checkout@v3
 
       - name: List directory structure (Debugging step)   # 디렉토리 구조 확인
@@ -29,7 +29,6 @@ jobs:
       - name: Build React App        # React Build
         run: |
           cd src/main/frontend       # 상대 경로 수정
-          ls -l
           npm run build
 
       - name: Install AWS CLI        # AWS CLI 설치
@@ -45,22 +44,8 @@ jobs:
         run: |
           aws s3 cp --recursive --region ap-northeast-2 src/main/frontend/build s3://farmfarm-bucket
 
-      # ✅ Docker 이미지 빌드 (캐싱 방지 위해 `--no-cache` 옵션 추가)
-      - name: Build Docker Image (Frontend)
-        run: |
-          cd src/main/frontend        # 상대 경로 수정
-          docker build --no-cache -t farmfarm1234/farmfarm-react-image .
-
-      # ✅ Docker Hub 로그인
-      - name: Login to Docker Hub
-        run: echo "${{ secrets.DOCKERHUB_PW }}" | docker login -u "${{ secrets.DOCKERHUB_USERNAME }}" --password-stdin
-
-      # ✅ Docker Hub Push (프론트엔드 이미지 푸시)
-      - name: Push Frontend Docker Image to Docker Hub
-        run: docker push farmfarm1234/farmfarm-react-image
-
-      # ✅ EC2 접속 후 프론트엔드 배포 스크립트 실행
-      - name: Deploy Frontend to AWS EC2
+      # ✅ EC2에서 기존 컨테이너와 이미지 삭제 (Push 전에 실행)
+      - name: Remove old container & image from EC2
         uses: appleboy/ssh-action@v0.1.6
         with:
           host: ${{ secrets.EC2_HOST }}
@@ -76,6 +61,30 @@ jobs:
             echo "🗑️ Removing old Frontend Docker images..."
             sudo docker rmi farmfarm1234/farmfarm-react-image || true
 
+      # ✅ 새로운 Docker 이미지 빌드
+      - name: Build Docker Image (Frontend)
+        run: |
+          cd src/main/frontend        # 상대 경로 수정
+          docker build --no-cache -t farmfarm1234/farmfarm-react-image .
+
+      # ✅ Docker Hub 로그인
+      - name: Login to Docker Hub
+        run: echo "${{ secrets.DOCKERHUB_PW }}" | docker login -u "${{ secrets.DOCKERHUB_USERNAME }}" --password-stdin
+
+      # ✅ 새 이미지 Docker Hub에 Push
+      - name: Push Frontend Docker Image to Docker Hub
+        run: docker push farmfarm1234/farmfarm-react-image
+
+      # ✅ EC2에서 새로운 이미지 가져오고 실행
+      - name: Deploy Frontend to AWS EC2
+        uses: appleboy/ssh-action@v0.1.6
+        with:
+          host: ${{ secrets.EC2_HOST }}
+          username: ubuntu
+          key: ${{ secrets.EC2_KEY }}
+          port: ${{ secrets.EC2_SSH_PORT }}
+          timeout: 60s
+          script: |
             echo "🚀 Pulling latest Frontend Docker image..."
             sudo docker pull farmfarm1234/farmfarm-react-image
 
