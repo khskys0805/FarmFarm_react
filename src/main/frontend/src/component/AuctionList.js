@@ -55,9 +55,9 @@ const AuctionList = ({ numToShow }) => {
                             <div className={styles.item_media}>
                                 <img src={item.images[0].fileUrl} alt=""/>
                             </div>
-                            <div className={styles.auction_time}>
-                                <h3 data-date={item.date}></h3>
-                            </div>
+                            {/*<div className={styles.auction_time}>*/}
+                            {/*    <h3 data-date={item.date}></h3>*/}
+                            {/*</div>*/}
                             <div className={styles.item_content}>
                                 <div>
                                     <h5>{item.farm.name}</h5>

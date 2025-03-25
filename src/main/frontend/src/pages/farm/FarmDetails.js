@@ -6,7 +6,6 @@ import SwiperComponent from "../../component/SwiperComponent";
 import {IoIosArrowDropleftCircle} from "react-icons/io";
 import {FaPen} from "react-icons/fa6";
 import {FaTrashAlt} from "react-icons/fa";
-import {FiShare2} from "react-icons/fi";
 import Tabs from "../../component/Tabs";
 import api from "../../api/api";
 import ShareButton from "../../component/ShareButton";
@@ -83,7 +82,7 @@ const FarmDetails = ({ myFarm }) => {
                     console.error('작성한 게시물을 가져오는 중 오류 발생: ', error);
                 });
         }
-    }, []);
+    }, [id, myFarm]);
 
     const handleEdit = () => {
         navigate(`/editFarm/${id}`);

@@ -2,7 +2,6 @@ import styles from "./AllAuction.module.css";
 import {useContext} from "react";
 import {DataContext} from "../../context/DataContext";
 import Header from "../../component/Header";
-import ProductList from "../../component/ProductList";
 import AuctionList from "../../component/AuctionList";
 const AllAuction = () => {
     const { auctionList = [] } = useContext(DataContext); // 기본값을 빈 배열로 설정;

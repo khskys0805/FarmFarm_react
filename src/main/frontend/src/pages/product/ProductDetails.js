@@ -3,7 +3,6 @@ import React, { useContext, useEffect, useState } from "react";
 import { DataContext } from "../../context/DataContext";
 import API from "../../config";
 import { useNavigate, useParams } from "react-router-dom";
-import { FiShare2 } from "react-icons/fi";
 import { FaStar, FaTrashAlt, FaPen } from "react-icons/fa";
 import { IoIosArrowDropleftCircle } from "react-icons/io";
 import { MdCancel } from "react-icons/md";
@@ -19,13 +18,12 @@ const ProductDetails = () => {
     const { id } = useParams();
     const { fetchProductList } = useContext(DataContext);
     const [product, setProduct] = useState([]);
-    const [reviews, setReviews] = useState([]);
+    // const [reviews, setReviews] = useState([]);
     const [images, setImages] = useState([]);
     const [quantity, setQuantity] = useState(1);
     const [isGroup, setIsGroup] = useState(false);
     const [isDirect, setIsDirect] = useState(false);
     const [showLayer, setShowLayer] = useState(false);
-    const [groups, setGroups] = useState([]);
     const [discount, setDiscount] = useState("");
     const [groupCapacity, setGroupCapacity] = useState("");
     const [groupList, setGroupList] = useState([]);
@@ -64,7 +62,7 @@ const ProductDetails = () => {
                     setGroupCapacity(res.data.result.groupProductQuantity);
                 }
                 setIsDirect(res.data.result.direct);
-                setReviews(res.data.reviews || []); // null을 빈 배열로 대체
+                // setReviews(res.data.reviews || []); // null을 빈 배열로 대체
                 const imageArray = res.data.result.images.map(image => (
                     <img key={image.fileId} src={image.fileUrl} alt={`Slide ${image.fileId}`} style={{ objectFit: "cover", height: "50%" }} />
                 ));
@@ -331,9 +329,9 @@ const ProductDetails = () => {
                     <form>
                         <div className={styles.title}>
                             <h3>공동구매 참여하기</h3>
-                            <a href="#" onClick={handleCancelGroupProduct}>
+                            <button onClick={handleCancelGroupProduct}>
                                 <MdCancel size="25"/>
-                            </a>
+                            </button>
                         </div>
                         <div>
                             <div className={styles.group_open_btn}>

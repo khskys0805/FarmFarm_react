@@ -38,9 +38,6 @@ const EventDetail = () => {
         return <div>Loading...</div>; // 데이터 로딩 중일 때 표시
     }
 
-    // content를 마침표로 분리
-    const lines = eventDetail.content.split(".").map(line => line.trim());
-
     return (
         <div className={styles.box}>
             <Header title={"이벤트"} go={`/home`} />

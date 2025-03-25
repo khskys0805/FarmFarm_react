@@ -18,7 +18,7 @@ const EditMyProfile = () => {
 
     useEffect(() => {
         setProfileImage(user.profileImage ? user.profileImage : icon);
-    }, [])
+    }, [user.profileImage])
 
     const inputChange = (e) => {
         setNickName(e.target.value)

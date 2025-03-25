@@ -28,7 +28,7 @@ const CreateNickname = () => {
     }
     return (
         <div className={styles.box}>
-            <img src={logo} className={styles.logo}/>
+            <img src={logo} className={styles.logo} alt="logo"/>
             <div className={styles.container}>
                 <h2>닉네임을 입력해주세요</h2>
                 <div className={styles.input_box}><InputBox name={"nickname"} value={nickname} placeholder={"닉네임을 설정해주세요."} onChange={(e) => inputChange(e)}/></div>

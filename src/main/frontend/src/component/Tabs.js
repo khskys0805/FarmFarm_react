@@ -24,7 +24,7 @@ const Tabs = ({ type, farm, product }) => {
     const [isMyFarm, setIsMyFarm] = useState(false);
     const [loading, setLoading] = useState(true);  // 로딩 상태 추가
 
-    const fetchEnquiry = () => {
+    const fetchEnquiry = useCallback(() => {
         api.get(API.ENQUIRY(product.pid), {
             headers: { Authorization: `Bearer ${localStorage.getItem('jwt')}` },
             withCredentials: true
@@ -32,13 +32,12 @@ const Tabs = ({ type, farm, product }) => {
             .then((res) => {
                 console.log("전송 성공");
                 console.log(res.data.result.enquiryList);
-
                 setEnquiryList(res.data.result.enquiryList);
             })
             .catch((error) => {
                 console.error('작성한 게시물을 가져오는 중 오류 발생: ', error);
             });
-    }
+    }, [product.pid]); // product.pid가 변경될 때만 함수가 다시 생성됨
 
     useEffect(() => {
         setLoading(true);  // 데이터 로딩 시작 시 true로 설정
@@ -131,7 +130,7 @@ const Tabs = ({ type, farm, product }) => {
                 });
             setLoading(false);
         }
-    }, [type, farm, product]);
+    }, [type, farm, product, fetchEnquiry]);
 
     if (loading) {
         return (

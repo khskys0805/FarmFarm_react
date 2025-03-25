@@ -207,7 +207,7 @@ const RegisterFarm = () => {
                     console.error(error);
                 });
         }
-    }, [farmData, navigate, addImages, deleteImages]);
+    }, [farmData, navigate, addImages, deleteImages, isEditMode, validateForm]);
 
     return (
         <div className={styles.box}>

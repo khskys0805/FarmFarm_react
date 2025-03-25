@@ -22,6 +22,8 @@ const Category = () => {
                 return "VEGETABLE";
             case 2:
                 return "ETC";
+            default:
+                return "ETC";
         }
     };
 
@@ -54,10 +56,10 @@ const Category = () => {
                         className={styles.category}
                         onClick={() => handleShowCategoryProduct(item.value - 1)}
                     >
-                        <a className={styles.text}>
+                        <button className={styles.text}>
                             <span>{item.name}</span>
                             <IoIosArrowForward />
-                        </a>
+                        </button>
                     </div>
                 ))}
             </div>

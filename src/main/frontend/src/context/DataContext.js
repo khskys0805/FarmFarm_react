@@ -1,4 +1,4 @@
-import { createContext, useState, useEffect } from "react";
+import { createContext, useState, useEffect, useCallback } from "react";
 import API from "../config";
 import api from "../api/api";
 
@@ -14,7 +14,8 @@ export const DataProvider = ({ children }) => {
     const [auctionList, setAuctionList] = useState([]);
     const [loading, setLoading] = useState(true);
 
-    const fetchProductList = async () => {
+    // fetchProductList를 useCallback으로 감싸서 메모이제이션
+    const fetchProductList = useCallback(async () => {
         try {
             const res = await api.get(API.ALLPRODUCT, {
                 params: { sort: sortValue },
@@ -29,9 +30,10 @@ export const DataProvider = ({ children }) => {
         } catch (error) {
             console.error('Error fetching products: ', error);
         }
-    };
+    }, [sortValue]); // sortValue가 변경되면 새로 정의되도록 의존성 추가
 
-    const fetchFarmList = async () => {
+    // fetchFarmList를 useCallback으로 감싸서 메모이제이션
+    const fetchFarmList = useCallback(async () => {
         try {
             const res = await api.get(API.ALLFARM, {
                 params: { sort: sortValue },
@@ -43,7 +45,7 @@ export const DataProvider = ({ children }) => {
         } catch (error) {
             console.error('Error fetching farms: ', error);
         }
-    };
+    }, [sortValue]); // sortValue가 변경되면 새로 정의되도록 의존성 추가
 
     const fetchGroupProductList = async () => {
         try {
@@ -55,7 +57,7 @@ export const DataProvider = ({ children }) => {
         } catch (error) {
             console.error('Error fetching groupProduct: ', error);
         }
-    }
+    };
 
     const fetchAuctionList = async () => {
         try {
@@ -68,7 +70,7 @@ export const DataProvider = ({ children }) => {
         } catch (error) {
             console.error('Error fetching groupProduct: ', error);
         }
-    }
+    };
 
     useEffect(() => {
         const jwt = localStorage.getItem('jwt');
@@ -81,12 +83,12 @@ export const DataProvider = ({ children }) => {
             console.warn('JWT token is missing or invalid.');
         }
         setLoading(false);
-    }, []);
+    }, [fetchProductList, fetchFarmList]); // 의존성 배열에 fetchProductList와 fetchFarmList 추가
 
     useEffect(() => {
         fetchFarmList();
         fetchProductList();
-    }, [sortValue]); // sortValue가 변경될 때마다 실행
+    }, [sortValue, fetchFarmList, fetchProductList]); // sortValue가 변경될 때마다 실행
 
     useEffect(() => {
         // 페이지 이동 시 sortValue를 기본값으로 설정
@@ -99,9 +101,17 @@ export const DataProvider = ({ children }) => {
 
     return (
         <DataContext.Provider
-            value={{ productList, farmList, groupProductList, auctionList,
-                fetchProductList, fetchFarmList, setSortValue,
-                fetchGroupProductList, fetchAuctionList }}>
+            value={{
+                productList,
+                farmList,
+                groupProductList,
+                auctionList,
+                fetchProductList,
+                fetchFarmList,
+                setSortValue,
+                fetchGroupProductList,
+                fetchAuctionList
+            }}>
             {children}
         </DataContext.Provider>
     );

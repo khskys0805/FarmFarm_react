@@ -45,13 +45,13 @@ const MyOrderList = () => {
                     text: "결제 취소",
                     className: styles.status_canceled
                 };
+            default:
+                return {
+                    text: "결제 이상",
+                    className: styles.status_canceled
+                }
         }
     };
-
-    const handleOrderCancel = (id) => {
-
-    }
-
     const handleOrderProduct = () => {
         navigate(`/productList`);
     }

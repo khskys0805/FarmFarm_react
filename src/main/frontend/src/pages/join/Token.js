@@ -29,7 +29,7 @@ const Token = () => {
 
                     console.log(tokenResponse.data); // 서버에서 반환된 토큰 데이터
 
-                    const { access_token, refresh_token } = tokenResponse.data;
+                    const { access_token } = tokenResponse.data;
                     console.log("access_token " + access_token);
 
                     // access_token을 API로 보내기
@@ -57,7 +57,7 @@ const Token = () => {
         };
 
         fetchData();
-    }, [code, navigate]);
+    }, [code, navigate, REDIRECT_URI, REST_API_KEY]);
 
     if (loading) {
         return (

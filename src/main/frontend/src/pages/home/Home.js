@@ -13,7 +13,7 @@ import API from "../../config";
 import api from "../../api/api";
 
 const Home = () => {
-    const { productList = [], farmList = [], groupProductList = [], setSortValue } = useContext(DataContext);
+    const { farmList = [] } = useContext(DataContext);
     const [eventSlides, setEventSlides] = useState([]);
     const navigate = useNavigate();
 
@@ -38,7 +38,7 @@ const Home = () => {
             .catch((error) => {
                 console.error('에러 발생: ', error.response.data || error);
             })
-    }, []);
+    }, [navigate]);
 
     const numProductsToShow = 4; // 보여줄 상품 개수를 지정
     const numFarmsToShow = 5; // 보여줄 농장 개수를 지정

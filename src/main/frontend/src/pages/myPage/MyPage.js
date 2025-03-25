@@ -10,7 +10,6 @@ import api from "../../api/api";
 
 const MyPage = () => {
     const [user, setUser] = useState([]);
-    const [farm, setFarm] = useState([]);
     const [loading, setLoading] = useState(true);  // 로딩 상태 추가
     const navigate = useNavigate();
 
@@ -62,12 +61,12 @@ const MyPage = () => {
                                 님
                             </div>
                             <div>
-                                <a
+                                <button
                                     className={styles.profile_edit_btn}
                                     onClick={navigateToEditProfile}
                                 >
                                     프로필 관리
-                                </a>
+                                </button>
                             </div>
                         </td>
                     </tr>

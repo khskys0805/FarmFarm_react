@@ -74,9 +74,9 @@ const TabBar = () => {
                 </button>
                 <button onClick={() => handleTabClick('myPage')}>
                     {profileImage ? (
-                        <img src={profileImage} style={{ borderRadius: '50%', width: '25px', height: '25px'}} />
+                        <img src={profileImage} style={{ borderRadius: '50%', width: '25px', height: '25px'}} alt="profile-Image"/>
                     ) : (
-                        <img src="https://farmfarm-bucket.s3.ap-northeast-2.amazonaws.com/7cc20134-7565-44e3-ba1d-ae6edbc213e5.png" alt="" style={{ borderRadius: '50%', width: '25px', height: '25px'}} />
+                        <img src="https://farmfarm-bucket.s3.ap-northeast-2.amazonaws.com/7cc20134-7565-44e3-ba1d-ae6edbc213e5.png" alt="profile-Image" style={{ borderRadius: '50%', width: '25px', height: '25px'}} />
                     )}
                 </button>
             </div>

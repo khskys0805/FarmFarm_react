@@ -24,12 +24,6 @@ const ProductShippingAddress = () => {
     const { isDirect, isGroup, isAuction, pid } = location.state || {};
 
     useEffect(() => {
-        console.log("isGroup:", isGroup);
-        console.log("isDirect:", isDirect);
-        console.log("isAuction:", isAuction); // 추가
-    }, []);
-
-    useEffect(() => {
         if (isDirect === 1) {
             setShippingAddress((prevAddress) => ({
                 ...prevAddress,

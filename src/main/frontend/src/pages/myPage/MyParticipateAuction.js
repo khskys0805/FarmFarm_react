@@ -2,7 +2,6 @@ import styles from "./MyParticipateAuction.module.css";
 import Header from "../../component/Header";
 import {useEffect, useState} from "react";
 import API from "../../config";
-import img from "../../images/logo/farmfarm_logo.png";
 import Button from "../../component/Button";
 import {useNavigate} from "react-router-dom";
 import api from "../../api/api";
@@ -42,9 +41,11 @@ const MyOrderList = () => {
     const getStatus = (status) => {
         switch (status) {
             case "AUCTION_CLOSE":
-                return
+                return "경매 닫힘";
             case "AUCTION_IN_PROGRESS":
                 return "경매 진행 중";
+            default:
+                return "nothing";
         }
     }
 

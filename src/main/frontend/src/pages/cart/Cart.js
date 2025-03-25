@@ -2,7 +2,6 @@ import styles from "./Cart.module.css";
 import Header from "../../component/Header";
 import React, {useEffect, useState} from "react";
 import API from "../../config";
-import img from "../../images/logo/farmfarm_logo.png";
 import {Link, useNavigate} from "react-router-dom";
 import {FaTrashAlt} from "react-icons/fa";
 import Button from "../../component/Button";
@@ -12,7 +11,6 @@ import api from "../../api/api";
 
 const Cart = () => {
     const [carts, setCarts] = useState([]);
-    const [quantity, setQuantity] = useState(1);
     const navigate = useNavigate();
     useEffect(() => {
         fetchCartItems();

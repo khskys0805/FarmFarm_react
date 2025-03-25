@@ -3,7 +3,6 @@ import API from "../../config";
 import {useNavigate, useParams} from "react-router-dom";
 import styles from "./AuctionDetail.module.css";
 import SwiperComponent from "../../component/SwiperComponent";
-import {FiShare2} from "react-icons/fi";
 import Button from "../../component/Button";
 import {IoIosArrowDropleftCircle} from "react-icons/io";
 import api from "../../api/api";
@@ -14,7 +13,7 @@ const AuctionDetail = () => {
     const [product, setProduct] = useState([]);
     const [images, setImages] = useState([]);
     const [isDirect, setIsDirect] = useState(0);
-    const [isAuction, setIsAuction] = useState(true);
+    const [isAuction] = useState(true);
     const [timeLeft, setTimeLeft] = useState({});
     const [days, setDays] = useState('00'); // days는 별도로 관리
     const navigate = useNavigate();
