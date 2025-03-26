@@ -1,15 +1,9 @@
-module.exports = function override(config, env) {
-    if (env === 'development') {
-        config.devServer = {
-            ...config.devServer,
-            client: {
-                webSocketURL: {
-                    hostname: 'farm-farm.store',
-                    port: '443', // HTTPS라면 443 포트 사용
-                    protocol: 'wss' // 🔥 웹소켓을 보안 연결(wss)로 강제 설정
-                }
-            }
-        };
-    }
-    return config;
+module.exports = {
+    devServer: {
+        client: {
+            webSocketURL: null, // 웹소켓 연결 끊기
+        },
+        hot: false, // 핫 리로딩 비활성화
+        liveReload: false, // 라이브 리로딩 비활성화
+    },
 };
