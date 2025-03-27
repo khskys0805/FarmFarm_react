@@ -7,7 +7,7 @@ const Login = () => {
     const REDIRECT_URI = process.env.REACT_APP_REDIRECT_URI;
     const REST_API_KEY = process.env.REACT_APP_APP_KEY;
     const link = `https://kauth.kakao.com/oauth/authorize?client_id=${REST_API_KEY}&redirect_uri=${REDIRECT_URI}&response_type=code`;
-
+    console.log(link);
     const loginHandler = () => {
         window.location.href = link;
     }
