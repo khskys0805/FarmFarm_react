@@ -2,7 +2,7 @@
 FROM node:20-alpine AS build
 
 # 작업 디렉토리 설정
-WORKDIR /src
+WORKDIR /src/main/frontend
 
 # package.json과 package-lock.json 복사 및 의존성 설치
 COPY package*.json ./
@@ -17,7 +17,8 @@ FROM node:20-alpine AS production
 WORKDIR /app
 
 # 빌드된 정적 파일만 복사
-COPY --from=build /src/build /app/build
+# /src/main/frontend/build 디렉토리를 /app/build로 복사
+COPY --from=build /src/main/frontend/build /app/build
 
 # 최신 npm 사용 (선택 사항)
 RUN npm install -g npm@latest && npm install -g serve
