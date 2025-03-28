@@ -6,11 +6,10 @@ WORKDIR /src
 
 # package.json과 package-lock.json 복사 및 의존성 설치
 COPY package*.json ./
+RUN npm cache clean --force && npm config set registry https://registry.npmjs.org/ && npm install
 
-# ✅ npm 캐시 정리 후 레지스트리 설정 및 의존성 설치
-RUN npm cache clean --force && \
-    npm config set registry https://registry.npmjs.org/ && \
-    npm install
+# .env 파일 복사
+COPY .env .env   # .env 파일을 컨테이너로 복사
 
 # 소스 코드 복사 및 빌드 실행
 COPY . .
@@ -23,7 +22,7 @@ WORKDIR /app
 # 빌드된 정적 파일만 복사
 COPY --from=build /src/build /app/build
 
-# ✅ 최신 npm 사용 (선택 사항)
+# 최신 npm 사용 (선택 사항)
 RUN npm install -g npm@latest && npm install -g serve
 
 # 컨테이너 실행 시 정적 파일 제공
