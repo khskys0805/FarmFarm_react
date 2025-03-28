@@ -29,6 +29,9 @@ jobs:
       - name: Build React App        # React Build
         run: |
           cd src/main/frontend       # 상대 경로 수정
+          REACT_APP_REDIRECT_URI=${{ secrets.REACT_APP_REDIRECT_URI }} \
+          REACT_APP_APP_KEY=${{ secrets.REACT_APP_APP_KEY }} \
+          REACT_APP_API_BASE_URL=${{ secrets.REACT_APP_API_BASE_URL }} \
           npm run build
 
       - name: Install AWS CLI        # AWS CLI 설치
@@ -105,12 +108,3 @@ jobs:
               farmfarm1234/farmfarm-react-image
             
             echo " ✅ Frontend Deployment Completed!"
-
-#      # ✅ 배포 완료 후 AWS 보안 그룹에서 GitHub IP 제거
-#      - name: Remove GitHub IP from AWS Security Group
-#        run: |
-#          aws ec2 revoke-security-group-ingress \
-#            --group-id ${{ secrets.AWS_SG_ID }} \
-#            --protocol tcp \
-#            --port 22 \
-#            --cidr ${{ steps.ip.outputs.ipv4 }}/32
