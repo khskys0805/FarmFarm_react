@@ -76,8 +76,12 @@ jobs:
       # ✅ 새로운 Docker 이미지 빌드
       - name: Build Docker Image (Frontend)
         run: |
-          cd src/main/frontend        # 상대 경로 수정
-          docker build --no-cache -t farmfarm1234/farmfarm-react-image .
+          cd src/main/frontend
+          docker build --no-cache \
+            --build-arg REACT_APP_REDIRECT_URI=${{ secrets.REACT_APP_REDIRECT_URI }} \
+            --build-arg REACT_APP_APP_KEY=${{ secrets.REACT_APP_APP_KEY }} \
+            --build-arg REACT_APP_API_BASE_URL=${{ secrets.REACT_APP_API_BASE_URL }} \
+            -t farmfarm1234/farmfarm-react-image .
 
       # ✅ Docker Hub 로그인
       - name: Login to Docker Hub
