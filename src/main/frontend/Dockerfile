@@ -9,7 +9,7 @@ COPY package*.json ./
 RUN npm cache clean --force && npm config set registry https://registry.npmjs.org/ && npm install
 
 # .env 파일 복사
-COPY .env .env   # .env 파일을 컨테이너로 복사
+COPY .env .env
 
 # 소스 코드 복사 및 빌드 실행
 COPY . .
