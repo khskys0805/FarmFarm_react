@@ -26,12 +26,16 @@ jobs:
           cd src/main/frontend       # 상대 경로 수정
           npm install
 
+      # ✅ .env 파일 생성 (GitHub Actions에서)
+      - name: Create .env file
+        run: |
+          echo "REACT_APP_REDIRECT_URI=${{ secrets.REACT_APP_REDIRECT_URI }}" > src/main/frontend/.env
+          echo "REACT_APP_APP_KEY=${{ secrets.REACT_APP_APP_KEY }}" >> src/main/frontend/.env
+          echo "REACT_APP_API_BASE_URL=${{ secrets.REACT_APP_API_BASE_URL }}" >> src/main/frontend/.env
+
       - name: Build React App        # React Build
         run: |
           cd src/main/frontend       # 상대 경로 수정
-          REACT_APP_REDIRECT_URI=${{ secrets.REACT_APP_REDIRECT_URI }} \
-          REACT_APP_APP_KEY=${{ secrets.REACT_APP_APP_KEY }} \
-          REACT_APP_API_BASE_URL=${{ secrets.REACT_APP_API_BASE_URL }} \
           npm run build
 
       - name: Install AWS CLI        # AWS CLI 설치
@@ -77,11 +81,7 @@ jobs:
       - name: Build Docker Image (Frontend)
         run: |
           cd src/main/frontend
-          docker build --no-cache \
-            --build-arg REACT_APP_REDIRECT_URI=${{ secrets.REACT_APP_REDIRECT_URI }} \
-            --build-arg REACT_APP_APP_KEY=${{ secrets.REACT_APP_APP_KEY }} \
-            --build-arg REACT_APP_API_BASE_URL=${{ secrets.REACT_APP_API_BASE_URL }} \
-            -t farmfarm1234/farmfarm-react-image .
+          docker build --no-cache -t farmfarm1234/farmfarm-react-image .
 
       # ✅ Docker Hub 로그인
       - name: Login to Docker Hub
