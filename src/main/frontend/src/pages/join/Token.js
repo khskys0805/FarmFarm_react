@@ -1,15 +1,18 @@
-import React, { useEffect, useState } from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import { useNavigate } from 'react-router-dom';
 import api from "../../api/api";
 import API from '../../config';
 import { BeatLoader } from "react-spinners";
 import axios from "axios";
+import {DataContext} from "../../context/DataContext";
 const Token = () => {
     const navigate = useNavigate();
     const [loading, setLoading] = useState(true);
     const code = new URL(window.location.href).searchParams.get('code');
     const REST_API_KEY = process.env.REACT_APP_APP_KEY;
     const REDIRECT_URI = process.env.REACT_APP_REDIRECT_URI;
+
+    const { setJwt } = useContext(DataContext);
 
     useEffect(() => {
         const fetchData = async () => {
@@ -43,16 +46,13 @@ const Token = () => {
                             // 🔥 localStorage 변경 이벤트 발생 (DataProvider에서 감지하도록)
                             window.dispatchEvent(new Event('storage'));
 
-                            // window.location.reload();  // ✅ 새로고침 추가
+                            setJwt(res.data.result.accessToken);  // ✅ DataProvider의 jwt 상태 즉시 업데이트!
 
-                            // 🚀 100ms 정도 딜레이 후 navigate 실행
-                            setTimeout(() => {
-                                if (res.data.result.nickname) {
-                                    navigate("/home");
-                                } else {
-                                    navigate("/nickname");
-                                }
-                            }, 100);
+                            if (res.data.result.nickname) {
+                                navigate("/home");
+                            } else {
+                                navigate("/nickname");
+                            }
                         })
                         .catch(error => {
                             console.error('Error sending token:', error);

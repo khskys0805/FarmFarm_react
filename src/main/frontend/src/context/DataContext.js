@@ -103,6 +103,16 @@ export const DataProvider = ({ children }) => {
         setSortValue(defaultSortValue);
     }, []);
 
+    useEffect(() => {
+        const handleStorageChange = () => {
+            const token = localStorage.getItem('jwt');
+            setJwt(token);  // ✅ localStorage 변경 감지 후 jwt 업데이트
+        };
+
+        window.addEventListener('storage', handleStorageChange);
+        return () => window.removeEventListener('storage', handleStorageChange);
+    }, []);
+
     if (loading) {
         return <div>Loading...</div>;
     }
