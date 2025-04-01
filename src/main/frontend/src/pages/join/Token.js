@@ -43,11 +43,14 @@ const Token = () => {
                             // 🔥 localStorage 변경 이벤트 발생 (DataProvider에서 감지하도록)
                             window.dispatchEvent(new Event('storage'));
 
-                            if (res.data.result.nickname) {
-                                navigate("/home");
-                            } else {
-                                navigate("/nickname");
-                            }
+                            // 🚀 100ms 정도 딜레이 후 navigate 실행
+                            setTimeout(() => {
+                                if (res.data.result.nickname) {
+                                    navigate("/home");
+                                } else {
+                                    navigate("/nickname");
+                                }
+                            }, 100);
                         })
                         .catch(error => {
                             console.error('Error sending token:', error);
