@@ -23,7 +23,8 @@
     "react-spinners": "^0.13.8",
     "sass": "^1.71.1",
     "swiper": "^6.8.4",
-    "web-vitals": "^2.1.4"
+    "web-vitals": "^2.1.4",
+    "camelcase": "^6.3.0"
   },
   "scripts": {
     "start": "serve -s build -l 3000",
