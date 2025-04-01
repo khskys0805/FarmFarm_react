@@ -120,6 +120,8 @@ export const DataProvider = ({ children }) => {
     return (
         <DataContext.Provider
             value={{
+                jwt,  // ✅ 현재 JWT 값
+                setJwt,  // ✅ 반드시 포함
                 productList,
                 farmList,
                 groupProductList,
