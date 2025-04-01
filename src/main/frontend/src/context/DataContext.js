@@ -5,6 +5,8 @@ import api from "../api/api";
 export const DataContext = createContext();
 
 export const DataProvider = ({ children }) => {
+    const [jwt, setJwt] = useState(localStorage.getItem('jwt'));
+
     const defaultSortValue = 'rating'; // 기본 값
     const [sortValue, setSortValue] = useState(defaultSortValue); // 상태에서만 관리
 
@@ -47,7 +49,7 @@ export const DataProvider = ({ children }) => {
         }
     }, [sortValue]); // sortValue가 변경되면 새로 정의되도록 의존성 추가
 
-    const fetchGroupProductList = async () => {
+    const fetchGroupProductList = useCallback(async () => {
         try {
             const res = await api.get(API.ALLGROUPPRODUCT, {
                 headers: { Authorization: `Bearer ${localStorage.getItem('jwt')}` },
@@ -57,9 +59,9 @@ export const DataProvider = ({ children }) => {
         } catch (error) {
             console.error('Error fetching groupProduct: ', error);
         }
-    };
+    }, []);
 
-    const fetchAuctionList = async () => {
+    const fetchAuctionList = useCallback(async () => {
         try {
             const res = await api.get(API.ALLAUCTION, {
                 headers: { Authorization: `Bearer ${localStorage.getItem('jwt')}` },
@@ -68,9 +70,16 @@ export const DataProvider = ({ children }) => {
             setAuctionList(res.data.result.productList);
             console.log(res.data.result.productList);
         } catch (error) {
-            console.error('Error fetching groupProduct: ', error);
+            console.error('Error fetching auction list: ', error);
         }
-    };
+    }, []);
+
+    useEffect(() => {
+        const token = localStorage.getItem('jwt');
+        if (token) {
+            setJwt(token);
+        }
+    }, []);
 
     useEffect(() => {
         const jwt = localStorage.getItem('jwt');
@@ -83,17 +92,17 @@ export const DataProvider = ({ children }) => {
             console.warn('JWT token is missing or invalid.');
         }
         setLoading(false);
-    }, [fetchProductList, fetchFarmList]); // 의존성 배열에 fetchProductList와 fetchFarmList 추가
+    }, [jwt, fetchProductList, fetchFarmList, fetchGroupProductList, fetchAuctionList]);
 
     useEffect(() => {
         fetchFarmList();
         fetchProductList();
-    }, [sortValue, fetchFarmList, fetchProductList]); // sortValue가 변경될 때마다 실행
+    }, [sortValue, fetchFarmList, fetchProductList]);
 
     useEffect(() => {
         // 페이지 이동 시 sortValue를 기본값으로 설정
         setSortValue(defaultSortValue);
-    }, []); // 빈 배열을 넣어서 페이지가 처음 로드될 때만 실행
+    }, []);
 
     if (loading) {
         return <div>Loading...</div>;
