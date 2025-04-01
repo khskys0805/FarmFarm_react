@@ -66,7 +66,7 @@ const Token = () => {
         };
 
         fetchData();
-    }, [code, navigate, REDIRECT_URI, REST_API_KEY]);
+    }, [code, navigate, setJwt, REDIRECT_URI, REST_API_KEY]);
 
     if (loading) {
         return (
