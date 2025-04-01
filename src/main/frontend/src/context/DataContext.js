@@ -82,7 +82,6 @@ export const DataProvider = ({ children }) => {
     }, []);
 
     useEffect(() => {
-        const jwt = localStorage.getItem('jwt');
         if (jwt) {
             fetchProductList();
             fetchFarmList();

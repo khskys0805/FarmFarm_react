@@ -43,6 +43,8 @@ const Token = () => {
                             // 🔥 localStorage 변경 이벤트 발생 (DataProvider에서 감지하도록)
                             window.dispatchEvent(new Event('storage'));
 
+                            // window.location.reload();  // ✅ 새로고침 추가
+
                             // 🚀 100ms 정도 딜레이 후 navigate 실행
                             setTimeout(() => {
                                 if (res.data.result.nickname) {
