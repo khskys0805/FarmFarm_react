@@ -36,26 +36,35 @@ const api = axios.create({
     },
 });
 
-// 요청 인터셉터 설정
+// 요청을 보낼 때 자동으로 accessToken 포함
+api.interceptors.request.use(config => {
+    const accessToken = localStorage.getItem('jwt');
+    if (accessToken) {
+        config.headers['Authorization'] = `Bearer ${accessToken}`;
+    }
+    return config;
+}, error => Promise.reject(error));
+
+
+// 응답 인터셉터 설정
 api.interceptors.response.use(
     response => response, // 성공적인 응답은 그대로 리턴
     async error => {
         const originalRequest = error.config;
 
-        // 419 에러 발생 시 토큰 갱신 시도
+        // 419 (토큰 만료) 발생 시 갱신 시도
         if (error.response && error.response.status === 419 && !originalRequest._retry) {
             originalRequest._retry = true;
 
             const newAccessToken = await refreshToken();
 
             if (newAccessToken) {
-                // 갱신된 토큰을 요청 헤더에 설정하여 재시도
                 originalRequest.headers['Authorization'] = `Bearer ${newAccessToken}`;
                 return api(originalRequest); // 재시도
             }
         }
 
-        return Promise.reject(error); // 여전히 에러가 발생하면 reject
+        return Promise.reject(error);
     }
 );
 
