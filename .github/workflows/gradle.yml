@@ -32,7 +32,7 @@ jobs:
       - name: Install dependencies   # 의존 파일 설치
         run: |
           cd src/main/frontend       # 상대 경로 수정
-          npm ci                      # package-lock.json 기반으로 클린 설치
+          npm install                   # package-lock.json 기반으로 클린 설치
 
       # ✅ .env 파일 생성
       - name: Create .env file
