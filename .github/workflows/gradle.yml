@@ -15,18 +15,26 @@ jobs:
         uses: actions/checkout@v3
 
       - name: List directory structure (Debugging step)   # 디렉토리 구조 확인
-        run: |
-          ls -R
+        run: ls -R
 
       - name: Check Node v           # Node v 확인
         run: node -v
 
+      # ✅ 캐시를 무효화하여 npm install 실행
+      - name: Cache dependencies
+        uses: actions/cache@v3
+        with:
+          path: src/main/frontend/node_modules
+          key: run-${{ github.run_id }} # 매 실행마다 새로운 캐시 키 생성
+          restore-keys: |
+            run-
+
       - name: Install dependencies   # 의존 파일 설치
         run: |
           cd src/main/frontend       # 상대 경로 수정
-          npm install
+          npm ci                      # package-lock.json 기반으로 클린 설치
 
-      # ✅ .env 파일 생성 (GitHub Actions에서)
+      # ✅ .env 파일 생성
       - name: Create .env file
         run: |
           echo "REACT_APP_REDIRECT_URI=${{ secrets.REACT_APP_REDIRECT_URI }}" > src/main/frontend/.env
@@ -35,7 +43,7 @@ jobs:
 
       - name: Build React App        # React Build
         run: |
-          cd src/main/frontend       # 상대 경로 수정
+          cd src/main/frontend
           npm run build
 
       - name: Install AWS CLI        # AWS CLI 설치
@@ -51,7 +59,7 @@ jobs:
         run: |
           aws s3 cp --recursive --region ap-northeast-2 src/main/frontend/build s3://farmfarm-bucket
 
-      # ✅ EC2에서 기존 컨테이너와 이미지 삭제 (Push 전에 실행)
+      # ✅ EC2에서 기존 컨테이너와 이미지 삭제
       - name: Remove old container & image from EC2
         uses: appleboy/ssh-action@v0.1.6
         with:
@@ -63,7 +71,6 @@ jobs:
           script: |
             echo "🔄 Stopping and Removing existing Frontend Docker container..."
             
-            # 기존 컨테이너 ID를 자동으로 찾아서 중지 및 삭제
             CONTAINER_ID=$(sudo docker ps -a -q --filter "ancestor=farmfarm1234/farmfarm-react-image")
             if [ ! -z "$CONTAINER_ID" ]; then
                 sudo docker stop $CONTAINER_ID
@@ -71,7 +78,6 @@ jobs:
             fi
 
             echo "🗑️ Removing old Frontend Docker images..."
-            # 이미지 ID로 기존 이미지를 삭제
             IMAGE_ID=$(sudo docker images -q farmfarm1234/farmfarm-react-image)
             if [ ! -z "$IMAGE_ID" ]; then
                 sudo docker rmi $IMAGE_ID
@@ -111,4 +117,4 @@ jobs:
               -e HOST=0.0.0.0 \
               farmfarm1234/farmfarm-react-image
             
-            echo " ✅ Frontend Deployment Completed!"
+            echo "✅ Frontend Deployment Completed! 🎉"
