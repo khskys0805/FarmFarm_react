@@ -23,6 +23,7 @@ const Tabs = ({ type, farm, product }) => {
     const [reviewList, setReviewList] = useState([]);
     const [isMyFarm, setIsMyFarm] = useState(false);
     const [loading, setLoading] = useState(true);  // 로딩 상태 추가
+    console.log(product);
 
     const fetchEnquiry = useCallback(() => {
         api.get(API.ENQUIRY(product.pid), {
