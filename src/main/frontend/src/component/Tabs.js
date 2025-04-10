@@ -26,6 +26,7 @@ const Tabs = ({ type, farm, product }) => {
     console.log(product);
 
     const fetchEnquiry = useCallback(() => {
+        if (!product?.pid) return;
         api.get(API.ENQUIRY(product.pid), {
             headers: { Authorization: `Bearer ${localStorage.getItem('jwt')}` },
             withCredentials: true
@@ -38,7 +39,7 @@ const Tabs = ({ type, farm, product }) => {
             .catch((error) => {
                 console.error('작성한 게시물을 가져오는 중 오류 발생: ', error);
             });
-    }, [product.pid]); // product.pid가 변경될 때만 함수가 다시 생성됨
+    }, [product?.pid]); // product.pid가 변경될 때만 함수가 다시 생성됨
 
     useEffect(() => {
         setLoading(true);  // 데이터 로딩 시작 시 true로 설정
@@ -99,7 +100,7 @@ const Tabs = ({ type, farm, product }) => {
                 });
             setLoading(false);
         }
-        else if (type === "product" && product.pid) {
+        else if (type === "product" && product?.pid) {
             setLoading(true);
             api.get(API.PRODUCT(product?.pid), {
                 headers: { Authorization: `Bearer ${localStorage.getItem('jwt')}` },
@@ -131,7 +132,7 @@ const Tabs = ({ type, farm, product }) => {
                 });
             setLoading(false);
         }
-    }, [type, farm, product, fetchEnquiry]);
+    }, [type, farm, product?.pid, fetchEnquiry]);
 
     if (loading) {
         return (
